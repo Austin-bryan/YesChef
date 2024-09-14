@@ -38,6 +38,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <GridLayout
+                android:id="@+id/photo_grid_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:padding="16dp"
+                android:layout_gravity="center"
+                android:alignmentMode="alignMargins"
+                android:useDefaultMargins="true">
+
+                <include layout="@layout/image_add" />
+                <include layout="@layout/image_add" />
+                <include layout="@layout/image_add" />
+                <include layout="@layout/image_add" />
+
+            </GridLayout>
+
             <LinearLayout
                 android:id="@+id/ingredients_container"
                 android:layout_width="match_parent"
