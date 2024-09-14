@@ -3,12 +3,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFragment">
+    android:background="#dfdfdf"
+    tools:context=".fragments.AddFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Fragment"
-        android:textSize="25dp"
-        android:layout_centerInParent="true"/>
+    <!-- ScrollView to make the content scrollable -->
+    <ScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="always"
+        android:fillViewport="true">
+
+        <!-- LinearLayout inside ScrollView -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/item_list"
+                android:id="@+id/meal_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                layout="@layout/item_list"
+                android:id="@+id/meal_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                layout="@layout/item_list"
+                android:id="@+id/meal_nutrition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/ingredients_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:tag="ingredients"
+                android:orientation="vertical">
+
+                <!-- Text Label -->
+                <TextView
+                    android:id="@+id/ingredients_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ingredient"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Ingredients"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <!-- LinearLayout inside ScrollView -->
+            <LinearLayout
+                android:id="@+id/directions_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tag="directions"
+                android:orientation="vertical">
+
+                <!-- Text Label -->
+                <TextView
+                    android:id="@+id/directions_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/step"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Directions"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.yeschef;
+package com.example.yeschef.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.yeschef.R;
 
 public class ScrollingFragment extends Fragment {
 
