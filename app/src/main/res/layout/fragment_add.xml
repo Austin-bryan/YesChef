@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content" />
 
             <GridLayout
-                android:id="@+id/photo_grid_layout"
+                android:id="@+id/image_add_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="4"
@@ -48,11 +48,14 @@
                 android:alignmentMode="alignMargins"
                 android:useDefaultMargins="true">
 
-                <include layout="@layout/image_add" />
-                <include layout="@layout/image_add" />
-                <include layout="@layout/image_add" />
-                <include layout="@layout/image_add" />
-
+                <include layout="@layout/image_add"
+                    android:id="@+id/image_add1"/>
+                <include layout="@layout/image_add"
+                    android:id="@+id/image_add2" />
+                <include layout="@layout/image_add"
+                    android:id="@+id/image_add3" />
+                <include layout="@layout/image_add"
+                    android:id="@+id/image_add4" />
             </GridLayout>
 
             <LinearLayout

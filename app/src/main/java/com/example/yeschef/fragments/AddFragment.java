@@ -1,8 +1,13 @@
 package com.example.yeschef.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +19,11 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -41,11 +49,58 @@ public class AddFragment extends Fragment {
         setHintText(view, R.id.meal_description, "Description");
         setHintText(view, R.id.meal_nutrition, "Nutrition");
 
+        initializeImageAdders(view);
+
         // Initialize with one item in each section
         addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer);
         addNewItem(directionsContainer, "Step(s)", directionsColor, null);
 
         return view;
+    }
+    private ActivityResultLauncher<Intent> galleryLauncher;
+    private ImageButton clickedButton;
+
+    private void initializeImageAdders(View view) {
+        // Register Activity Result Launcher
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Uri imageUri = result.getData().getData();
+
+                if (clickedButton != null) {
+                    // Set the image to the clicked button
+                    clickedButton.setImageURI(imageUri);
+                    clickedButton.setImageDrawable(null);  // Clear existing drawable first
+                    clickedButton.setImageURI(imageUri);
+                    clickedButton.clearColorFilter();
+                    clickedButton.setColorFilter(Color.TRANSPARENT);
+                    clickedButton.setPadding(0, 0, 0, 0);
+                    Log.d("", "initializeImageAdders: ");
+                }
+                else {
+                    Log.e("", "Null clickedbutton");
+                }
+            }
+        });
+
+        GridLayout gridLayout = view.findViewById(R.id.image_add_grid);
+
+        int[] imageAddIds = {R.id.image_add1, R.id.image_add2, R.id.image_add3, R.id.image_add4};
+
+        for (int i = 0; i < imageAddIds.length; i++) {
+            RelativeLayout relativeLayout = gridLayout.findViewById(imageAddIds[i]);
+            ImageButton imageAdd = relativeLayout.findViewById(R.id.add_photo);
+            initializeImageAdder(imageAdd);
+        }
+    }
+
+    private void initializeImageAdder(ImageButton imageButton) {
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            // Store reference to the clicked button
+            clickedButton = imageButton;
+            galleryLauncher.launch(intent);
+        });
     }
 
     private void setHintText(View view, int id, String text) {
@@ -134,7 +189,6 @@ public class AddFragment extends Fragment {
                         .setDuration(300)
                         .withEndAction(() -> {
                             itemListContainer.removeView(newItem);
-                            itemListContainer.requestLayout();  // Force layout recalculation
                             updateStepNumbers(itemListContainer);
                         })
                         .start();
@@ -169,11 +223,6 @@ public class AddFragment extends Fragment {
 
         // Add the new item to the container
         itemListContainer.addView(newItem);
-
-        // Ensure the other container is properly adjusted
-        if (otherContainer != null) {
-            otherContainer.requestLayout();
-        }
     }
 
     private void updateStepNumbers(LinearLayout itemListContainer) {
