@@ -5,4 +5,11 @@
     <color name="ingredient">#EEAA00</color>
     <color name="step">#00AC79</color>
     <color name="itemList">#0079AC</color>
+
+    <!-- colors.xml -->
+    <color name="bottom_nav_icon_color">#FF000000</color> <!-- Black icons -->
+    <color name="bottom_nav_text_color">#FF000000</color> <!-- Black text -->
+    <color name="bottom_nav_background_color">#FFFFFFFF</color> <!-- White background -->
+
+
 </resources>

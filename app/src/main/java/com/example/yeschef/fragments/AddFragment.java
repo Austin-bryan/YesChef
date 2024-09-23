@@ -2,92 +2,181 @@ package com.example.yeschef.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.yeschef.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddFragment extends Fragment {
+
+    private static final String KEY_INGREDIENTS_LIST = "ingredients_list";
+    private static final String KEY_DIRECTIONS_LIST = "directions_list";
+
+    private List<String> ingredientsList;
+    private List<String> directionsList;
+
+    private ActivityResultLauncher<Intent> galleryLauncher;
+    private ImageButton clickedButton;
+    private LinearLayout categoryButtonsContainer;
+    private TextView selectedCategoryText;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
+        // Containers for dynamic content (ingredients and directions)
         LinearLayout ingredientsContainer = view.findViewById(R.id.ingredients_container);
         LinearLayout directionsContainer = view.findViewById(R.id.directions_container);
 
-        // Get the color of the ingredients and directions labels
-        int ingredientsColor = ((ColorDrawable) view.findViewById(R.id.ingredients_label).getBackground()).getColor();
-        int directionsColor = ((ColorDrawable) view.findViewById(R.id.directions_label).getBackground()).getColor();
+        // TextViews that act as labels (for toggling visibility)
+        TextView ingredientsLabel = view.findViewById(R.id.ingredients_label);
+        TextView directionsLabel = view.findViewById(R.id.directions_label);
 
-        // Setup basic text fields with proper hints
+        // Get label colors
+        int ingredientsColor = ((ColorDrawable) ingredientsLabel.getBackground()).getColor();
+        int directionsColor = ((ColorDrawable) directionsLabel.getBackground()).getColor();
+
+        // Setup basic text fields
         setHintText(view, R.id.meal_title, "Meal Title");
         setHintText(view, R.id.meal_description, "Description");
         setHintText(view, R.id.meal_nutrition, "Nutrition");
 
         initializeImageAdders(view);
+        initializeCategorySelection(view);
 
-        // Initialize with one item in each section
-        addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer);
-        addNewItem(directionsContainer, "Step(s)", directionsColor, null);
+        // Restore saved state or initialize with one item
+        if (savedInstanceState != null) {
+            ingredientsList = savedInstanceState.getStringArrayList(KEY_INGREDIENTS_LIST);
+            directionsList = savedInstanceState.getStringArrayList(KEY_DIRECTIONS_LIST);
+            if (ingredientsList != null) {
+                for (String ingredient : ingredientsList) {
+                    addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, null, ingredient);
+                }
+            }
+            if (directionsList != null) {
+                for (String direction : directionsList) {
+                    addNewItem(directionsContainer, "Step(s)", directionsColor, null, direction);
+                }
+            }
+        } else {
+            ingredientsList = new ArrayList<>();
+            directionsList = new ArrayList<>();
+            addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer);
+            addNewItem(directionsContainer, "Step(s)", directionsColor, null);
+        }
+
+        // Set click listeners for toggling visibility
+        ingredientsLabel.setOnClickListener(v -> toggleContainerVisibility(ingredientsContainer));
+        directionsLabel.setOnClickListener(v -> toggleContainerVisibility(directionsContainer));
+
+        // Navigate to BreakfastMealsFragment using the Breakfast button
+        Button openBreakfastMealsFragment = view.findViewById(R.id.breakfast_button);
+        openBreakfastMealsFragment.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_addFragment_to_breakfastMealsFragment)
+        );
 
         return view;
     }
-    private ActivityResultLauncher<Intent> galleryLauncher;
-    private ImageButton clickedButton;
+
+    private void initializeCategorySelection(View view) {
+        Button pickCategoryButton = view.findViewById(R.id.pick_category_button);
+        categoryButtonsContainer = view.findViewById(R.id.category_buttons_container);
+        selectedCategoryText = view.findViewById(R.id.selected_category_text);
+
+        pickCategoryButton.setOnClickListener(v -> {
+            // Toggle the visibility of the category buttons container
+            if (categoryButtonsContainer.getVisibility() == View.GONE) {
+                categoryButtonsContainer.setVisibility(View.VISIBLE);
+            } else {
+                categoryButtonsContainer.setVisibility(View.GONE);
+            }
+        });
+
+        // Set up click listeners for each category button
+        view.findViewById(R.id.breakfast_button).setOnClickListener(v -> {
+            selectedCategoryText.setText("Selected Category: Breakfast");
+            categoryButtonsContainer.setVisibility(View.GONE);
+        });
+
+        view.findViewById(R.id.lunch_button).setOnClickListener(v -> {
+            selectedCategoryText.setText("Selected Category: Lunch");
+            categoryButtonsContainer.setVisibility(View.GONE);
+        });
+
+        view.findViewById(R.id.dinner_button).setOnClickListener(v -> {
+            selectedCategoryText.setText("Selected Category: Dinner");
+            categoryButtonsContainer.setVisibility(View.GONE);
+        });
+    }
+
+    private void toggleContainerVisibility(final LinearLayout container) {
+        if (container.getVisibility() == View.VISIBLE) {
+            container.animate()
+                    .alpha(0f)
+                    .translationY(-30)
+                    .setDuration(300)
+                    .withEndAction(() -> container.setVisibility(View.GONE))
+                    .start();
+        } else {
+            container.setVisibility(View.VISIBLE);
+            container.setAlpha(0f);
+            container.setTranslationY(-30);
+            container.animate()
+                    .alpha(1f)
+                    .translationY(0)
+                    .setDuration(300)
+                    .start();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList(KEY_INGREDIENTS_LIST, new ArrayList<>(ingredientsList));
+        outState.putStringArrayList(KEY_DIRECTIONS_LIST, new ArrayList<>(directionsList));
+    }
 
     private void initializeImageAdders(View view) {
-        // Register Activity Result Launcher
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();
-
                 if (clickedButton != null) {
-                    // Set the image to the clicked button
                     clickedButton.setImageURI(imageUri);
-                    clickedButton.setImageDrawable(null);  // Clear existing drawable first
+                    clickedButton.setImageDrawable(null);
                     clickedButton.setImageURI(imageUri);
                     clickedButton.clearColorFilter();
-                    clickedButton.setColorFilter(Color.TRANSPARENT);
                     clickedButton.setPadding(0, 0, 0, 0);
-                    Log.d("", "initializeImageAdders: ");
-                }
-                else {
-                    Log.e("", "Null clickedbutton");
                 }
             }
         });
 
         GridLayout gridLayout = view.findViewById(R.id.image_add_grid);
-
         int[] imageAddIds = {R.id.image_add1, R.id.image_add2, R.id.image_add3, R.id.image_add4};
 
-        for (int i = 0; i < imageAddIds.length; i++) {
-            RelativeLayout relativeLayout = gridLayout.findViewById(imageAddIds[i]);
+        for (int imageAddId : imageAddIds) {
+            RelativeLayout relativeLayout = gridLayout.findViewById(imageAddId);
             ImageButton imageAdd = relativeLayout.findViewById(R.id.add_photo);
             initializeImageAdder(imageAdd);
         }
@@ -97,7 +186,6 @@ public class AddFragment extends Fragment {
         imageButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
-            // Store reference to the clicked button
             clickedButton = imageButton;
             galleryLauncher.launch(intent);
         });
@@ -109,16 +197,15 @@ public class AddFragment extends Fragment {
         editText.setHint(text);
     }
 
-    // Method to add a new item to a section (either ingredients or directions)
     private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer) {
-        // Inflate the item_list layout
+        addNewItem(itemListContainer, hintText, labelColor, otherContainer, null);
+    }
+
+    private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer, String existingText) {
         View newItem = getLayoutInflater().inflate(R.layout.item_list, itemListContainer, false);
-
-        // Set initial alpha to 0 (for fade-in effect)
         newItem.setAlpha(0f);
-        newItem.setTranslationY(-50);  // Start slightly above for slide-in
+        newItem.setTranslationY(-50);
 
-        // Animate the fade-in and slide-down effect
         newItem.animate()
                 .alpha(1f)
                 .translationY(0)
@@ -126,117 +213,31 @@ public class AddFragment extends Fragment {
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
 
-        // Find the input field and set its hint
         TextInputEditText inputField = newItem.findViewById(R.id.ingredient_step_input);
         inputField.setHint(hintText);
+        if (existingText != null) {
+            inputField.setText(existingText);
+        }
 
-        // Find the add/remove button in the item
         ImageButton addRemoveButton = newItem.findViewById(R.id.add_remove_button);
         View leftRectangle = newItem.findViewById(R.id.left_rectangle);
 
-        // Set the color of the button to match the label's color
-        addRemoveButton.setColorFilter(labelColor);
-        leftRectangle.setBackgroundColor(labelColor);
-
-        // Set initial button state as "add"
-        addRemoveButton.setImageResource(R.drawable.ic_add_circle);
-        addRemoveButton.setTag("add");
-
-        FrameLayout frameLayout = newItem.findViewById(R.id.circle_frame);  // Replace R.id.frame_layout with the actual ID of your FrameLayout
-        boolean isDirections = "directions".equals(itemListContainer.getTag());
-
-        if (isDirections) {
-            frameLayout.setVisibility(View.VISIBLE);  // Set to VISIBLE
-            TextView stepText = newItem.findViewById(R.id.circle_text);
-            int stepNumber = itemListContainer.getChildCount();  // Get current step number
-            stepText.setText(String.valueOf(stepNumber));
-        } else {
-            frameLayout.setVisibility(View.GONE);  // Hide it for non-directions
-        }
-
-        addRemoveButton.setVisibility(View.VISIBLE);
-
-        // Set click listener to dynamically add or remove items
         addRemoveButton.setOnClickListener(v -> {
-            String currentState = (String) addRemoveButton.getTag();
-
-            if (currentState.equals("add")) {
-                // Change to "remove" state
-                addRemoveButton.setImageResource(R.drawable.ic_remove_outline);
-                addRemoveButton.setTag("remove");
-
-                // Animate the other container to slide down
-                if (otherContainer != null) {
-                    otherContainer.animate()
-                            .translationYBy(addRemoveButton.getHeight())
-                            .setDuration(300)
-                            .setInterpolator(new AccelerateDecelerateInterpolator())
-                            .withEndAction(() -> {
-                                // Reset translation to avoid jumps
-                                otherContainer.setTranslationY(0);
-                                addNewItem(itemListContainer, hintText, labelColor, otherContainer);
-                            })
-                            .start();
-                } else {
+            if (inputField.getText().toString().isEmpty()) {
+                // Remove the item if the input field is empty
+                itemListContainer.removeView(newItem);
+                if (otherContainer != null && itemListContainer.getChildCount() == 0) {
                     addNewItem(itemListContainer, hintText, labelColor, otherContainer);
                 }
-
             } else {
-                // Slide and fade out the item
-                newItem.animate()
-                        .alpha(0f)
-                        .translationY(-50)
-                        .setDuration(300)
-                        .withEndAction(() -> {
-                            itemListContainer.removeView(newItem);
-                            updateStepNumbers(itemListContainer);
-                        })
-                        .start();
-
-                // Move up all items below the removed one
-                int startIndex = itemListContainer.indexOfChild(newItem);
-                int height = 0;
-                for (int i = startIndex; i < itemListContainer.getChildCount(); i++) {
-                    View item = itemListContainer.getChildAt(i);
-                    height = item.getHeight();
-
-                    // Slide each item up by the height of the removed item
-                    item.animate()
-                            .translationYBy(-height)
-                            .setDuration(300)
-                            .setInterpolator(new AccelerateDecelerateInterpolator())
-                            .withEndAction(() -> item.setTranslationY(0))  // Reset translation after animation
-                            .start();
-                }
-
-                // Animate the other container to slide up
-                if (otherContainer != null) {
-                    otherContainer.animate()
-                            .translationYBy(-height)
-                            .setDuration(300)
-                            .setInterpolator(new AccelerateDecelerateInterpolator())
-                            .withEndAction(() -> otherContainer.setTranslationY(0))  // Reset translation after animation
-                            .start();
-                }
+                // Add a new empty item to the list
+                addNewItem(itemListContainer, hintText, labelColor, otherContainer);
             }
         });
 
-        // Add the new item to the container
+        // Set the background color of the rectangle
+        leftRectangle.setBackgroundColor(labelColor);
+
         itemListContainer.addView(newItem);
-    }
-
-    private void updateStepNumbers(LinearLayout itemListContainer) {
-        for (int i = 0; i < itemListContainer.getChildCount(); i++) {
-            View stepItem = itemListContainer.getChildAt(i);
-            TextView stepText = stepItem.findViewById(R.id.circle_text);  // Text inside the circle
-
-            if (stepText != null) {
-                // Only set text if the TextView is not null
-                stepText.setText(String.valueOf(i));  // Update the step number based on its position in the list
-            } else {
-                // Optional: Log or handle the case where the TextView is missing
-                Log.e("AddFragment", "TextView 'circle_text' is null in step item at index " + i);
-            }
-        }
     }
 }

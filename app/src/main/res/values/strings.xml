@@ -1,4 +1,12 @@
 <resources>
+
+        <string-array name="category_array">
+            <item>Breakfast</item>
+            <item>Lunch</item>
+            <item>Dinner</item>
+        </string-array>
+
+
     <string name="app_name">Yes, Chef!</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

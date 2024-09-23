@@ -20,24 +20,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Meal Title Input -->
             <include
                 layout="@layout/item_list"
                 android:id="@+id/meal_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <!-- Meal Description Input -->
             <include
                 layout="@layout/item_list"
                 android:id="@+id/meal_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <!-- Meal Nutrition Input -->
             <include
                 layout="@layout/item_list"
                 android:id="@+id/meal_nutrition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <!-- Grid Layout for Image Addition -->
             <GridLayout
                 android:id="@+id/image_add_grid"
                 android:layout_width="match_parent"
@@ -49,7 +53,7 @@
                 android:useDefaultMargins="true">
 
                 <include layout="@layout/image_add"
-                    android:id="@+id/image_add1"/>
+                    android:id="@+id/image_add1" />
                 <include layout="@layout/image_add"
                     android:id="@+id/image_add2" />
                 <include layout="@layout/image_add"
@@ -58,6 +62,92 @@
                     android:id="@+id/image_add4" />
             </GridLayout>
 
+            <!-- Category Selection Section -->
+            <LinearLayout
+                android:id="@+id/category_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+                <!-- Pick a Category Button -->
+                <Button
+                    android:id="@+id/pick_category_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="Pick a Category" />
+
+                <!-- Selected Category Display -->
+                <TextView
+                    android:id="@+id/selected_category_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selected Category: None"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Category Buttons -->
+                <LinearLayout
+                    android:id="@+id/category_buttons_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="16dp">
+
+                    <!-- Breakfast Button -->
+                    <Button
+                        android:id="@+id/breakfast_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="16dp"
+                        android:backgroundTint="#6200EE"
+                        android:textColor="#FFFFFF"
+                        android:text="Breakfast"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center" /> <!-- Center the text -->
+
+                    <!-- Lunch Button -->
+                    <Button
+                        android:id="@+id/lunch_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="16dp"
+                        android:backgroundTint="#6200EE"
+                        android:textColor="#FFFFFF"
+                        android:text="Lunch"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center" /> <!-- Center the text -->
+
+                    <!-- Dinner Button -->
+                    <Button
+                        android:id="@+id/dinner_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="16dp"
+                        android:backgroundTint="#6200EE"
+                        android:textColor="#FFFFFF"
+                        android:text="Dinner"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center" /> <!-- Center the text -->
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Ingredients Section -->
             <LinearLayout
                 android:id="@+id/ingredients_container"
                 android:layout_width="match_parent"
@@ -66,7 +156,7 @@
                 android:tag="ingredients"
                 android:orientation="vertical">
 
-                <!-- Text Label -->
+                <!-- Ingredients Text Label -->
                 <TextView
                     android:id="@+id/ingredients_label"
                     android:layout_width="match_parent"
@@ -81,7 +171,7 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <!-- LinearLayout inside ScrollView -->
+            <!-- Directions Section -->
             <LinearLayout
                 android:id="@+id/directions_container"
                 android:layout_width="match_parent"
@@ -89,7 +179,7 @@
                 android:tag="directions"
                 android:orientation="vertical">
 
-                <!-- Text Label -->
+                <!-- Directions Text Label -->
                 <TextView
                     android:id="@+id/directions_label"
                     android:layout_width="match_parent"
@@ -102,7 +192,6 @@
                     android:text="Directions"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
-
             </LinearLayout>
         </LinearLayout>
 
