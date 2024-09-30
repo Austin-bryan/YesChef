@@ -6,7 +6,7 @@
     android:background="#dfdfdf"
     tools:context=".fragments.AddFragment">
 
-    <!-- ScrollView to make the content scrollable -->
+    <!-- Scrollable container for inputs -->
     <ScrollView
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
@@ -14,11 +14,11 @@
         android:overScrollMode="always"
         android:fillViewport="true">
 
-        <!-- LinearLayout inside ScrollView -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <!-- Meal Title Input -->
             <include
@@ -26,7 +26,6 @@
                 android:id="@+id/meal_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
             <!-- Meal Description Input -->
             <include
                 layout="@layout/item_list"
@@ -41,6 +40,72 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <!-- Serving Size Input -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/serving_size_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Serving Size"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/serving_size_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/serving_size_label"
+                    android:hint="e.g., 1 cup"
+                    android:inputType="text"/>
+            </RelativeLayout>
+
+            <!-- Nutrition Facts Input -->
+            <Button
+                android:id="@+id/add_nutrition_fact_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Make a New Nutrition Fact"
+                android:textSize="18sp"
+                android:backgroundTint="#6200EE"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Options Section -->
+            <TextView
+                android:id="@+id/options_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Options"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/option_vegan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegan" />
+
+            <CheckBox
+                android:id="@+id/option_vegetarian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegetarian" />
+
+            <CheckBox
+                android:id="@+id/option_gluten_free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gluten-Free" />
+
+            <CheckBox
+                android:id="@+id/option_dairy_free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dairy-Free" />
+
             <!-- Grid Layout for Image Addition -->
             <GridLayout
                 android:id="@+id/image_add_grid"
@@ -48,18 +113,13 @@
                 android:layout_height="wrap_content"
                 android:columnCount="4"
                 android:padding="16dp"
-                android:layout_gravity="center"
                 android:alignmentMode="alignMargins"
                 android:useDefaultMargins="true">
 
-                <include layout="@layout/image_add"
-                    android:id="@+id/image_add1" />
-                <include layout="@layout/image_add"
-                    android:id="@+id/image_add2" />
-                <include layout="@layout/image_add"
-                    android:id="@+id/image_add3" />
-                <include layout="@layout/image_add"
-                    android:id="@+id/image_add4" />
+                <include layout="@layout/image_add" android:id="@+id/image_add1"/>
+                <include layout="@layout/image_add" android:id="@+id/image_add2"/>
+                <include layout="@layout/image_add" android:id="@+id/image_add3"/>
+                <include layout="@layout/image_add" android:id="@+id/image_add4"/>
             </GridLayout>
 
             <!-- Category Selection Section -->
@@ -67,27 +127,15 @@
                 android:id="@+id/category_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="6dp"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp">
+                android:orientation="vertical">
 
-                <!-- Pick a Category Button -->
                 <Button
                     android:id="@+id/pick_category_button"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:text="Pick a Category" />
+                    android:text="Pick a Category"/>
 
-                <!-- Selected Category Display -->
-                <TextView
-                    android:id="@+id/selected_category_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Selected Category: None"
-                    android:layout_marginTop="8dp" />
-
-                <!-- Category Buttons -->
+                <!-- Category Buttons (hidden by default) -->
                 <LinearLayout
                     android:id="@+id/category_buttons_container"
                     android:layout_width="match_parent"
@@ -96,54 +144,35 @@
                     android:visibility="gone"
                     android:layout_marginTop="16dp">
 
-                    <!-- Breakfast Button -->
                     <Button
                         android:id="@+id/breakfast_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="8dp"
-                        android:padding="16dp"
-                        android:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
+                        android:layout_margin="8dp"
                         android:text="Breakfast"
                         android:textSize="18sp"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center" /> <!-- Center the text -->
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#6200EE"/>
 
-                    <!-- Lunch Button -->
                     <Button
                         android:id="@+id/lunch_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="8dp"
-                        android:padding="16dp"
-                        android:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
+                        android:layout_margin="8dp"
                         android:text="Lunch"
                         android:textSize="18sp"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center" /> <!-- Center the text -->
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#6200EE"/>
 
-                    <!-- Dinner Button -->
                     <Button
                         android:id="@+id/dinner_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="8dp"
-                        android:padding="16dp"
-                        android:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
+                        android:layout_margin="8dp"
                         android:text="Dinner"
                         android:textSize="18sp"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center" /> <!-- Center the text -->
-
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#6200EE"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -152,11 +181,8 @@
                 android:id="@+id/ingredients_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="6dp"
-                android:tag="ingredients"
                 android:orientation="vertical">
 
-                <!-- Ingredients Text Label -->
                 <TextView
                     android:id="@+id/ingredients_label"
                     android:layout_width="match_parent"
@@ -164,11 +190,18 @@
                     android:background="@color/ingredient"
                     android:gravity="center"
                     android:padding="6dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:text="Ingredients"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/add_ingredient_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_margin="8dp"
+                    android:src="@android:drawable/ic_input_add"
+                    android:contentDescription="Add Ingredient" />
             </LinearLayout>
 
             <!-- Directions Section -->
@@ -176,10 +209,8 @@
                 android:id="@+id/directions_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:tag="directions"
                 android:orientation="vertical">
 
-                <!-- Directions Text Label -->
                 <TextView
                     android:id="@+id/directions_label"
                     android:layout_width="match_parent"
@@ -187,14 +218,20 @@
                     android:background="@color/step"
                     android:gravity="center"
                     android:padding="6dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:text="Directions"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/add_direction_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_margin="8dp"
+                    android:src="@android:drawable/ic_input_add"
+                    android:contentDescription="Add Direction" />
             </LinearLayout>
+
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>

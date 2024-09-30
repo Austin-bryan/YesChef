@@ -3,6 +3,9 @@ package com.example.yeschef.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Trigger scale animation
+                animateBottomNavItem(item);
+
                 Fragment selectedFragment = null;
 
                 // Get the index of the current and newly selected items
@@ -99,5 +105,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         transaction.replace(R.id.container, fragment).commit();
+    }
+
+    // Method to animate the BottomNavigationView item with scale effect
+    private void animateBottomNavItem(MenuItem item) {
+        View view = findViewById(item.getItemId());
+        Animation scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_animation);
+        view.startAnimation(scaleAnimation);
     }
 }

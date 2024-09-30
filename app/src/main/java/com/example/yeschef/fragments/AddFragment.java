@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -21,7 +23,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import com.example.yeschef.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -40,21 +41,21 @@ public class AddFragment extends Fragment {
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ImageButton clickedButton;
     private LinearLayout categoryButtonsContainer;
-    private TextView selectedCategoryText;
+
+    private int stepCounter = 1; // Counter for steps
+    private LinearLayout directionsContainer; // Added directionsContainer as a member variable
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
-        // Containers for dynamic content (ingredients and directions)
+        // Initialize containers for dynamic content
         LinearLayout ingredientsContainer = view.findViewById(R.id.ingredients_container);
-        LinearLayout directionsContainer = view.findViewById(R.id.directions_container);
+        directionsContainer = view.findViewById(R.id.directions_container); // Initialize directionsContainer
 
-        // TextViews that act as labels (for toggling visibility)
+        // Set up labels
         TextView ingredientsLabel = view.findViewById(R.id.ingredients_label);
         TextView directionsLabel = view.findViewById(R.id.directions_label);
-
-        // Get label colors
         int ingredientsColor = ((ColorDrawable) ingredientsLabel.getBackground()).getColor();
         int directionsColor = ((ColorDrawable) directionsLabel.getBackground()).getColor();
 
@@ -91,44 +92,72 @@ public class AddFragment extends Fragment {
         ingredientsLabel.setOnClickListener(v -> toggleContainerVisibility(ingredientsContainer));
         directionsLabel.setOnClickListener(v -> toggleContainerVisibility(directionsContainer));
 
-        // Navigate to BreakfastMealsFragment using the Breakfast button
-        Button openBreakfastMealsFragment = view.findViewById(R.id.breakfast_button);
-        openBreakfastMealsFragment.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.action_addFragment_to_breakfastMealsFragment)
-        );
+        // Add buttons for adding new items
+        addButtonListeners(view, ingredientsContainer, directionsContainer, ingredientsColor, directionsColor);
 
         return view;
+    }
+
+    private void addButtonListeners(View view, LinearLayout ingredientsContainer, LinearLayout directionsContainer, int ingredientsColor, int directionsColor) {
+        ImageButton addIngredientButton = view.findViewById(R.id.add_ingredient_button);
+        ImageButton addDirectionButton = view.findViewById(R.id.add_direction_button);
+
+        addIngredientButton.setOnClickListener(v -> addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer));
+        addDirectionButton.setOnClickListener(v -> addNewItem(directionsContainer, "Step(s)", directionsColor, null));
     }
 
     private void initializeCategorySelection(View view) {
         Button pickCategoryButton = view.findViewById(R.id.pick_category_button);
         categoryButtonsContainer = view.findViewById(R.id.category_buttons_container);
-        selectedCategoryText = view.findViewById(R.id.selected_category_text);
 
-        pickCategoryButton.setOnClickListener(v -> {
-            // Toggle the visibility of the category buttons container
-            if (categoryButtonsContainer.getVisibility() == View.GONE) {
-                categoryButtonsContainer.setVisibility(View.VISIBLE);
-            } else {
-                categoryButtonsContainer.setVisibility(View.GONE);
+        pickCategoryButton.setOnClickListener(v -> toggleCategoryButtons());
+
+        view.findViewById(R.id.breakfast_button).setOnClickListener(v -> selectCategory("Breakfast", pickCategoryButton));
+        view.findViewById(R.id.lunch_button).setOnClickListener(v -> selectCategory("Lunch", pickCategoryButton));
+        view.findViewById(R.id.dinner_button).setOnClickListener(v -> selectCategory("Dinner", pickCategoryButton));
+    }
+
+    private void toggleCategoryButtons() {
+        if (categoryButtonsContainer.getVisibility() == View.GONE) {
+            categoryButtonsContainer.setVisibility(View.VISIBLE);
+            slideDown(categoryButtonsContainer);
+        } else {
+            slideUp(categoryButtonsContainer, () -> categoryButtonsContainer.setVisibility(View.GONE));
+        }
+    }
+
+    private void slideDown(View view) {
+        TranslateAnimation animation = new TranslateAnimation(0, 0, -view.getHeight(), 0);
+        animation.setDuration(300);
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        view.startAnimation(animation);
+        view.setTranslationY(0);
+    }
+
+    private void slideUp(View view, Runnable endAction) {
+        TranslateAnimation animation = new TranslateAnimation(0, 0, 0, -view.getHeight());
+        animation.setDuration(300);
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                view.setVisibility(View.VISIBLE);
             }
-        });
 
-        // Set up click listeners for each category button
-        view.findViewById(R.id.breakfast_button).setOnClickListener(v -> {
-            selectedCategoryText.setText("Selected Category: Breakfast");
-            categoryButtonsContainer.setVisibility(View.GONE);
-        });
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                endAction.run();
+            }
 
-        view.findViewById(R.id.lunch_button).setOnClickListener(v -> {
-            selectedCategoryText.setText("Selected Category: Lunch");
-            categoryButtonsContainer.setVisibility(View.GONE);
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
         });
+        view.startAnimation(animation);
+    }
 
-        view.findViewById(R.id.dinner_button).setOnClickListener(v -> {
-            selectedCategoryText.setText("Selected Category: Dinner");
-            categoryButtonsContainer.setVisibility(View.GONE);
-        });
+    private void selectCategory(String category, Button pickCategoryButton) {
+        pickCategoryButton.setText(category);
+        categoryButtonsContainer.setVisibility(View.GONE);
     }
 
     private void toggleContainerVisibility(final LinearLayout container) {
@@ -163,8 +192,6 @@ public class AddFragment extends Fragment {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();
                 if (clickedButton != null) {
-                    clickedButton.setImageURI(imageUri);
-                    clickedButton.setImageDrawable(null);
                     clickedButton.setImageURI(imageUri);
                     clickedButton.clearColorFilter();
                     clickedButton.setPadding(0, 0, 0, 0);
@@ -204,8 +231,7 @@ public class AddFragment extends Fragment {
     private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer, String existingText) {
         View newItem = getLayoutInflater().inflate(R.layout.item_list, itemListContainer, false);
         newItem.setAlpha(0f);
-        newItem.setTranslationY(-50);
-
+        newItem.setTranslationY(-30);
         newItem.animate()
                 .alpha(1f)
                 .translationY(0)
@@ -214,7 +240,14 @@ public class AddFragment extends Fragment {
                 .start();
 
         TextInputEditText inputField = newItem.findViewById(R.id.ingredient_step_input);
-        inputField.setHint(hintText);
+
+        // Use stepCounter to set the hint for the step number
+        if (itemListContainer == directionsContainer) {
+            inputField.setHint("Step " + stepCounter++); // Increment step counter for each new direction
+        } else {
+            inputField.setHint(hintText);
+        }
+
         if (existingText != null) {
             inputField.setText(existingText);
         }
@@ -237,7 +270,6 @@ public class AddFragment extends Fragment {
 
         // Set the background color of the rectangle
         leftRectangle.setBackgroundColor(labelColor);
-
         itemListContainer.addView(newItem);
     }
 }

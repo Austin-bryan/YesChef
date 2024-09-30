@@ -39,5 +39,4 @@
         app:itemIconTint="@color/bottom_nav_icon_color"
         app:itemTextColor="@color/bottom_nav_text_color"
         app:backgroundTint="@color/bottom_nav_background_color" />
-
 </RelativeLayout>
