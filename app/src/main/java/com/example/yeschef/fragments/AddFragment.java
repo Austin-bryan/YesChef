@@ -2,6 +2,7 @@ package com.example.yeschef.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +30,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.yeschef.R;
 import com.google.android.material.textfield.TextInputEditText;
+
+
 
 public class AddFragment extends Fragment {
     @Override
@@ -225,6 +228,7 @@ public class AddFragment extends Fragment {
         itemListContainer.addView(newItem);
     }
 
+
     private void updateStepNumbers(LinearLayout itemListContainer) {
         for (int i = 0; i < itemListContainer.getChildCount(); i++) {
             View stepItem = itemListContainer.getChildAt(i);
@@ -240,3 +244,4 @@ public class AddFragment extends Fragment {
         }
     }
 }
+

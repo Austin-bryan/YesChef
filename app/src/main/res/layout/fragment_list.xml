@@ -3,12 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AddFragment">
+    tools:context=".fragments.ListFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Button to Add New Task -->
+    <Button
+        android:id="@+id/addTaskButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List Fragment"
-        android:textSize="25dp"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:text="Add Task"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:backgroundTint="@android:color/holo_purple" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addTaskButton"
+        android:layout_marginTop="7dp">
+
+        <LinearLayout
+            android:id="@+id/taskContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <!-- Container for dynamically added tasks -->
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
