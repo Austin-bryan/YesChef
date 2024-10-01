@@ -79,6 +79,8 @@ public class AddFragment extends Fragment {
         ImageButton removeButton2 = mealDescriptionView.findViewById(R.id.remove_button);
         removeButton2.setVisibility(View.GONE);
 
+        ingredientsLabel.setClickable(false);
+        directionsLabel.setClickable(false);
 
         initializeImageAdders(view);
 //        initializeCategorySelection(view);
@@ -178,23 +180,23 @@ public class AddFragment extends Fragment {
     }
 
     private void toggleContainerVisibility(final LinearLayout container) {
-        if (container.getVisibility() == View.VISIBLE) {
-            container.animate()
-                    .alpha(0f)
-                    .translationY(-30)
-                    .setDuration(300)
-                    .withEndAction(() -> container.setVisibility(View.GONE))
-                    .start();
-        } else {
-            container.setVisibility(View.VISIBLE);
-            container.setAlpha(0f);
-            container.setTranslationY(-30);
-            container.animate()
-                    .alpha(1f)
-                    .translationY(0)
-                    .setDuration(300)
-                    .start();
-        }
+//        if (container.getVisibility() == View.VISIBLE) {
+//            container.animate()
+//                    .alpha(0f)
+//                    .translationY(-30)
+//                    .setDuration(300)
+//                    .withEndAction(() -> container.setVisibility(View.GONE))
+//                    .start();
+//        } else {
+//            container.setVisibility(View.VISIBLE);
+//            container.setAlpha(0f);
+//            container.setTranslationY(-30);
+//            container.animate()
+//                    .alpha(1f)
+//                    .translationY(0)
+//                    .setDuration(300)
+//                    .start();
+//        }
     }
 
     @Override

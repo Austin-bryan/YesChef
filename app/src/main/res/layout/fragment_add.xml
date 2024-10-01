@@ -20,6 +20,89 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Meal Title Input -->
+            <include
+                android:id="@+id/meal_title"
+                layout="@layout/item_list"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <!-- Meal Description Input -->
+            <include
+                android:id="@+id/meal_description"
+                layout="@layout/item_list"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- Serving Size Input -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/serving_size_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Serving Size"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/serving_size_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/serving_size_label"
+                    android:hint="e.g., 1 cup"
+                    android:inputType="text" />
+            </RelativeLayout>
+
+            <!-- Nutrition Facts Input -->
+            <Button
+                android:id="@+id/add_nutrition_fact_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#6200EE"
+                android:text="Make a New Nutrition Fact"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <!-- Options Section -->
+            <TextView
+                android:id="@+id/options_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Options"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/option_vegan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegan" />
+
+            <CheckBox
+                android:id="@+id/option_vegetarian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegetarian" />
+
+            <CheckBox
+                android:id="@+id/option_gluten_free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gluten-Free" />
+
+            <CheckBox
+                android:id="@+id/option_dairy_free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dairy-Free" />
+
             <!-- Grid Layout for Image Addition -->
             <GridLayout
                 android:id="@+id/image_add_grid"
@@ -128,89 +211,6 @@
                         android:src="@drawable/ic_add" />
                 </RelativeLayout>
             </LinearLayout>
-
-            <!-- Meal Title Input -->
-            <include
-                android:id="@+id/meal_title"
-                layout="@layout/item_list"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <!-- Meal Description Input -->
-            <include
-                android:id="@+id/meal_description"
-                layout="@layout/item_list"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!-- Serving Size Input -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/serving_size_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Serving Size"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/serving_size_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/serving_size_label"
-                    android:hint="e.g., 1 cup"
-                    android:inputType="text" />
-            </RelativeLayout>
-
-            <!-- Nutrition Facts Input -->
-            <Button
-                android:id="@+id/add_nutrition_fact_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#6200EE"
-                android:text="Make a New Nutrition Fact"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <!-- Options Section -->
-            <TextView
-                android:id="@+id/options_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Options"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <CheckBox
-                android:id="@+id/option_vegan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegan" />
-
-            <CheckBox
-                android:id="@+id/option_vegetarian"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegetarian" />
-
-            <CheckBox
-                android:id="@+id/option_gluten_free"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gluten-Free" />
-
-            <CheckBox
-                android:id="@+id/option_dairy_free"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dairy-Free" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
