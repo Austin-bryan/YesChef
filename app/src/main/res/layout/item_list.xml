@@ -59,9 +59,9 @@
         android:hint="Ingredient(s)"
         android:paddingStart="10dp" />
 
-    <!-- Add/Remove Button -->
+    <!-- Remove Button -->
     <ImageButton
-        android:id="@+id/add_remove_button"
+        android:id="@+id/remove_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="#fff"
@@ -69,9 +69,6 @@
         android:adjustViewBounds="true"
         android:padding="8dp"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:contentDescription="Add item"
-        android:tint="@color/itemList"
-        android:src="@drawable/ic_add_circle" />
-
+        android:src="@drawable/ic_remove_outline" />
 </LinearLayout>

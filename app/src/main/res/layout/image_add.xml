@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:layout_width="87dp"
-        android:layout_height="87dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:id="@+id/add_photo"
         android:src="@drawable/ic_add_photo"
         android:adjustViewBounds="true"

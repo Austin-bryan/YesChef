@@ -56,15 +56,25 @@ public class AddFragment extends Fragment {
         directionsContainer = view.findViewById(R.id.directions_container); // Initialize directionsContainer
 
         // Set up labels
-            RelativeLayout ingredientsLabel = view.findViewById(R.id.ingredients_label);
-            RelativeLayout directionsLabel = view.findViewById(R.id.directions_label);
-            int ingredientsColor = ((ColorDrawable) ingredientsLabel.getBackground()).getColor();
-            int directionsColor = ((ColorDrawable) directionsLabel.getBackground()).getColor();
+        RelativeLayout ingredientsLabel = view.findViewById(R.id.ingredients_label);
+        RelativeLayout directionsLabel = view.findViewById(R.id.directions_label);
+        int ingredientsColor = ((ColorDrawable) ingredientsLabel.getBackground()).getColor();
+        int directionsColor = ((ColorDrawable) directionsLabel.getBackground()).getColor();
 
         // Setup basic text fields
         setHintText(view, R.id.meal_title, "Meal Title");
         setHintText(view, R.id.meal_description, "Description");
-        setHintText(view, R.id.meal_nutrition, "Nutrition");
+
+        // Hide close buttons
+        View mealTitleView = view.findViewById(R.id.meal_title);
+        View mealDescriptionView = view.findViewById(R.id.meal_description);
+
+        ImageButton removeButton1 = mealTitleView.findViewById(R.id.remove_button);
+        removeButton1.setVisibility(View.GONE);
+
+        ImageButton removeButton2 = mealDescriptionView.findViewById(R.id.remove_button);
+        removeButton2.setVisibility(View.GONE);
+
 
         initializeImageAdders(view);
 //        initializeCategorySelection(view);
@@ -266,7 +276,7 @@ public class AddFragment extends Fragment {
             inputField.setText(existingText);
         }
 
-        ImageButton addRemoveButton = newItem.findViewById(R.id.add_remove_button);
+        ImageButton addRemoveButton = newItem.findViewById(R.id.remove_button);
         View leftRectangle = newItem.findViewById(R.id.left_rectangle);
 
         addRemoveButton.setOnClickListener(v -> {

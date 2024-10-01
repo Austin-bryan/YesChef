@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:padding="10dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="5dp"
                 android:background="@drawable/flat_spinner_background"
                 android:prompt="@string/select_mealtime"
                 android:spinnerMode="dropdown" />
@@ -69,7 +69,7 @@
                     android:id="@+id/ingredients_label"
                     android:layout_height="wrap_content"
                     android:background="@color/ingredient"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginVertical="5dp"
                     android:padding="6dp">
 
                     <TextView
@@ -105,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/step"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginVertical="5dp"
                     android:padding="6dp">
 
                     <TextView
@@ -133,19 +133,16 @@
             <include
                 android:id="@+id/meal_title"
                 layout="@layout/item_list"
-                android:layout_width="match_parent"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <!-- Meal Description Input -->
             <include
                 android:id="@+id/meal_description"
                 layout="@layout/item_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!-- Meal Nutrition Input -->
-            <include
-                android:id="@+id/meal_nutrition"
-                layout="@layout/item_list"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
