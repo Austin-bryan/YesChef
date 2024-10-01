@@ -3,7 +3,6 @@ package com.example.yeschef.fragments;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,14 +47,16 @@ public class AddFragment extends Fragment {
     private LinearLayout categoryButtonsContainer;
 
     private int stepCounter = 1; // Counter for steps
-    private LinearLayout directionsContainer; // Added directionsContainer as a member variable
+    private LinearLayout directionsContainer;
+    private LinearLayout ingredientsContainer;
+    private boolean isAnimating = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
         // Initialize containers for dynamic content
-        LinearLayout ingredientsContainer = view.findViewById(R.id.ingredients_container);
+        ingredientsContainer = view.findViewById(R.id.ingredients_container);
         directionsContainer = view.findViewById(R.id.directions_container); // Initialize directionsContainer
 
         // Set up labels
@@ -262,15 +261,29 @@ public class AddFragment extends Fragment {
     }
 
     private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer, String existingText) {
+        if (isAnimating)
+            return;
+        isAnimating = true;
+
         View newItem = getLayoutInflater().inflate(R.layout.item_list, itemListContainer, false);
         newItem.setAlpha(0f);
         newItem.setTranslationY(-30);
         newItem.animate()
-                .alpha(1f)
+            .alpha(1f)
+            .translationY(0)
+            .setDuration(300)
+            .setInterpolator(new AccelerateDecelerateInterpolator())
+            .withEndAction(() -> { isAnimating = false; })
+            .start();
+
+        if (itemListContainer == ingredientsContainer) {
+            directionsContainer.setTranslationY(-30);
+            directionsContainer.animate()
                 .translationY(0)
                 .setDuration(300)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
+        }
 
         TextInputEditText inputField = newItem.findViewById(R.id.ingredient_step_input);
         FrameLayout stepFrame = newItem.findViewById(R.id.step_frame);
@@ -296,13 +309,15 @@ public class AddFragment extends Fragment {
         View leftRectangle = newItem.findViewById(R.id.left_rectangle);
 
         addRemoveButton.setOnClickListener(v -> {
-            // Remove the item if the input field is empty
-//            itemListContainer.removeView(newItem);
+            if (isAnimating)
+                return;
+            isAnimating = true;
+
             playDeleteAnimation(newItem, itemListContainer);
             playSlideDownAnimation(itemListContainer, itemListContainer.indexOfChild(newItem));
-//            if (itemListContainer == directionsContainer) {
-//                updateStepNumbers(itemListContainer);
-//            }
+
+            if (itemListContainer == ingredientsContainer)
+                playSlideContainerAnimation(directionsContainer, newItem, -1);
             if (otherContainer != null && itemListContainer.getChildCount() == 0) {
                 addNewItem(itemListContainer, hintText, labelColor, otherContainer);
             }
@@ -325,6 +340,7 @@ public class AddFragment extends Fragment {
                     if (itemListContainer == directionsContainer) {
                         updateStepNumbers(itemListContainer);
                     }
+                    isAnimating = false;
                 })
                 .start();
     }
@@ -335,14 +351,25 @@ public class AddFragment extends Fragment {
 
             // Apply translation animation only to items below the deleted one
             item.animate()
-                    .translationYBy(-item.getHeight())  // Move down by the height of the deleted item
-                    .setDuration(300)  // Set the duration for the animation
-                    .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
-                    .withEndAction(() -> {
-                        // Reset translation after the animation completes
-                        item.setTranslationY(0);
-                    })
-                    .start();
+                .translationYBy(-item.getHeight())  // Move down by the height of the deleted item
+                .setDuration(300)  // Set the duration for the animation
+                .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
+                .withEndAction(() -> {
+                    // Reset translation after the animation completes
+                    item.setTranslationY(0);
+                })
+                .start();
         }
+    }
+    private void playSlideContainerAnimation(LinearLayout itemListContainer, View itemView, int direction) {
+        itemListContainer.animate()
+            .translationYBy(direction * itemView.getHeight())  // Move down by the height of the deleted item
+            .setDuration(300)  // Set the duration for the animation
+            .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
+            .withEndAction(() -> {
+                // Reset translation after the animation completes
+                itemListContainer.setTranslationY(0);
+            })
+            .start();
     }
 }
