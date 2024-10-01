@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -54,10 +56,10 @@ public class AddFragment extends Fragment {
         directionsContainer = view.findViewById(R.id.directions_container); // Initialize directionsContainer
 
         // Set up labels
-        TextView ingredientsLabel = view.findViewById(R.id.ingredients_label);
-        TextView directionsLabel = view.findViewById(R.id.directions_label);
-        int ingredientsColor = ((ColorDrawable) ingredientsLabel.getBackground()).getColor();
-        int directionsColor = ((ColorDrawable) directionsLabel.getBackground()).getColor();
+            RelativeLayout ingredientsLabel = view.findViewById(R.id.ingredients_label);
+            RelativeLayout directionsLabel = view.findViewById(R.id.directions_label);
+            int ingredientsColor = ((ColorDrawable) ingredientsLabel.getBackground()).getColor();
+            int directionsColor = ((ColorDrawable) directionsLabel.getBackground()).getColor();
 
         // Setup basic text fields
         setHintText(view, R.id.meal_title, "Meal Title");
@@ -65,7 +67,7 @@ public class AddFragment extends Fragment {
         setHintText(view, R.id.meal_nutrition, "Nutrition");
 
         initializeImageAdders(view);
-        initializeCategorySelection(view);
+//        initializeCategorySelection(view);
 
         // Restore saved state or initialize with one item
         if (savedInstanceState != null) {
@@ -88,6 +90,18 @@ public class AddFragment extends Fragment {
             addNewItem(directionsContainer, "Step(s)", directionsColor, null);
         }
 
+        Spinner spinner = view.findViewById(R.id.spinner1);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.mealtime_options, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
         // Set click listeners for toggling visibility
         ingredientsLabel.setOnClickListener(v -> toggleContainerVisibility(ingredientsContainer));
         directionsLabel.setOnClickListener(v -> toggleContainerVisibility(directionsContainer));
@@ -106,16 +120,16 @@ public class AddFragment extends Fragment {
         addDirectionButton.setOnClickListener(v -> addNewItem(directionsContainer, "Step(s)", directionsColor, null));
     }
 
-    private void initializeCategorySelection(View view) {
-        Button pickCategoryButton = view.findViewById(R.id.pick_category_button);
-        categoryButtonsContainer = view.findViewById(R.id.category_buttons_container);
-
-        pickCategoryButton.setOnClickListener(v -> toggleCategoryButtons());
-
-        view.findViewById(R.id.breakfast_button).setOnClickListener(v -> selectCategory("Breakfast", pickCategoryButton));
-        view.findViewById(R.id.lunch_button).setOnClickListener(v -> selectCategory("Lunch", pickCategoryButton));
-        view.findViewById(R.id.dinner_button).setOnClickListener(v -> selectCategory("Dinner", pickCategoryButton));
-    }
+//    private void initializeCategorySelection(View view) {
+//        Button pickCategoryButton = view.findViewById(R.id.pick_category_button);
+//        categoryButtonsContainer = view.findViewById(R.id.category_buttons_container);
+//
+//        pickCategoryButton.setOnClickListener(v -> toggleCategoryButtons());
+//
+//        view.findViewById(R.id.breakfast_button).setOnClickListener(v -> selectCategory("Breakfast", pickCategoryButton));
+//        view.findViewById(R.id.lunch_button).setOnClickListener(v -> selectCategory("Lunch", pickCategoryButton));
+//        view.findViewById(R.id.dinner_button).setOnClickListener(v -> selectCategory("Dinner", pickCategoryButton));
+//    }
 
     private void toggleCategoryButtons() {
         if (categoryButtonsContainer.getVisibility() == View.GONE) {

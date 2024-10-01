@@ -7,6 +7,13 @@
         <item>Dinner</item>
         <item>Snacks</item> <!-- Added Snacks category -->
     </string-array>
+    <string-array name="mealtime_options">
+        <item>Any Mealtime</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
+    <string name="select_mealtime">Select a Mealtime</string>
 
     <!-- App name string -->
     <string name="app_name">Yes, Chef!</string>
