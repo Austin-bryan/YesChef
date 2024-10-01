@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -238,6 +240,21 @@ public class AddFragment extends Fragment {
         editText.setHint(text);
     }
 
+    private void updateStepNumbers(LinearLayout itemListContainer) {
+        for (int i = 0; i < itemListContainer.getChildCount(); i++) {
+            View stepItem = itemListContainer.getChildAt(i);
+            TextView stepText = stepItem.findViewById(R.id.circle_text);  // Text inside the circle
+
+            if (stepText != null) {
+                // Only set text if the TextView is not null
+                stepText.setText(String.valueOf(i));  // Update the step number based on its position in the list
+            } else {
+                // Optional: Log or handle the case where the TextView is missing
+                Log.e("TestCount", "TextView 'circle_text' is null in step item at index " + i);
+            }
+        }
+    }
+
     private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer) {
         addNewItem(itemListContainer, hintText, labelColor, otherContainer, null);
     }
@@ -259,7 +276,12 @@ public class AddFragment extends Fragment {
         // Use stepCounter to set the hint for the step number
         if (itemListContainer == directionsContainer) {
             stepFrame.setVisibility(View.VISIBLE);
+            inputField.setHint("Step");
 
+            // Add a delay before updating step numbers
+            new Handler().postDelayed(() -> {
+                updateStepNumbers(itemListContainer);
+            }, 50);  // 500 ms delay
         } else {
             inputField.setHint(hintText);
         }
@@ -272,14 +294,12 @@ public class AddFragment extends Fragment {
         View leftRectangle = newItem.findViewById(R.id.left_rectangle);
 
         addRemoveButton.setOnClickListener(v -> {
-            if (inputField.getText().toString().isEmpty()) {
-                // Remove the item if the input field is empty
-                itemListContainer.removeView(newItem);
-                if (otherContainer != null && itemListContainer.getChildCount() == 0) {
-                    addNewItem(itemListContainer, hintText, labelColor, otherContainer);
-                }
-            } else {
-                // Add a new empty item to the list
+            // Remove the item if the input field is empty
+            itemListContainer.removeView(newItem);
+            if (itemListContainer == directionsContainer) {
+                updateStepNumbers(itemListContainer);
+            }
+            if (otherContainer != null && itemListContainer.getChildCount() == 0) {
                 addNewItem(itemListContainer, hintText, labelColor, otherContainer);
             }
         });
