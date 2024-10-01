@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -295,10 +297,12 @@ public class AddFragment extends Fragment {
 
         addRemoveButton.setOnClickListener(v -> {
             // Remove the item if the input field is empty
-            itemListContainer.removeView(newItem);
-            if (itemListContainer == directionsContainer) {
-                updateStepNumbers(itemListContainer);
-            }
+//            itemListContainer.removeView(newItem);
+            playDeleteAnimation(newItem, itemListContainer);
+            playSlideDownAnimation(itemListContainer, itemListContainer.indexOfChild(newItem));
+//            if (itemListContainer == directionsContainer) {
+//                updateStepNumbers(itemListContainer);
+//            }
             if (otherContainer != null && itemListContainer.getChildCount() == 0) {
                 addNewItem(itemListContainer, hintText, labelColor, otherContainer);
             }
@@ -307,5 +311,38 @@ public class AddFragment extends Fragment {
         // Set the background color of the rectangle
         leftRectangle.setBackgroundColor(labelColor);
         itemListContainer.addView(newItem);
+    }
+
+    private void playDeleteAnimation(View itemView, LinearLayout itemListContainer) {
+        itemView.animate()
+                .alpha(0f)  // Fade out
+                .translationY(-30)  // Translate up
+                .setDuration(300)  // Animation duration
+                .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
+                .withEndAction(() -> {
+                    // This block will run after the animation ends
+                    itemListContainer.removeView(itemView);  // Remove the view from the container
+                    if (itemListContainer == directionsContainer) {
+                        updateStepNumbers(itemListContainer);
+                    }
+                })
+                .start();
+    }
+    private void playSlideDownAnimation(LinearLayout itemListContainer, int deletedIndex) {
+        // Loop through all items after the one being deleted
+        for (int i = deletedIndex + 1; i < itemListContainer.getChildCount(); i++) {
+            View item = itemListContainer.getChildAt(i);
+
+            // Apply translation animation only to items below the deleted one
+            item.animate()
+                    .translationYBy(-item.getHeight())  // Move down by the height of the deleted item
+                    .setDuration(300)  // Set the duration for the animation
+                    .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
+                    .withEndAction(() -> {
+                        // Reset translation after the animation completes
+                        item.setTranslationY(0);
+                    })
+                    .start();
+        }
     }
 }
