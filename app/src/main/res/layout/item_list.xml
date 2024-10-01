@@ -18,7 +18,7 @@
 
     <!-- FrameLayout for circle button and number (can hide it for ingredients) -->
     <FrameLayout
-        android:id="@+id/circle_frame"
+        android:id="@+id/step_frame"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"

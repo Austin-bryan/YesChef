@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -129,17 +130,6 @@ public class AddFragment extends Fragment {
         addIngredientButton.setOnClickListener(v -> addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer));
         addDirectionButton.setOnClickListener(v -> addNewItem(directionsContainer, "Step(s)", directionsColor, null));
     }
-
-//    private void initializeCategorySelection(View view) {
-//        Button pickCategoryButton = view.findViewById(R.id.pick_category_button);
-//        categoryButtonsContainer = view.findViewById(R.id.category_buttons_container);
-//
-//        pickCategoryButton.setOnClickListener(v -> toggleCategoryButtons());
-//
-//        view.findViewById(R.id.breakfast_button).setOnClickListener(v -> selectCategory("Breakfast", pickCategoryButton));
-//        view.findViewById(R.id.lunch_button).setOnClickListener(v -> selectCategory("Lunch", pickCategoryButton));
-//        view.findViewById(R.id.dinner_button).setOnClickListener(v -> selectCategory("Dinner", pickCategoryButton));
-//    }
 
     private void toggleCategoryButtons() {
         if (categoryButtonsContainer.getVisibility() == View.GONE) {
@@ -264,10 +254,12 @@ public class AddFragment extends Fragment {
                 .start();
 
         TextInputEditText inputField = newItem.findViewById(R.id.ingredient_step_input);
+        FrameLayout stepFrame = newItem.findViewById(R.id.step_frame);
 
         // Use stepCounter to set the hint for the step number
         if (itemListContainer == directionsContainer) {
-            inputField.setHint("Step " + stepCounter++); // Increment step counter for each new direction
+            stepFrame.setVisibility(View.VISIBLE);
+
         } else {
             inputField.setHint(hintText);
         }
