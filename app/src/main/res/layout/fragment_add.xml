@@ -22,20 +22,21 @@
 
             <!-- Meal Title Input -->
             <include
-                android:id="@+id/meal_title"
                 layout="@layout/item_list"
+                android:id="@+id/meal_title"
                 android:layout_marginStart="-16dp"
                 android:layout_marginEnd="-16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <!-- Meal Description Input -->
             <include
-                android:id="@+id/meal_description"
                 layout="@layout/item_list"
+                android:id="@+id/meal_description"
                 android:layout_marginStart="-16dp"
                 android:layout_marginEnd="-16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
 
             <!-- Serving Size Input -->
             <RelativeLayout
@@ -55,19 +56,21 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/serving_size_label"
                     android:hint="e.g., 1 cup"
-                    android:inputType="text" />
+                    android:inputType="text"/>
             </RelativeLayout>
-
-            <!-- Nutrition Facts Input -->
-            <Button
-                android:id="@+id/add_nutrition_fact_button"
+            <EditText
+                android:id="@+id/carbs_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#6200EE"
-                android:text="Make a New Nutrition Fact"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:hint="Carbohydrates (g)"
+                android:inputType="numberDecimal"/>
+
+            <EditText
+                android:id="@+id/protein_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Protein (g)"
+                android:inputType="numberDecimal"/>
 
             <!-- Options Section -->
             <TextView
@@ -108,9 +111,9 @@
                 android:id="@+id/image_add_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:alignmentMode="alignMargins"
                 android:columnCount="4"
                 android:padding="16dp"
+                android:alignmentMode="alignMargins"
                 android:useDefaultMargins="true">
 
                 <include
@@ -211,6 +214,7 @@
                         android:src="@drawable/ic_add" />
                 </RelativeLayout>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
