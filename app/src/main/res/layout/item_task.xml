@@ -27,7 +27,6 @@
         android:adjustViewBounds="true"
         android:src="@drawable/ic_circle"
         android:padding="8dp"
-        android:tint="@color/black"
         android:contentDescription="Button"
         android:layout_gravity="center_vertical"
         tools:ignore="UseAppTint" />
@@ -43,23 +42,23 @@
         android:paddingStart="10dp" />
 
     <!-- X Button (for deleting task) -->
+
     <Button
         android:id="@+id/checkmarkButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@android:color/holo_green_dark"
-        android:text="✓"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:background="@drawable/ic_check_out"
+        android:tint="@null"
+        android:text=" ."/>
 
     <Button
         android:id="@+id/deleteTaskButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:text="✕"
-        android:textSize="18sp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@android:color/white"/>
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/ic_trash_can"
+        android:text=" ."
+        android:tint="@null"
+        android:textSize="18sp" />
 
 </LinearLayout>
