@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,12 +34,13 @@
                 android:id="@+id/meal_description"
                 android:layout_marginStart="-16dp"
                 android:layout_marginEnd="-16dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
 
             <!-- Serving Size Input -->
             <RelativeLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -78,33 +79,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Options"
+                android:text="Dietary Options"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
-            <CheckBox
-                android:id="@+id/option_vegan"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/dietary_options_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegan" />
+                android:layout_height="wrap_content">
 
-            <CheckBox
-                android:id="@+id/option_vegetarian"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegetarian" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_vegan"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pescatarian" />
 
-            <CheckBox
-                android:id="@+id/option_gluten_free"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gluten-Free" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_vegetarian"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vegetarian" />
 
-            <CheckBox
-                android:id="@+id/option_dairy_free"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dairy-Free" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_gluten_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gluten-Free" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_dairy_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dairy-Free" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_dairy_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sugar-Free" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_dairy_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Low Carb" />
+            </com.google.android.material.chip.ChipGroup>
 
             <!-- Grid Layout for Image Addition -->
             <GridLayout
@@ -217,4 +242,4 @@
 
         </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
