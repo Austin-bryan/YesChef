@@ -39,31 +39,18 @@
 
 
             <!-- Serving Size Input -->
-            <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/serving_size_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Serving Size"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/serving_size_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/serving_size_label"
-                    android:hint="e.g., 1 cup"
-                    android:inputType="text"/>
-            </RelativeLayout>
             <EditText
-                android:id="@+id/carbs_input"
+                android:id="@+id/serving_size_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Carbohydrates (g)"
+                android:hint="Serving Size"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/calories_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Calories"
                 android:inputType="numberDecimal"/>
 
             <EditText
