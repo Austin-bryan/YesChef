@@ -257,7 +257,6 @@ public class AddFragment extends Fragment {
             }
         }
     }
-
     private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer) {
         addNewItem(itemListContainer, hintText, labelColor, otherContainer, null);
     }

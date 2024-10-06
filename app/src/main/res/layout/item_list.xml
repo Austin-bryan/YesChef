@@ -52,9 +52,9 @@
     <!-- Input Text Box -->
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/ingredient_step_input"
-        android:layout_width="400dp"
-        android:layout_weight="1"
+        android:layout_width="321dp"
         android:layout_height="50dp"
+        android:layout_weight="1"
         android:background="#fff"
         android:hint="Ingredient(s)"
         android:paddingStart="10dp" />
