@@ -12,10 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="16dp"
-        android:text="Add Task"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:backgroundTint="@android:color/holo_purple" />
+        android:text="Add Grocery Item"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#2a2" />
 
     <ScrollView
         android:layout_width="match_parent"

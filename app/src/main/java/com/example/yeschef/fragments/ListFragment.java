@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 import com.example.yeschef.R;
@@ -29,8 +30,8 @@ public class ListFragment extends Fragment {
                 View newTask = taskInflater.inflate(R.layout.item_task, taskContainer, false);
 
                 TextInputEditText taskInput = newTask.findViewById(R.id.item_task_input);
-                Button checkTaskButton = newTask.findViewById(R.id.checkmarkButton);
-                Button deleteTaskButton = newTask.findViewById(R.id.deleteTaskButton);
+                ImageButton checkTaskButton = newTask.findViewById(R.id.checkmarkButton);
+                ImageButton deleteTaskButton = newTask.findViewById(R.id.deleteTaskButton);
 
                 // Set the hint for the task input
                 taskInput.setHint("New Task");
