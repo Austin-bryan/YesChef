@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,71 +24,33 @@
             <include
                 layout="@layout/item_list"
                 android:id="@+id/meal_title"
-                android:layout_width="match_parent"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <!-- Meal Description Input -->
             <include
                 layout="@layout/item_list"
                 android:id="@+id/meal_description"
-                android:layout_width="match_parent"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <!-- Meal Nutrition Input -->
-            <include
-                layout="@layout/item_list"
-                android:id="@+id/meal_nutrition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <!-- Serving Size Input -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/serving_size_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/serving_size_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Serving Size"
-                    android:textSize="18sp"/>
-
-                <EditText
-                    android:id="@+id/serving_size_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="e.g., 1 cup"
-                    android:inputType="text"/>
-            </LinearLayout>
-
-            <!-- Nutrition Facts Input (Text Boxes) -->
-            <TextView
-                android:id="@+id/nutrition_facts_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nutrition Facts"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp"/>
+                android:hint="Serving Size"
+                android:inputType="text"/>
 
             <EditText
                 android:id="@+id/calories_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Calories (e.g., 200)"
-                android:inputType="number"/>
-
-            <EditText
-                android:id="@+id/fat_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Fat (g)"
-                android:inputType="numberDecimal"/>
-
-            <EditText
-                android:id="@+id/carbs_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Carbohydrates (g)"
+                android:hint="Calories"
                 android:inputType="numberDecimal"/>
 
             <EditText
@@ -103,33 +66,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Options"
+                android:text="Dietary Options"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
-            <CheckBox
-                android:id="@+id/option_vegan"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/dietary_options_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegan" />
+                android:layout_height="wrap_content">
 
-            <CheckBox
-                android:id="@+id/option_vegetarian"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegetarian" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_vegan"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pescatarian" />
 
-            <CheckBox
-                android:id="@+id/option_gluten_free"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gluten-Free" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_vegetarian"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vegetarian" />
 
-            <CheckBox
-                android:id="@+id/option_dairy_free"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dairy-Free" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_gluten_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gluten-Free" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_dairy_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dairy-Free" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_dairy_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sugar-Free" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/option_dairy_free"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Low Carb" />
+            </com.google.android.material.chip.ChipGroup>
 
             <!-- Grid Layout for Image Addition -->
             <GridLayout
@@ -141,65 +128,32 @@
                 android:alignmentMode="alignMargins"
                 android:useDefaultMargins="true">
 
-                <include layout="@layout/image_add" android:id="@+id/image_add1"/>
-                <include layout="@layout/image_add" android:id="@+id/image_add2"/>
-                <include layout="@layout/image_add" android:id="@+id/image_add3"/>
-                <include layout="@layout/image_add" android:id="@+id/image_add4"/>
+                <include
+                    android:id="@+id/image_add1"
+                    layout="@layout/image_add" />
+
+                <include
+                    android:id="@+id/image_add2"
+                    layout="@layout/image_add" />
+
+                <include
+                    android:id="@+id/image_add3"
+                    layout="@layout/image_add" />
+
+                <include
+                    android:id="@+id/image_add4"
+                    layout="@layout/image_add" />
             </GridLayout>
 
-            <!-- Category Selection Section -->
-            <LinearLayout
-                android:id="@+id/category_container"
+            <Spinner
+                android:id="@+id/spinner1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/pick_category_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="Pick a Category"/>
-
-                <!-- Category Buttons (hidden by default) -->
-                <LinearLayout
-                    android:id="@+id/category_buttons_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    android:layout_marginTop="16dp">
-
-                    <Button
-                        android:id="@+id/breakfast_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:text="Breakfast"
-                        android:textSize="18sp"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#6200EE"/>
-
-                    <Button
-                        android:id="@+id/lunch_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:text="Lunch"
-                        android:textSize="18sp"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#6200EE"/>
-
-                    <Button
-                        android:id="@+id/dinner_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:text="Dinner"
-                        android:textSize="18sp"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#6200EE"/>
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/flat_spinner_background"
+                android:prompt="@string/select_mealtime"
+                android:spinnerMode="dropdown" />
 
             <!-- Ingredients Section -->
             <LinearLayout
@@ -208,28 +162,33 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Ingredients Label -->
-                <TextView
-                    android:id="@+id/ingredients_label"
+                <RelativeLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/ingredients_label"
                     android:layout_height="wrap_content"
                     android:background="@color/ingredient"
-                    android:gravity="center"
-                    android:padding="6dp"
-                    android:text="Ingredients"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:layout_marginVertical="5dp"
+                    android:padding="6dp">
 
-                <!-- Add Ingredient Button (Overlayed) -->
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/add_ingredient_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="8dp"
-                    android:src="@android:drawable/ic_input_add"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Add Ingredient" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Ingredients"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/add_ingredient_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="0dp"
+                        android:background="@null"
+                        android:contentDescription="Add Direction"
+                        android:src="@drawable/ic_add" />
+                </RelativeLayout>
             </LinearLayout>
 
             <!-- Directions Section -->
@@ -239,31 +198,35 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Directions Label -->
-                <TextView
+                <RelativeLayout
                     android:id="@+id/directions_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/step"
-                    android:gravity="center"
-                    android:padding="6dp"
-                    android:text="Directions"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:layout_marginVertical="5dp"
+                    android:padding="6dp">
 
-                <!-- Add Direction Button (Overlayed) -->
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/add_direction_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="8dp"
-                    android:src="@android:drawable/ic_input_add"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Add Direction" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Directions"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/add_direction_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="0dp"
+                        android:background="@null"
+                        android:contentDescription="Add Direction"
+                        android:src="@drawable/ic_add" />
+                </RelativeLayout>
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

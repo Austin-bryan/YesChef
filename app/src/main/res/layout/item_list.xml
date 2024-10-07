@@ -18,7 +18,7 @@
 
     <!-- FrameLayout for circle button and number (can hide it for ingredients) -->
     <FrameLayout
-        android:id="@+id/circle_frame"
+        android:id="@+id/step_frame"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -52,16 +52,16 @@
     <!-- Input Text Box -->
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/ingredient_step_input"
-        android:layout_width="400dp"
-        android:layout_weight="1"
+        android:layout_width="321dp"
         android:layout_height="50dp"
+        android:layout_weight="1"
         android:background="#fff"
         android:hint="Ingredient(s)"
         android:paddingStart="10dp" />
 
-    <!-- Add/Remove Button -->
+    <!-- Remove Button -->
     <ImageButton
-        android:id="@+id/add_remove_button"
+        android:id="@+id/remove_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="#fff"
@@ -69,9 +69,6 @@
         android:adjustViewBounds="true"
         android:padding="8dp"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:contentDescription="Add item"
-        android:tint="@color/itemList"
-        android:src="@drawable/ic_add_circle" />
-
+        android:src="@drawable/ic_remove_outline" />
 </LinearLayout>
