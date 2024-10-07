@@ -11,5 +11,8 @@
     <color name="bottom_nav_text_color">#FF000000</color> <!-- Black text -->
     <color name="bottom_nav_background_color">#FFFFFFFF</color> <!-- White background -->
 
+    <!-- New primary color for use in your layout -->
+    <color name="primaryColor">#FF9800</color> <!-- Use any color you like -->
+
 
 </resources>
