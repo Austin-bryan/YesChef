@@ -20,52 +20,64 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Meal Title Input -->
-            <include
-                layout="@layout/item_list"
-                android:id="@+id/meal_title"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <!-- Meal Description Input -->
-            <include
-                layout="@layout/item_list"
-                android:id="@+id/meal_description"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-            <!-- Serving Size Input -->
-            <EditText
-                android:id="@+id/serving_size_input"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Serving Size"
-                android:inputType="text"/>
+                android:hint="Meal Title">
 
-            <EditText
-                android:id="@+id/calories_input"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/meal_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Calories"
-                android:inputType="numberDecimal"/>
+                android:hint="Description">
 
-            <EditText
-                android:id="@+id/protein_input"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/meal_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Grid Layout for Image Addition -->
+
+            <GridLayout
+                android:id="@+id/image_add_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Protein (g)"
-                android:inputType="numberDecimal"/>
+                android:alignmentMode="alignMargins"
+                android:columnCount="4"
+                android:padding="16dp"
+                android:useDefaultMargins="true">
+
+                <include
+                    android:id="@+id/image_add1"
+                    layout="@layout/image_add" />
+
+                <include
+                    android:id="@+id/image_add2"
+                    layout="@layout/image_add" />
+
+                <include
+                    android:id="@+id/image_add3"
+                    layout="@layout/image_add" />
+
+                <include
+                    android:id="@+id/image_add4"
+                    layout="@layout/image_add" />
+            </GridLayout>
 
             <!-- Options Section -->
             <TextView
                 android:id="@+id/options_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="4dp"
                 android:text="Dietary Options"
                 android:textColor="#000000"
                 android:textSize="20sp" />
@@ -118,32 +130,42 @@
                     android:text="Low Carb" />
             </com.google.android.material.chip.ChipGroup>
 
-            <!-- Grid Layout for Image Addition -->
-            <GridLayout
-                android:id="@+id/image_add_grid"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="4"
-                android:padding="16dp"
-                android:alignmentMode="alignMargins"
-                android:useDefaultMargins="true">
+                android:hint="Serving Size">
 
-                <include
-                    android:id="@+id/image_add1"
-                    layout="@layout/image_add" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/serving_size_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <include
-                    android:id="@+id/image_add2"
-                    layout="@layout/image_add" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Calories">
 
-                <include
-                    android:id="@+id/image_add3"
-                    layout="@layout/image_add" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/calories_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <include
-                    android:id="@+id/image_add4"
-                    layout="@layout/image_add" />
-            </GridLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Protien (g)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/protien_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
                 android:id="@+id/spinner1"
