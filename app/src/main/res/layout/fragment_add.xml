@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,6 +29,7 @@
                 android:layout_marginEnd="-16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <!-- Meal Description Input -->
             <include
                 layout="@layout/item_list"
@@ -37,28 +39,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-
             <!-- Serving Size Input -->
             <EditText
                 android:id="@+id/serving_size_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Serving Size"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/calories_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Calories"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/protein_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Protein (g)"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal" />
+
+            <!-- Difficulty Level Section -->
+            <TextView
+                android:id="@+id/difficulty_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Difficulty Level"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp" />
+
+            <Spinner
+                android:id="@+id/difficulty_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_background"
+                android:padding="12dp"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                android:spinnerMode="dropdown"
+                android:dropDownWidth="match_parent" />
 
             <!-- Options Section -->
             <TextView
@@ -104,14 +129,14 @@
                     android:text="Dairy-Free" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/option_dairy_free"
+                    android:id="@+id/option_sugar_free"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sugar-Free" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/option_dairy_free"
+                    android:id="@+id/option_low_carb"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,7 +144,7 @@
             </com.google.android.material.chip.ChipGroup>
 
             <!-- Grid Layout for Image Addition -->
-            <GridLayout
+            <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/image_add_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,7 +168,7 @@
                 <include
                     android:id="@+id/image_add4"
                     layout="@layout/image_add" />
-            </GridLayout>
+            </androidx.gridlayout.widget.GridLayout>
 
             <Spinner
                 android:id="@+id/spinner1"
@@ -186,7 +211,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="0dp"
                         android:background="@null"
-                        android:contentDescription="Add Direction"
+                        android:contentDescription="Add Ingredient"
                         android:src="@drawable/ic_add" />
                 </RelativeLayout>
             </LinearLayout>

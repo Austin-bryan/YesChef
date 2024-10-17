@@ -39,6 +39,10 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation("androidx.viewpager2:viewpager2:1.0.0") // Add ViewPager2 dependency here
+
+    // Add GridLayout dependency
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
