@@ -5,30 +5,50 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ListFragment">
 
-    <!-- Button to Add New Task -->
-    <Button
-        android:id="@+id/addTaskButton"
+    <!-- Purple Header Section -->
+    <RelativeLayout
+        android:id="@+id/headerSection"
         android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#800080"
+    android:layout_alignParentTop="true">
+
+    <!-- Header Text inside the purple box -->
+    <TextView
+        android:id="@+id/headerTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
-        android:text="Add Grocery Item"
+        android:layout_centerInParent="true"
+        android:text="Make a Grocery List"
+        android:textSize="24sp"
         android:textColor="@android:color/white"
-        android:backgroundTint="#2a2" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/addTaskButton"
-        android:layout_marginTop="7dp">
-
-        <LinearLayout
-            android:id="@+id/taskContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
-            <!-- Container for dynamically added tasks -->
-        </LinearLayout>
-    </ScrollView>
+        android:gravity="center" />
 </RelativeLayout>
+
+
+<Button
+android:id="@+id/addTaskButton"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_below="@id/headerSection"
+android:layout_margin="16dp"
+android:text="Add Grocery Item"
+android:textColor="@android:color/white"
+android:backgroundTint="#2a2" />
+
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_below="@id/addTaskButton"
+android:layout_marginTop="7dp">
+
+<LinearLayout
+    android:id="@+id/taskContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+</LinearLayout>
+</ScrollView>
+    </RelativeLayout>
