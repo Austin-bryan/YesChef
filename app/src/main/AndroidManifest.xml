@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YesChef"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activities.RecipeActivity"
+            android:exported="false" />
         <!-- SplashActivity as the launcher activity -->
         <activity
             android:name=".activities.SplashActivity"
