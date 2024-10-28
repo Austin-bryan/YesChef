@@ -103,19 +103,7 @@
                     android:layout_height="wrap_content"
                     android:text="Dairy-Free" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/option_dairy_free"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sugar-Free" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/option_dairy_free"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Low Carb" />
             </com.google.android.material.chip.ChipGroup>
 
             <!-- Grid Layout for Image Addition -->
@@ -160,7 +148,8 @@
                 android:id="@+id/ingredients_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="ExtraText">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -189,6 +178,7 @@
                         android:contentDescription="Add Direction"
                         android:src="@drawable/ic_add" />
                 </RelativeLayout>
+
             </LinearLayout>
 
             <!-- Directions Section -->

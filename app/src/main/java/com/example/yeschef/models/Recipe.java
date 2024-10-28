@@ -1,5 +1,6 @@
 package com.example.yeschef.models;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Recipe {
@@ -18,14 +19,14 @@ public class Recipe {
 
     //MealTime enumeration
     public enum MealTime {
+        ANYTIME,
         BREAKFAST,
         LUNCH,
         DINNER
     }
 
     private MealTime mealTime;
-    //TO:DO Difficulty level enumeration
-
+//TO:DO difficulty level enumeration
     public Recipe(String name, List<String> ingredients, String servingSize,
                   int cal, int protein, String description, List<String> directions,
                   MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree) {
@@ -42,8 +43,17 @@ public class Recipe {
         this.isGlutenFree = isGlutenFree;
 
     }
+    public Recipe() {
+        this.recipeTitle = "";
+        this.servingSize = "";
+        this.description = "";
+        this.cal = protein = 0;
+        this.ingredients = new LinkedList<String>();  // Initialize as empty list
+        this.directions = new LinkedList<String>();
+        this.mealTime = MealTime.ANYTIME;
 
 
+    }
 
     // Getters
     public String getTitle() { return recipeTitle; }
@@ -55,10 +65,10 @@ public class Recipe {
     public int getProtein() { return protein; }
     public MealTime getMealTime() { return mealTime; }
 
-//Setters
+   //Setters
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
     public void setIngredients(List<String> ingredients) { this.ingredients = ingredients; }
-    public void setDirections(List<String> directions) { this.ingredients = directions; }
+    public void setDirections(List<String> directions) { this.directions = directions; }
     public void setServingSize(String servingSize) { this.servingSize = servingSize; }
     public void setDescription(String description) { this.description = description; }
     public void setCal(int cal) { this.cal = cal; }
@@ -69,10 +79,10 @@ public class Recipe {
    @Override
    public String toString() {
        return "Recipe Title: " + recipeTitle + "\n" +
+               "Description: " + description + "\n" +
                "Meal Time: " + mealTime + "\n" +
                "Calories: " + cal + "\n" +
                "Protein: " + protein + "g\n" +
-               "Description: " + description + "\n" +
                "Ingredients: \n" + formatIngredients() + "\n" +
                "Directions: \n" + formatDirections();
     }
