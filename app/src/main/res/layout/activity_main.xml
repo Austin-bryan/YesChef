@@ -9,14 +9,15 @@
     tools:context=".activities.MainActivity">
 
     <!-- Toolbar for title and fragment-specific actions -->
+    <!-- If you want to remove the purple bar, you can either remove the Toolbar or change its background -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+        android:background="@android:color/transparent"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
     <!-- FrameLayout for fragment replacement -->
     <FrameLayout

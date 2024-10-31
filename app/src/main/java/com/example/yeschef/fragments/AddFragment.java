@@ -15,6 +15,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;  // Add this import statement
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.gridlayout.widget.GridLayout;  // Make sure to import GridLayout from androidx
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
@@ -130,8 +132,17 @@ public class AddFragment extends Fragment {
         // Set up the meal time spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.mealtime_options, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mealTimeSpinner.setAdapter(adapter);
+
+        // Spinner for difficulty level
+        Spinner difficultySpinner = view.findViewById(R.id.difficulty_spinner);
+        ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(
+                getContext(), R.array.difficulty_levels, android.R.layout.simple_spinner_item);
+        difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        difficultySpinner.setAdapter(difficultyAdapter);
 
         // Set click listeners for toggling visibility
         ingredientsLabel.setOnClickListener(v -> toggleContainerVisibility(ingredientsContainer));
@@ -145,7 +156,6 @@ public class AddFragment extends Fragment {
         saveButton.setOnClickListener(v -> onSaveClick());
 
         return view;
-
     }
 
     private void addButtonListeners(View view, LinearLayout ingredientsContainer, LinearLayout directionsContainer, int ingredientsColor, int directionsColor) {
@@ -198,23 +208,7 @@ public class AddFragment extends Fragment {
         categoryButtonsContainer.setVisibility(View.GONE);
     }
     private void toggleContainerVisibility(final LinearLayout container) {
-//        if (container.getVisibility() == View.VISIBLE) {
-//            container.animate()
-//                    .alpha(0f)
-//                    .translationY(-30)
-//                    .setDuration(300)
-//                    .withEndAction(() -> container.setVisibility(View.GONE))
-//                    .start();
-//        } else {
-//            container.setVisibility(View.VISIBLE);
-//            container.setAlpha(0f);
-//            container.setTranslationY(-30);
-//            container.animate()
-//                    .alpha(1f)
-//                    .translationY(0)
-//                    .setDuration(300)
-//                    .start();
-//        }
+        // Logic for toggling visibility
     }
 
     @Override
@@ -309,7 +303,7 @@ public class AddFragment extends Fragment {
             }
         });
 
-        GridLayout gridLayout = view.findViewById(R.id.image_add_grid);
+        GridLayout gridLayout = view.findViewById(R.id.image_add_grid);  // Make sure to use view.findViewById()
         int[] imageAddIds = {R.id.image_add1, R.id.image_add2, R.id.image_add3, R.id.image_add4};
 
         for (int imageAddId : imageAddIds) {
@@ -338,10 +332,8 @@ public class AddFragment extends Fragment {
             TextView stepText = stepItem.findViewById(R.id.circle_text);  // Text inside the circle
 
             if (stepText != null) {
-                // Only set text if the TextView is not null
                 stepText.setText(String.valueOf(i));  // Update the step number based on its position in the list
             } else {
-                // Optional: Log or handle the case where the TextView is missing
                 Log.e("TestCount", "TextView 'circle_text' is null in step item at index " + i);
             }
         }
@@ -413,10 +405,10 @@ public class AddFragment extends Fragment {
 
     private void playDeleteAnimation(View itemView, LinearLayout itemListContainer) {
         itemView.animate()
-                .alpha(0f)  // Fade out
-                .translationY(-30)  // Translate up
-                .setDuration(300)  // Animation duration
-                .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
+                .alpha(0f)
+                .translationY(-30)
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
                 .withEndAction(() -> {
                     // This block will run after the animation ends
                     itemListContainer.removeView(itemView);  // Remove the view from the container
@@ -427,32 +419,30 @@ public class AddFragment extends Fragment {
                 })
                 .start();
     }
+
     private void playSlideDownAnimation(LinearLayout itemListContainer, int deletedIndex) {
-        // Loop through all items after the one being deleted
         for (int i = deletedIndex + 1; i < itemListContainer.getChildCount(); i++) {
             View item = itemListContainer.getChildAt(i);
 
-            // Apply translation animation only to items below the deleted one
             item.animate()
-                .translationYBy(-item.getHeight())  // Move down by the height of the deleted item
-                .setDuration(300)  // Set the duration for the animation
-                .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
-                .withEndAction(() -> {
-                    // Reset translation after the animation completes
-                    item.setTranslationY(0);
-                })
-                .start();
+                    .translationYBy(-item.getHeight())
+                    .setDuration(300)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .withEndAction(() -> {
+                        item.setTranslationY(0);
+                    })
+                    .start();
         }
     }
+
     private void playSlideContainerAnimation(LinearLayout itemListContainer, View itemView, int direction) {
         itemListContainer.animate()
-            .translationYBy(direction * itemView.getHeight())  // Move down by the height of the deleted item
-            .setDuration(300)  // Set the duration for the animation
-            .setInterpolator(new AccelerateDecelerateInterpolator())  // Smooth animation
-            .withEndAction(() -> {
-                // Reset translation after the animation completes
-                itemListContainer.setTranslationY(0);
-            })
-            .start();
+                .translationYBy(direction * itemView.getHeight())
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .withEndAction(() -> {
+                    itemListContainer.setTranslationY(0);
+                })
+                .start();
     }
 }

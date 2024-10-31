@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context=".fragments.ListFragment">
+
+    <!-- Header for Grocery List with pink background -->
+    <TextView
+        android:id="@+id/headerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="16dp"
+        android:text="Make a Grocery List"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:background="#FF69B4"
+        android:elevation="4dp" />
 
     <!-- Button to Add New Task -->
     <Button
         android:id="@+id/addTaskButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/headerTextView"
         android:layout_margin="16dp"
         android:text="Add Grocery Item"
         android:textColor="@android:color/white"
-        android:backgroundTint="#2a2"
-        />
+        android:backgroundTint="#2a2" />
 
     <ScrollView
         android:layout_width="match_parent"
