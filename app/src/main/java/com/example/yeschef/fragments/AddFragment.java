@@ -29,7 +29,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
-import androidx.gridlayout.widget.GridLayout;  // Make sure to import GridLayout from androidx
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
