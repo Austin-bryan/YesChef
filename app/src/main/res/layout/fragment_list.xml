@@ -14,7 +14,8 @@
         android:layout_margin="16dp"
         android:text="Add Grocery Item"
         android:textColor="@android:color/white"
-        android:backgroundTint="#2a2" />
+        android:backgroundTint="#2a2"
+        />
 
     <ScrollView
         android:layout_width="match_parent"

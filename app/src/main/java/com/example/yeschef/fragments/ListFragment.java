@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -34,7 +37,12 @@ public class ListFragment extends Fragment {
                 ImageButton deleteTaskButton = newTask.findViewById(R.id.deleteTaskButton);
 
                 // Set the hint for the task input
-                taskInput.setHint("New Task");
+                taskInput.setHint("Groceries");
+
+                // Animation for adding a new task
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+                fadeIn.setDuration(300);
+                newTask.startAnimation(fadeIn);
 
                 // Check task listener
                 checkTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +63,25 @@ public class ListFragment extends Fragment {
                 deleteTaskButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        taskContainer.removeView(newTask);
+                        // Animation for deleting a task
+                        ScaleAnimation scaleDown = new ScaleAnimation(
+                                1.0f, 0.0f, 1.0f, 0.0f,
+                                Animation.RELATIVE_TO_SELF, 0.5f,
+                                Animation.RELATIVE_TO_SELF, 0.5f);
+                        scaleDown.setDuration(300);
+                        scaleDown.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {}
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                taskContainer.removeView(newTask);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {}
+                        });
+                        newTask.startAnimation(scaleDown);
                     }
                 });
 
