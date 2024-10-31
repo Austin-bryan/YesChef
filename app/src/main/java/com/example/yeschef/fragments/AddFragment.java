@@ -249,7 +249,6 @@ public class AddFragment extends Fragment {
                mealTime = Recipe.MealTime.ANYTIME;
                break;
        }
-       recipe.setMealTime(mealTime);
 
         // Parse numeric inputs (with default values if empty)
         int calories = caloriesStr.isEmpty() ? 0 : Integer.parseInt(caloriesStr);
@@ -260,6 +259,8 @@ public class AddFragment extends Fragment {
         recipe.setDescription(description);
         recipe.setCal(calories);
         recipe.setProtein(protein);
+        recipe.setMealTime(mealTime);
+
 
        //Retrieve the ingredients
        ingredientsList.clear();
