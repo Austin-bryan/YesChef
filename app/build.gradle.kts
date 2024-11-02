@@ -1,5 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.application) apply true
+
 }
 
 android {
@@ -25,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -32,13 +34,20 @@ android {
 }
 
 dependencies {
+    implementation("androidx.cardview:cardview:1.0.0") // Latest version for CardView
+
+    // Using the libraries from your version catalog
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation("androidx.viewpager2:viewpager2:1.0.0") // Add ViewPager2 dependency here
+
+    // ViewPager2 dependency
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    // Testing libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
