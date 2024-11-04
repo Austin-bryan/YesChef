@@ -54,6 +54,7 @@ public class AddFragment extends Fragment {
     private LinearLayout ingredientsContainer;
     private boolean isAnimating = false;
     private Spinner mealTimeSpinner;
+    private Spinner difficultySpinner;
     private EditText recipeTitleInput;
     private EditText descriptionInput;
     private EditText caloriesInput;
@@ -75,6 +76,7 @@ public class AddFragment extends Fragment {
         caloriesInput = view.findViewById(R.id.calories_input);
         proteinInput = view.findViewById(R.id.protein_input);
         mealTimeSpinner = view.findViewById(R.id.spinner1);
+        difficultySpinner = view.findViewById(R.id.difficulty_spinner);
 
         // Initialize containers for dynamic content
         ingredientsContainer = view.findViewById(R.id.ingredients_container);
@@ -137,7 +139,6 @@ public class AddFragment extends Fragment {
         mealTimeSpinner.setAdapter(adapter);
 
         // Spinner for difficulty level
-        Spinner difficultySpinner = view.findViewById(R.id.difficulty_spinner);
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(
                 getContext(), R.array.difficulty_levels, android.R.layout.simple_spinner_item);
         difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -225,6 +226,7 @@ public class AddFragment extends Fragment {
         String caloriesStr = caloriesInput.getText().toString();
         String proteinStr = proteinInput.getText().toString();
        String mealTimeStr = mealTimeSpinner.getSelectedItem().toString();
+       String difficultyLevelStr = difficultySpinner.getSelectedItem().toString();
 
        // Convert mealTimeStr to MealTime enum
        Recipe.MealTime mealTime;
@@ -243,6 +245,20 @@ public class AddFragment extends Fragment {
                break;
        }
 
+       // Convert Difficulty Level string to Difficulty Level enum
+       Recipe.DifficultyLevel difficultyLevel;
+       switch (difficultyLevelStr) {
+           case "Medium":
+               difficultyLevel = Recipe.DifficultyLevel.MEDIUM;
+               break;
+           case "Hard":
+               difficultyLevel = Recipe.DifficultyLevel.HARD;
+               break;
+           default:
+               difficultyLevel = Recipe.DifficultyLevel.EASY;
+               break;
+       }
+
         // Parse numeric inputs (with default values if empty)
         int calories = caloriesStr.isEmpty() ? 0 : Integer.parseInt(caloriesStr);
         int protein = proteinStr.isEmpty() ? 0 : Integer.parseInt(proteinStr);
@@ -253,6 +269,7 @@ public class AddFragment extends Fragment {
         recipe.setCal(calories);
         recipe.setProtein(protein);
         recipe.setMealTime(mealTime);
+        recipe.setDifficultyLevel(difficultyLevel);
 
 
        //Retrieve the ingredients
