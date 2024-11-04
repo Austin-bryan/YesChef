@@ -1,73 +1,109 @@
 package com.example.yeschef.models;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Recipe {
-    private String name;
-    private List<Ingredient> ingredients;
-    private List<Step> steps;
-    private int servingSize;
-    private int prepTime;  // in minutes
-    private int cookTime;  // in minutes
+    private String recipeTitle;
+    private int cal;
+    //private int rating; 1-10, every even number being a .5 star
+    private int protein;
+    private String servingSize;
     private String description;
-    private List<NutritionFact> nutritionInfo;
-    private List<String> tags;
+    private boolean isVegetarian;
+    private boolean isSugarFree;
+    private boolean isGlutenFree;
+    private List<String> ingredients;
+    private List<String> directions;
 
-    public Recipe(String name, List<Ingredient> ingredients, List<Step> steps, int servingSize,
-                  int prepTime, int cookTime, String description, List<NutritionFact> nutritionInfo, List<String> tags) {
-        this.name = name;
-        this.ingredients = ingredients;
-        this.steps = steps;
-        this.servingSize = servingSize;
-        this.prepTime = prepTime;
-        this.cookTime = cookTime;
-        this.description = description;
-        this.nutritionInfo = nutritionInfo;
-        this.tags = tags;
+
+    //MealTime enumeration
+    public enum MealTime {
+        ANYTIME,
+        BREAKFAST,
+        LUNCH,
+        DINNER
     }
 
-    // Method to calculate total time
-    public int getTotalTime() {
-        return prepTime + cookTime;
+    private MealTime mealTime;
+//TO:DO difficulty level enumeration
+    public Recipe(String name, List<String> ingredients, String servingSize,
+                  int cal, int protein, String description, List<String> directions,
+                  MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree) {
+        this.recipeTitle = name;
+        this.ingredients = ingredients;
+        this.directions = directions;
+        this.servingSize = servingSize;
+        this.cal = cal;
+        this.protein = protein;
+        this.description = description;
+        this.mealTime = mealTime;
+        this.isVegetarian = isVegetarian;
+        this.isSugarFree = isSugarFree;
+        this.isGlutenFree = isGlutenFree;
+
+    }
+    public Recipe() {
+        this.recipeTitle = "";
+        this.servingSize = "";
+        this.description = "";
+        this.cal = protein = 0;
+        this.ingredients = new LinkedList<String>();  // Initialize as empty list
+        this.directions = new LinkedList<String>();
+        this.mealTime = MealTime.ANYTIME;
+
+
     }
 
     // Getters
-    public String getName() { return name; }
-    public List<Ingredient> getIngredients() { return ingredients; }
-    public List<Step> getSteps() { return steps; }
-    public int getServingSize() { return servingSize; }
+    public String getTitle() { return recipeTitle; }
+    public List<String> getIngredients() { return ingredients; }
+    public List<String> getDirections() { return directions; }
+    public String getServingSize() { return servingSize; }
     public String getDescription() { return description; }
-    public List<NutritionFact> getNutritionInfo() { return nutritionInfo; }
-    public List<String> getTags() { return tags; }
+    public int getCal() { return cal; }
+    public int getProtein() { return protein; }
+    public MealTime getMealTime() { return mealTime; }
 
-    // toString method for displaying the recipe
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder("Recipe: " + name + "\n");
+   //Setters
+    public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
+    public void setIngredients(List<String> ingredients) { this.ingredients = ingredients; }
+    public void setDirections(List<String> directions) { this.directions = directions; }
+    public void setServingSize(String servingSize) { this.servingSize = servingSize; }
+    public void setDescription(String description) { this.description = description; }
+    public void setCal(int cal) { this.cal = cal; }
+    public void setProtein(int protein) { this.protein = protein; }
+    public void setMealTime(MealTime mealTime) { this.mealTime = mealTime; }
 
-        result.append("Serving Size: ").append(servingSize).append("\n");
-        result.append("Prep Time: ").append(prepTime).append(" minutes\n");
-        result.append("Cook Time: ").append(cookTime).append(" minutes\n");
-        result.append("Total Time: ").append(getTotalTime()).append(" minutes\n");
-        result.append("Description: ").append(description).append("\n\n");
-
-        result.append("Ingredients:\n");
-        for (Ingredient ingredient : ingredients) {
-            result.append("- ").append(ingredient.toString()).append("\n");
-        }
-
-        result.append("\nSteps:\n");
-        for (Step step : steps) {
-            result.append(step.toString()).append("\n");
-        }
-
-        result.append("\nNutrition Info:\n");
-        for (NutritionFact nutrition : nutritionInfo) {
-            result.append(nutrition.toString()).append("\n");
-        }
-
-        result.append("\nTags: ").append(String.join(", ", tags)).append("\n");
-
-        return result.toString();
+   //toString displays the recipe
+   @Override
+   public String toString() {
+       return "Recipe Title: " + recipeTitle + "\n" +
+               "Description: " + description + "\n" +
+               "Meal Time: " + mealTime + "\n" +
+               "Calories: " + cal + "\n" +
+               "Protein: " + protein + "g\n" +
+               "Ingredients: \n" + formatIngredients() + "\n" +
+               "Directions: \n" + formatDirections();
     }
+
+    //formatter functions for our lists
+    private String formatIngredients() {
+        StringBuilder sb = new StringBuilder();
+        for (String ingredient : ingredients) {
+            sb.append("- ").append(ingredient).append("\n");
+        }
+        return sb.toString();
+    }
+
+    private String formatDirections() {
+        StringBuilder sb = new StringBuilder();
+        int stepNumber = 1;
+        for (String direction : directions) {
+            sb.append(stepNumber++).append(". ").append(direction).append("\n");
+        }
+        return sb.toString();
+    }
+
+
 }

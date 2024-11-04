@@ -7,12 +7,15 @@
         <item>Dinner</item>
         <item>Snacks</item> <!-- Added Snacks category -->
     </string-array>
+
+    <!-- String array for mealtime options -->
     <string-array name="mealtime_options">
         <item>Any Mealtime</item>
         <item>Breakfast</item>
         <item>Lunch</item>
         <item>Dinner</item>
     </string-array>
+
     <string name="select_mealtime">Select a Mealtime</string>
 
     <!-- App name string -->
@@ -110,6 +113,14 @@
         <item>1 tablespoon</item>
         <item>100 grams</item>
         <item>1 serving</item>
+    </string-array>
+
+    <!-- New difficulty level array -->
+    <string-array name="difficulty_levels">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+
     </string-array>
 
 </resources>
