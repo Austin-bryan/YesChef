@@ -6,6 +6,7 @@
     <color name="ingredient">#EEAA00</color>
     <color name="step">#00AC79</color>
     <color name="itemList">#0079AC</color>
+    <color name="pink">#FF69B4</color>
 
     <!-- colors.xml -->
     <color name="bottom_nav_icon_color">#FF000000</color> <!-- Black icons -->
