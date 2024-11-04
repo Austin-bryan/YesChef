@@ -34,7 +34,7 @@ public class Recipe {
 
     private MealTime mealTime;
     private DifficultyLevel difficultyLevel;
-//TO:DO difficulty level enumeration
+
     public Recipe(String name, List<String> ingredients, String servingSize,
                   int cal, int protein, String description, List<String> directions,
                   MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree, DifficultyLevel difficultyLevel) {
@@ -86,6 +86,9 @@ public class Recipe {
     public void setProtein(int protein) { this.protein = protein; }
     public void setMealTime(MealTime mealTime) { this.mealTime = mealTime; }
     public void setDifficultyLevel(DifficultyLevel difficultyLevel) { this.difficultyLevel = difficultyLevel; }
+    public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
+    public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
+    public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
 
    //toString displays the recipe
    @Override
@@ -97,8 +100,8 @@ public class Recipe {
                "Calories: " + cal + "\n" +
                "Protein: " + protein + "g\n" +
                "Vegetarian: " + formatBool(isVegetarian) + "\n" +
-               "Sugar Free: " + formatBool(isSugarFree) + "\n" +
                "Gluten Free: " + formatBool(isGlutenFree) + "\n" +
+               "Sugar Free: " + formatBool(isSugarFree) + "\n" +
                "Ingredients: \n" + formatIngredients() + "\n" +
                "Directions: \n" + formatDirections();
     }

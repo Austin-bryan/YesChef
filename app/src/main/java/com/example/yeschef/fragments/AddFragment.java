@@ -60,6 +60,9 @@ public class AddFragment extends Fragment {
     private EditText caloriesInput;
     private EditText proteinInput;
     private Button saveButton;
+    private boolean isVegetarian = false;
+    private boolean isGlutenFree = false;
+    private boolean isSugarFree = false;
 
 
     @Override
@@ -150,6 +153,28 @@ public class AddFragment extends Fragment {
 
         // Add buttons for adding new items
         addButtonListeners(view, ingredientsContainer, directionsContainer, ingredientsColor, directionsColor);
+
+        // Add buttons for dietary options
+        Button vegetarianButton = view.findViewById(R.id.option_vegetarian);
+        Button glutenFreeButton = view.findViewById(R.id.option_gluten_free);
+        Button sugarFreeButton = view.findViewById(R.id.option_sugar_free);
+
+        //Add click listeners
+        // Set click listeners to toggle booleans
+        vegetarianButton.setOnClickListener(v -> {
+            isVegetarian = !isVegetarian;
+            vegetarianButton.setSelected(isVegetarian);
+        });
+
+        glutenFreeButton.setOnClickListener(v -> {
+            isGlutenFree = !isGlutenFree;
+            glutenFreeButton.setSelected(isGlutenFree);
+        });
+
+        sugarFreeButton.setOnClickListener(v -> {
+            isSugarFree = !isSugarFree;
+            sugarFreeButton.setSelected(isSugarFree);
+        });
 
         // Add save button click listener
         Button saveButton = view.findViewById(R.id.save_button);
@@ -302,6 +327,10 @@ public class AddFragment extends Fragment {
 
        recipe.setIngredients(ingredientsList);
        recipe.setDirections(directionsList);
+
+       recipe.setVegetarian(isVegetarian);
+       recipe.setGlutenFree(isGlutenFree);
+       recipe.setSugarFree(isSugarFree);
 
         // Log the recipe details to test the save functionality
         Log.e("RecipeTest", recipe.toString());
