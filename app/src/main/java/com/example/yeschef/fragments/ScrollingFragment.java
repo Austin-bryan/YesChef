@@ -58,4 +58,5 @@ public class ScrollingFragment extends Fragment {
         // Increment recipe count
         recipeCount++;
     }
+
 }
