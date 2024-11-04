@@ -181,6 +181,10 @@ public class AddFragment extends Fragment {
         Button saveButton = view.findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> onSaveClick());
 
+        // Add clear button click listener
+        Button clearButton = view.findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(v -> onClearClick());
+
         return view;
     }
 
@@ -381,10 +385,12 @@ public class AddFragment extends Fragment {
        recipe.setGlutenFree(isGlutenFree);
        recipe.setSugarFree(isSugarFree);
 
-       //Clear fields
-       resetFields();
+
         // Log the recipe details to test the save functionality
         Log.e("RecipeTest", recipe.toString());
+    }
+    private void onClearClick() {
+        resetFields();
     }
 
     private void initializeImageAdders(View view) {
