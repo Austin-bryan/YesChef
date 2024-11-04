@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -183,6 +184,49 @@ public class AddFragment extends Fragment {
         return view;
     }
 
+    // resetFields() method
+    private void resetFields() {
+
+        EditText servingSizeInput = requireView().findViewById(R.id.serving_size_input);
+        View caloriesView = getView().findViewById(R.id.calories_input);
+        View proteinView = getView().findViewById(R.id.protein_input);
+
+        // Reset dietary option Chips to unselected state
+        ChipGroup dietaryOptionsGroup = requireView().findViewById(R.id.dietary_options_group);
+        dietaryOptionsGroup.clearCheck();
+
+        recipeTitleInput.setText("");       // Clear the meal title
+        descriptionInput.setText("");     // Clear the meal description
+
+        // Clear serving size
+        servingSizeInput.setText("");
+
+
+
+        if (caloriesView instanceof TextView) {
+            ((TextView) caloriesView).setText("");
+        }
+        if (proteinView instanceof TextView) {
+            ((TextView) proteinView).setText("");
+        }
+
+        Spinner mealTimeSpinner = getView().findViewById(R.id.spinner1);
+        mealTimeSpinner.setSelection(0);
+        Spinner difficultySpinner = getView().findViewById(R.id.difficulty_spinner);
+        difficultySpinner.setSelection(0);
+
+        Button vegetarianButton = getView().findViewById(R.id.option_vegetarian);
+        Button glutenFreeButton = getView().findViewById(R.id.option_gluten_free);
+        Button sugarFreeButton = getView().findViewById(R.id.option_sugar_free);
+
+
+        vegetarianButton.setSelected(false);
+        glutenFreeButton.setSelected(false);
+        sugarFreeButton.setSelected(false);
+
+        //updateIngredientsAndDirectionsViews(); // if you have this method
+    }
+
     private void addButtonListeners(View view, LinearLayout ingredientsContainer, LinearLayout directionsContainer, int ingredientsColor, int directionsColor) {
         ImageButton addIngredientButton = view.findViewById(R.id.add_ingredient_button);
         ImageButton addDirectionButton = view.findViewById(R.id.add_direction_button);
@@ -332,6 +376,8 @@ public class AddFragment extends Fragment {
        recipe.setGlutenFree(isGlutenFree);
        recipe.setSugarFree(isSugarFree);
 
+       //Clear fields
+       resetFields();
         // Log the recipe details to test the save functionality
         Log.e("RecipeTest", recipe.toString());
     }
@@ -491,3 +537,4 @@ public class AddFragment extends Fragment {
                 .start();
     }
 }
+
