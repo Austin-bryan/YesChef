@@ -184,7 +184,7 @@ public class AddFragment extends Fragment {
         return view;
     }
 
-    // resetFields() method
+    // reset UI method
     private void resetFields() {
 
         EditText servingSizeInput = requireView().findViewById(R.id.serving_size_input);
@@ -219,14 +219,19 @@ public class AddFragment extends Fragment {
         Button glutenFreeButton = getView().findViewById(R.id.option_gluten_free);
         Button sugarFreeButton = getView().findViewById(R.id.option_sugar_free);
 
+        updateIngredientsAndDirectionsViews();
 
-        vegetarianButton.setSelected(false);
-        glutenFreeButton.setSelected(false);
-        sugarFreeButton.setSelected(false);
-
-        //updateIngredientsAndDirectionsViews(); // if you have this method
     }
+    private void updateIngredientsAndDirectionsViews() {
+        while (ingredientsContainer.getChildCount() > 1) { // Keep the header (assume header is the first child)
+            ingredientsContainer.removeViewAt(1); // Remove all but the header
+        }
 
+        // Clear existing input views in directions container
+        while (directionsContainer.getChildCount() > 1) { // Keep the header (assume header is the first child)
+            directionsContainer.removeViewAt(1); // Remove all but the header
+        }
+    }
     private void addButtonListeners(View view, LinearLayout ingredientsContainer, LinearLayout directionsContainer, int ingredientsColor, int directionsColor) {
         ImageButton addIngredientButton = view.findViewById(R.id.add_ingredient_button);
         ImageButton addDirectionButton = view.findViewById(R.id.add_direction_button);
