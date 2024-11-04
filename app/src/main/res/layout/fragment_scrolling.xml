@@ -16,20 +16,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Container for recipe items -->
-    <LinearLayout
-        android:id="@+id/recipe_container"
+    <!-- Scrollable Container for recipe items -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="92dp"
-        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/searchView"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintBottom_toTopOf="@id/addRecipeButton">
 
+        <GridLayout
+            android:id="@+id/recipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="5">
+            <!-- Recipe items will be added here dynamically -->
+        </GridLayout>
+    </ScrollView>
 
-        <include layout="@layout/recipe_item" />
-
-
-    </LinearLayout>
-
+    <!-- Button to add a recipe -->
+    <Button
+        android:id="@+id/addRecipeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Recipe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
