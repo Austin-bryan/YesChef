@@ -151,7 +151,7 @@ public class AddFragment extends Fragment {
         addButtonListeners(view, ingredientsContainer, directionsContainer, ingredientsColor, directionsColor);
 
         // Add save button click listener
-        Button saveButton = view.findViewById(R.id.save_button);
+        ImageButton saveButton = view.findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> onSaveClick());
 
         return view;
