@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
+import com.example.yeschef.utils.JsonUtils;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -296,7 +297,7 @@ public class AddFragment extends Fragment {
         outState.putStringArrayList(KEY_DIRECTIONS_LIST, new ArrayList<>(directionsList));
     }
    private void onSaveClick() {
-        // Create a new Recipe object
+       // Create a new Recipe object
         Recipe recipe = new Recipe();
         // Retrieve input from UI components
         String title = recipeTitleInput.getText().toString();
@@ -386,8 +387,24 @@ public class AddFragment extends Fragment {
        recipe.setSugarFree(isSugarFree);
 
 
+       JsonUtils.writeJsonToFile(requireContext(), recipe,"recipe.json");
+        JsonUtils.logJson(recipe);
+
         // Log the recipe details to test the save functionality
         Log.e("RecipeTest", recipe.toString());
+
+       // Use the file name recipe.json
+       String fileName = "recipe.json";
+
+       // Write the Recipe object to JSON file
+       JsonUtils.writeJsonToFile(requireContext(), recipe, fileName);
+
+       // Read the Recipe object back from the JSON file
+       Recipe restoredRecipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
+
+       Log.e("RestoreTest", restoredRecipe.toString());
+
+
     }
     private void onClearClick() {
         resetFields();

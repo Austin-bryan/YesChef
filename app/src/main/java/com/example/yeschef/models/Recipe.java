@@ -1,5 +1,7 @@
 package com.example.yeschef.models;
 
+import com.google.gson.Gson;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -134,5 +136,9 @@ public class Recipe {
         return sb.toString();
     }
 
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this); // Converts the Recipe object to JSON string
+    }
 
 }
