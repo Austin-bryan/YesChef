@@ -1,5 +1,7 @@
 package com.example.yeschef.models;
 
+import com.google.gson.Gson;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,9 +12,9 @@ public class Recipe {
     private int protein;
     private String servingSize;
     private String description;
-    private boolean isVegetarian;
-    private boolean isSugarFree;
-    private boolean isGlutenFree;
+    private boolean isVegetarian = false;
+    private boolean isSugarFree = false;
+    private boolean isGlutenFree = false;
     private List<String> ingredients;
     private List<String> directions;
 
@@ -25,11 +27,19 @@ public class Recipe {
         DINNER
     }
 
+    //Difficulty level enumeration
+    public enum DifficultyLevel{
+        EASY,
+        MEDIUM,
+        HARD
+    }
+
     private MealTime mealTime;
-//TO:DO difficulty level enumeration
+    private DifficultyLevel difficultyLevel;
+
     public Recipe(String name, List<String> ingredients, String servingSize,
                   int cal, int protein, String description, List<String> directions,
-                  MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree) {
+                  MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree, DifficultyLevel difficultyLevel) {
         this.recipeTitle = name;
         this.ingredients = ingredients;
         this.directions = directions;
@@ -41,6 +51,7 @@ public class Recipe {
         this.isVegetarian = isVegetarian;
         this.isSugarFree = isSugarFree;
         this.isGlutenFree = isGlutenFree;
+        this.difficultyLevel = difficultyLevel;
 
     }
     public Recipe() {
@@ -51,6 +62,7 @@ public class Recipe {
         this.ingredients = new LinkedList<String>();  // Initialize as empty list
         this.directions = new LinkedList<String>();
         this.mealTime = MealTime.ANYTIME;
+        this.difficultyLevel = DifficultyLevel.EASY;
 
 
     }
@@ -64,6 +76,7 @@ public class Recipe {
     public int getCal() { return cal; }
     public int getProtein() { return protein; }
     public MealTime getMealTime() { return mealTime; }
+    public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
 
    //Setters
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
@@ -74,6 +87,10 @@ public class Recipe {
     public void setCal(int cal) { this.cal = cal; }
     public void setProtein(int protein) { this.protein = protein; }
     public void setMealTime(MealTime mealTime) { this.mealTime = mealTime; }
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) { this.difficultyLevel = difficultyLevel; }
+    public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
+    public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
+    public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
 
    //toString displays the recipe
    @Override
@@ -81,12 +98,26 @@ public class Recipe {
        return "Recipe Title: " + recipeTitle + "\n" +
                "Description: " + description + "\n" +
                "Meal Time: " + mealTime + "\n" +
+               "Difficulty Level: " + difficultyLevel + "\n" +
                "Calories: " + cal + "\n" +
                "Protein: " + protein + "g\n" +
+               "Vegetarian: " + formatBool(isVegetarian) + "\n" +
+               "Gluten Free: " + formatBool(isGlutenFree) + "\n" +
+               "Sugar Free: " + formatBool(isSugarFree) + "\n" +
                "Ingredients: \n" + formatIngredients() + "\n" +
                "Directions: \n" + formatDirections();
     }
 
+    //formatter functions for booleans
+    private String formatBool(boolean isSomething) {
+      String answer;
+        if (isSomething) {
+            answer = "yes";
+        } else {
+            answer = "no";
+        }
+        return answer;
+    }
     //formatter functions for our lists
     private String formatIngredients() {
         StringBuilder sb = new StringBuilder();
@@ -105,5 +136,9 @@ public class Recipe {
         return sb.toString();
     }
 
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this); // Converts the Recipe object to JSON string
+    }
 
 }

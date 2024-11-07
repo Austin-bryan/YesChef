@@ -32,6 +32,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
+import com.example.yeschef.utils.JsonUtils;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -54,11 +56,15 @@ public class AddFragment extends Fragment {
     private LinearLayout ingredientsContainer;
     private boolean isAnimating = false;
     private Spinner mealTimeSpinner;
+    private Spinner difficultySpinner;
     private EditText recipeTitleInput;
     private EditText descriptionInput;
     private EditText caloriesInput;
     private EditText proteinInput;
     private Button saveButton;
+    private boolean isVegetarian = false;
+    private boolean isGlutenFree = false;
+    private boolean isSugarFree = false;
 
 
     @Override
@@ -75,6 +81,7 @@ public class AddFragment extends Fragment {
         caloriesInput = view.findViewById(R.id.calories_input);
         proteinInput = view.findViewById(R.id.protein_input);
         mealTimeSpinner = view.findViewById(R.id.spinner1);
+        difficultySpinner = view.findViewById(R.id.difficulty_spinner);
 
         // Initialize containers for dynamic content
         ingredientsContainer = view.findViewById(R.id.ingredients_container);
@@ -137,7 +144,6 @@ public class AddFragment extends Fragment {
         mealTimeSpinner.setAdapter(adapter);
 
         // Spinner for difficulty level
-        Spinner difficultySpinner = view.findViewById(R.id.difficulty_spinner);
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(
                 getContext(), R.array.difficulty_levels, android.R.layout.simple_spinner_item);
         difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -150,13 +156,87 @@ public class AddFragment extends Fragment {
         // Add buttons for adding new items
         addButtonListeners(view, ingredientsContainer, directionsContainer, ingredientsColor, directionsColor);
 
+        // Add buttons for dietary options
+        Button vegetarianButton = view.findViewById(R.id.option_vegetarian);
+        Button glutenFreeButton = view.findViewById(R.id.option_gluten_free);
+        Button sugarFreeButton = view.findViewById(R.id.option_sugar_free);
+
+        //Add click listeners
+        // Set click listeners to toggle booleans
+        vegetarianButton.setOnClickListener(v -> {
+            isVegetarian = !isVegetarian;
+            vegetarianButton.setSelected(isVegetarian);
+        });
+
+        glutenFreeButton.setOnClickListener(v -> {
+            isGlutenFree = !isGlutenFree;
+            glutenFreeButton.setSelected(isGlutenFree);
+        });
+
+        sugarFreeButton.setOnClickListener(v -> {
+            isSugarFree = !isSugarFree;
+            sugarFreeButton.setSelected(isSugarFree);
+        });
+
         // Add save button click listener
         ImageButton saveButton = view.findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> onSaveClick());
 
+        // Add clear button click listener
+        Button clearButton = view.findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(v -> onClearClick());
+
         return view;
     }
 
+    // reset UI method
+    private void resetFields() {
+
+        EditText servingSizeInput = requireView().findViewById(R.id.serving_size_input);
+        View caloriesView = getView().findViewById(R.id.calories_input);
+        View proteinView = getView().findViewById(R.id.protein_input);
+
+        // Reset dietary option Chips to unselected state
+        ChipGroup dietaryOptionsGroup = requireView().findViewById(R.id.dietary_options_group);
+        dietaryOptionsGroup.clearCheck();
+
+        recipeTitleInput.setText("");       // Clear the meal title
+        descriptionInput.setText("");     // Clear the meal description
+
+        // Clear serving size
+        servingSizeInput.setText("");
+
+
+
+        if (caloriesView instanceof TextView) {
+            ((TextView) caloriesView).setText("");
+        }
+        if (proteinView instanceof TextView) {
+            ((TextView) proteinView).setText("");
+        }
+
+        Spinner mealTimeSpinner = getView().findViewById(R.id.spinner1);
+        mealTimeSpinner.setSelection(0);
+        Spinner difficultySpinner = getView().findViewById(R.id.difficulty_spinner);
+        difficultySpinner.setSelection(0);
+
+        Button vegetarianButton = getView().findViewById(R.id.option_vegetarian);
+        Button glutenFreeButton = getView().findViewById(R.id.option_gluten_free);
+        Button sugarFreeButton = getView().findViewById(R.id.option_sugar_free);
+
+        updateIngredientsAndDirectionsViews();
+
+    }
+    private void updateIngredientsAndDirectionsViews() {
+        while (ingredientsContainer.getChildCount() > 1) { // Keep the header (assume header is the first child)
+            ingredientsContainer.removeViewAt(1); // Remove all but the header
+        }
+
+        // Clear existing input views in directions container
+        while (directionsContainer.getChildCount() > 1) { // Keep the header (assume header is the first child)
+            directionsContainer.removeViewAt(1); // Remove all but the header
+        }
+    }
     private void addButtonListeners(View view, LinearLayout ingredientsContainer, LinearLayout directionsContainer, int ingredientsColor, int directionsColor) {
         ImageButton addIngredientButton = view.findViewById(R.id.add_ingredient_button);
         ImageButton addDirectionButton = view.findViewById(R.id.add_direction_button);
@@ -217,7 +297,7 @@ public class AddFragment extends Fragment {
         outState.putStringArrayList(KEY_DIRECTIONS_LIST, new ArrayList<>(directionsList));
     }
    private void onSaveClick() {
-        // Create a new Recipe object
+       // Create a new Recipe object
         Recipe recipe = new Recipe();
         // Retrieve input from UI components
         String title = recipeTitleInput.getText().toString();
@@ -225,6 +305,7 @@ public class AddFragment extends Fragment {
         String caloriesStr = caloriesInput.getText().toString();
         String proteinStr = proteinInput.getText().toString();
        String mealTimeStr = mealTimeSpinner.getSelectedItem().toString();
+       String difficultyLevelStr = difficultySpinner.getSelectedItem().toString();
 
        // Convert mealTimeStr to MealTime enum
        Recipe.MealTime mealTime;
@@ -243,6 +324,20 @@ public class AddFragment extends Fragment {
                break;
        }
 
+       // Convert Difficulty Level string to Difficulty Level enum
+       Recipe.DifficultyLevel difficultyLevel;
+       switch (difficultyLevelStr) {
+           case "Medium":
+               difficultyLevel = Recipe.DifficultyLevel.MEDIUM;
+               break;
+           case "Hard":
+               difficultyLevel = Recipe.DifficultyLevel.HARD;
+               break;
+           default:
+               difficultyLevel = Recipe.DifficultyLevel.EASY;
+               break;
+       }
+
         // Parse numeric inputs (with default values if empty)
         int calories = caloriesStr.isEmpty() ? 0 : Integer.parseInt(caloriesStr);
         int protein = proteinStr.isEmpty() ? 0 : Integer.parseInt(proteinStr);
@@ -253,6 +348,7 @@ public class AddFragment extends Fragment {
         recipe.setCal(calories);
         recipe.setProtein(protein);
         recipe.setMealTime(mealTime);
+        recipe.setDifficultyLevel(difficultyLevel);
 
 
        //Retrieve the ingredients
@@ -286,8 +382,32 @@ public class AddFragment extends Fragment {
        recipe.setIngredients(ingredientsList);
        recipe.setDirections(directionsList);
 
+       recipe.setVegetarian(isVegetarian);
+       recipe.setGlutenFree(isGlutenFree);
+       recipe.setSugarFree(isSugarFree);
+
+
+       JsonUtils.writeJsonToFile(requireContext(), recipe,"recipe.json");
+        JsonUtils.logJson(recipe);
+
         // Log the recipe details to test the save functionality
         Log.e("RecipeTest", recipe.toString());
+
+       // Use the file name recipe.json
+       String fileName = "recipe.json";
+
+       // Write the Recipe object to JSON file
+       JsonUtils.writeJsonToFile(requireContext(), recipe, fileName);
+
+       // Read the Recipe object back from the JSON file
+       Recipe restoredRecipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
+
+       Log.e("RestoreTest", restoredRecipe.toString());
+
+
+    }
+    private void onClearClick() {
+        resetFields();
     }
 
     private void initializeImageAdders(View view) {
@@ -445,3 +565,4 @@ public class AddFragment extends Fragment {
                 .start();
     }
 }
+

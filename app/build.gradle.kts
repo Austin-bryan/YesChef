@@ -43,6 +43,10 @@ dependencies {
     // Add GridLayout dependency
     implementation("androidx.gridlayout:gridlayout:1.0.0")
 
+    // GSON DEPENDENCY
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("com.google.code.gson:gson:2.10.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
