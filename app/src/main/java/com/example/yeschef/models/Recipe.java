@@ -12,7 +12,7 @@ public class Recipe {
     private int cal;
     //private int rating; 1-10, every even number being a .5 star
     private int protein;
-    private List<Uri> images = new LinkedList<>();
+    private Uri[] images = new Uri[4];
     private String servingSize;
     private String description;
     private boolean isVegetarian = false;
@@ -65,7 +65,7 @@ public class Recipe {
         this.directions = new LinkedList<>();
         this.mealTime = MealTime.ANYTIME;
         this.difficultyLevel = DifficultyLevel.EASY;
-        this.images = new LinkedList<>();
+        this.images = new Uri[4];
     }
 
     // Getters
@@ -92,7 +92,7 @@ public class Recipe {
     public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
     public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
     public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
-    public void setImages(List<Uri> images) { this.images = images; }
+    public void setImages(Uri[] images) { this.images = images; }
 
    //toString displays the recipe
    @Override
@@ -124,7 +124,9 @@ public class Recipe {
     private String formatImages() {
         StringBuilder sb = new StringBuilder();
         for (Uri uri : images) {
-            sb.append("- ").append(uri.toString()).append('\n');
+            if (uri != null) {
+                sb.append("- ").append(uri.toString()).append('\n');
+            }
         }
         return sb.toString();
     }
