@@ -1,5 +1,7 @@
 package com.example.yeschef.models;
 
+import android.net.Uri;
+
 import com.google.gson.Gson;
 
 import java.util.LinkedList;
@@ -10,6 +12,7 @@ public class Recipe {
     private int cal;
     //private int rating; 1-10, every even number being a .5 star
     private int protein;
+    private List<Uri> images = new LinkedList<>();
     private String servingSize;
     private String description;
     private boolean isVegetarian = false;
@@ -17,7 +20,6 @@ public class Recipe {
     private boolean isGlutenFree = false;
     private List<String> ingredients;
     private List<String> directions;
-
 
     //MealTime enumeration
     public enum MealTime {
@@ -59,12 +61,11 @@ public class Recipe {
         this.servingSize = "";
         this.description = "";
         this.cal = protein = 0;
-        this.ingredients = new LinkedList<String>();  // Initialize as empty list
-        this.directions = new LinkedList<String>();
+        this.ingredients = new LinkedList<>();  // Initialize as empty list
+        this.directions = new LinkedList<>();
         this.mealTime = MealTime.ANYTIME;
         this.difficultyLevel = DifficultyLevel.EASY;
-
-
+        this.images = new LinkedList<>();
     }
 
     // Getters
@@ -91,20 +92,22 @@ public class Recipe {
     public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
     public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
     public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
+    public void setImages(List<Uri> images) { this.images = images; }
 
    //toString displays the recipe
    @Override
    public String toString() {
-       return "Recipe Title: " + recipeTitle + "\n" +
-               "Description: " + description + "\n" +
-               "Meal Time: " + mealTime + "\n" +
-               "Difficulty Level: " + difficultyLevel + "\n" +
-               "Calories: " + cal + "\n" +
+       return "Recipe Title: " + recipeTitle + '\n' +
+               "Description: " + description + '\n' +
+               "Meal Time: " + mealTime + '\n' +
+               "Difficulty Level: " + difficultyLevel + '\n' +
+               "Calories: " + cal + '\n' +
                "Protein: " + protein + "g\n" +
-               "Vegetarian: " + formatBool(isVegetarian) + "\n" +
-               "Gluten Free: " + formatBool(isGlutenFree) + "\n" +
-               "Sugar Free: " + formatBool(isSugarFree) + "\n" +
-               "Ingredients: \n" + formatIngredients() + "\n" +
+               "Vegetarian: " + formatBool(isVegetarian) + '\n' +
+               "Gluten Free: " + formatBool(isGlutenFree) + '\n' +
+               "Sugar Free: " + formatBool(isSugarFree) + '\n' +
+               "Images: \n" + formatImages() + '\n' +
+               "Ingredients: \n" + formatIngredients() + '\n' +
                "Directions: \n" + formatDirections();
     }
 
@@ -118,11 +121,19 @@ public class Recipe {
         }
         return answer;
     }
+    private String formatImages() {
+        StringBuilder sb = new StringBuilder();
+        for (Uri uri : images) {
+            sb.append("- ").append(uri.toString()).append('\n');
+        }
+        return sb.toString();
+    }
+
     //formatter functions for our lists
     private String formatIngredients() {
         StringBuilder sb = new StringBuilder();
         for (String ingredient : ingredients) {
-            sb.append("- ").append(ingredient).append("\n");
+            sb.append("- ").append(ingredient).append('\n');
         }
         return sb.toString();
     }
@@ -131,7 +142,7 @@ public class Recipe {
         StringBuilder sb = new StringBuilder();
         int stepNumber = 1;
         for (String direction : directions) {
-            sb.append(stepNumber++).append(". ").append(direction).append("\n");
+            sb.append(stepNumber++).append(". ").append(direction).append('\n');
         }
         return sb.toString();
     }
@@ -140,5 +151,4 @@ public class Recipe {
         Gson gson = new Gson();
         return gson.toJson(this); // Converts the Recipe object to JSON string
     }
-
 }

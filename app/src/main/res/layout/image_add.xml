@@ -12,8 +12,6 @@
         android:adjustViewBounds="true"
         android:padding="20dp"
         android:scaleType="fitCenter"
-        android:background="#eeaa88"
-    />
-
+        android:background="#eeaa88" />
 
 </RelativeLayout>
