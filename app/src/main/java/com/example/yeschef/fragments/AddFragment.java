@@ -415,8 +415,9 @@ public class AddFragment extends Fragment {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();
                 if (clickedButton != null) {
-                    clickedButton.setImageURI(imageUri);
                     clickedButton.clearColorFilter();
+                    clickedButton.setColorFilter(null);
+                    clickedButton.setImageURI(imageUri);
                     clickedButton.setPadding(0, 0, 0, 0);
                 }
             }
