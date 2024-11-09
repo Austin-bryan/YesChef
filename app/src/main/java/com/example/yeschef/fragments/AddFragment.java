@@ -63,7 +63,7 @@ public class AddFragment extends Fragment {
     private EditText descriptionInput;
     private EditText caloriesInput;
     private EditText proteinInput;
-    private Uri[] images = new Uri[4];
+    private String[] images = new String[4];
     private Button saveButton;
     private boolean isVegetarian = false;
     private boolean isGlutenFree = false;
@@ -403,9 +403,9 @@ public class AddFragment extends Fragment {
         JsonUtils.writeJsonToFile(requireContext(), recipe, fileName);
 
         // Read the Recipe object back from the JSON file
-        //Recipe restoredRecipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
+        Recipe restoredRecipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
 
-        //Log.e("RestoreTest", restoredRecipe.toString());
+        Log.e("RestoreTest", restoredRecipe.toString());
     }
     private void onClearClick() {
         resetFields();
@@ -421,7 +421,7 @@ public class AddFragment extends Fragment {
                     clickedButton.setImageURI(imageUri);
                     clickedButton.setPadding(0, 0, 0, 0);
 
-                    images[clickedIndex] = imageUri;
+                    images[clickedIndex] = imageUri.toString();
                 }
             }
         });

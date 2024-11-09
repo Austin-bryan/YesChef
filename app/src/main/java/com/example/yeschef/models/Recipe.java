@@ -12,7 +12,7 @@ public class Recipe {
     private int cal;
     //private int rating; 1-10, every even number being a .5 star
     private int protein;
-    private Uri[] images = new Uri[4];
+    private String[] images = new String[4];
     private String servingSize;
     private String description;
     private boolean isVegetarian = false;
@@ -65,7 +65,7 @@ public class Recipe {
         this.directions = new LinkedList<>();
         this.mealTime = MealTime.ANYTIME;
         this.difficultyLevel = DifficultyLevel.EASY;
-        this.images = new Uri[4];
+        this.images = new String[4];
     }
 
     // Getters
@@ -76,6 +76,13 @@ public class Recipe {
     public String getDescription() { return description; }
     public int getCal() { return cal; }
     public int getProtein() { return protein; }
+    public Uri[] getImages() {
+        Uri[] uris = new Uri[images.length];
+        for (int i = 0; i < images.length; i++) {
+            uris[i] = images[i] != null ? Uri.parse(images[i]) : null;
+        }
+        return uris;
+    }
     public MealTime getMealTime() { return mealTime; }
     public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
 
@@ -92,7 +99,11 @@ public class Recipe {
     public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
     public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
     public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
-    public void setImages(Uri[] images) { this.images = images; }
+    public void setImages(String[] uris) {
+        for (int i = 0; i < uris.length; i++) {
+            images[i] = uris[i] != null ? uris[i].toString() : null;
+        }
+    }
 
    //toString displays the recipe
    @Override
@@ -123,9 +134,9 @@ public class Recipe {
     }
     private String formatImages() {
         StringBuilder sb = new StringBuilder();
-        for (Uri uri : images) {
+        for (String uri : images) {
             if (uri != null) {
-                sb.append("- ").append(uri.toString()).append('\n');
+                sb.append("- ").append(uri).append('\n');
             }
         }
         return sb.toString();
