@@ -186,7 +186,7 @@ public class AddFragment extends Fragment {
         saveButton.setOnClickListener(v -> onSaveClick());
 
         // Add clear button click listener
-        Button clearButton = view.findViewById(R.id.clear_button);
+        ImageButton clearButton = view.findViewById(R.id.clear_button);
         clearButton.setOnClickListener(v -> onClearClick());
 
         updateIngredientsAndDirectionsViews();
