@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.yeschef.R;
@@ -183,11 +184,28 @@ public class AddFragment extends Fragment {
 
         // Add save button click listener
         ImageButton saveButton = view.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(v -> onSaveClick());
+        saveButton.setOnClickListener(v -> {
+            onSaveClick();
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Recipe Saved")
+                    .setMessage("The " + (recipeTitleInput.getText().toString().isEmpty() ?
+                            "untitled" : recipeTitleInput.getText().toString()) + " recipe has been saved." +
+                            "\nIt is safe to clear this page.")
+                    .setPositiveButton("Okay", (dialog, which) -> dialog.dismiss())
+                    .show();
+            });
 
         // Add clear button click listener
         ImageButton clearButton = view.findViewById(R.id.clear_button);
-        clearButton.setOnClickListener(v -> onClearClick());
+        clearButton.setOnClickListener(v -> {
+            // Create an AlertDialog builder
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Clear Recipe")
+                    .setMessage("Are you sure you want to clear all fields?")
+                    .setPositiveButton("Clear", (dialog, which) -> onClearClick())
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                    .show();
+        });
 
         updateIngredientsAndDirectionsViews();
 
