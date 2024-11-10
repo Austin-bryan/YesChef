@@ -189,6 +189,8 @@ public class AddFragment extends Fragment {
         Button clearButton = view.findViewById(R.id.clear_button);
         clearButton.setOnClickListener(v -> onClearClick());
 
+        updateIngredientsAndDirectionsViews();
+
         return view;
     }
 
@@ -203,13 +205,11 @@ public class AddFragment extends Fragment {
         ChipGroup dietaryOptionsGroup = requireView().findViewById(R.id.dietary_options_group);
         dietaryOptionsGroup.clearCheck();
 
-        recipeTitleInput.setText("");       // Clear the meal title
+        recipeTitleInput.setText("");     // Clear the meal title
         descriptionInput.setText("");     // Clear the meal description
 
         // Clear serving size
         servingSizeInput.setText("");
-
-
 
         if (caloriesView instanceof TextView) {
             ((TextView) caloriesView).setText("");
@@ -228,7 +228,6 @@ public class AddFragment extends Fragment {
         Button sugarFreeButton = getView().findViewById(R.id.option_sugar_free);
 
         updateIngredientsAndDirectionsViews();
-
     }
     private void updateIngredientsAndDirectionsViews() {
         while (ingredientsContainer.getChildCount() > 1) { // Keep the header (assume header is the first child)
