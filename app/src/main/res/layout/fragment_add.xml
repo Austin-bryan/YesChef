@@ -8,9 +8,6 @@
     tools:context=".fragments.AddFragment"
     tools:ignore="MissingConstraints">
 
-    <!-- Header TextView for "Create a Recipe" -->
-
-    <!-- Scrollable container for inputs -->
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -53,6 +50,7 @@
 
     </RelativeLayout>
 
+    <!-- Scrollable container for inputs -->
     <ScrollView
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
@@ -127,12 +125,13 @@
             <Spinner
                 android:id="@+id/difficulty_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/spinner_background"
-                android:dropDownWidth="match_parent"
-                android:padding="12dp"
+                android:layout_height="40dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/flat_spinner_background"
+                android:padding="10dp"
                 android:spinnerMode="dropdown"
+                android:layout_marginBottom="16dp"
+                android:dropDownWidth="match_parent"
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
