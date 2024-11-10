@@ -1,6 +1,7 @@
 package com.example.yeschef.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
+
 import com.example.yeschef.R;
 
 public class ScrollingFragment extends Fragment {
@@ -40,6 +43,12 @@ public class ScrollingFragment extends Fragment {
     private void addRecipeItem() {
         // Inflate the recipe item layout
         View recipeItemView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_item, recipeContainer, false);
+
+        // Set the OnClickListener for the recipe item view
+        recipeItemView.findViewById(R.id.recipe_image).setOnClickListener(v -> {
+            // Navigate to the AddFragment when the recipe item is clicked
+            Navigation.findNavController(v).navigate(R.id.action_scrollingFragment_to_addFragment);
+        });
 
         // Calculate the row and column for placement
         int columnCount = recipeContainer.getColumnCount();

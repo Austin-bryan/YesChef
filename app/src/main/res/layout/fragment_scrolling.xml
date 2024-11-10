@@ -23,7 +23,6 @@
 
     <!-- Search bar -->
 
-    <!-- Scrollable Container for recipe items -->
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"

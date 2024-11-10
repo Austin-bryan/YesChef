@@ -36,6 +36,10 @@ android {
 dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.cardview:cardview:1.0.0") // Latest version for CardView
+        implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
+        implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
+
+
 
     // Using the libraries from your version catalog
     implementation(libs.appcompat)
