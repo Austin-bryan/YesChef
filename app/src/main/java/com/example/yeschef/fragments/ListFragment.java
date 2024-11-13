@@ -22,7 +22,7 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        Button addTaskButton = view.findViewById(R.id.addTaskButton);
+        ImageButton addTaskButton = view.findViewById(R.id.addTaskButton);
         LinearLayout taskContainer = view.findViewById(R.id.taskContainer);
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
