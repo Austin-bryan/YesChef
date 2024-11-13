@@ -7,20 +7,46 @@
     android:layout_height="match_parent">
 
     <!-- Header TextView for "Browse Recipes" -->
-    <TextView
-        android:id="@+id/headerTextView"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Browse Recipes"
-        android:textSize="24sp"
-        android:textColor="@android:color/white"
         android:background="#FF69B4"
-        android:gravity="center"
-        android:padding="16dp"
         android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:padding="6dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <!-- Header Text centered in the layout -->
+        <TextView
+            android:id="@+id/headerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Browse Recipes"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <!-- Save Button aligned to the end (right) -->
+        <ImageButton
+            android:id="@+id/addRecipeButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:contentDescription="Add Grocery item"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_add_recipe"
+            android:tint="@android:color/white" />
+    </RelativeLayout>
 
     <!-- Search bar -->
 
@@ -28,11 +54,11 @@
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="76dp"
         android:iconifiedByDefault="false"
         android:queryHint="Search recipes..."
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,16 +82,4 @@
             <!-- Recipe items will be added here dynamically -->
         </GridLayout>
     </ScrollView>
-
-    <!-- Button to add a recipe -->
-    <Button
-        android:id="@+id/addRecipeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Recipe"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="16dp"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

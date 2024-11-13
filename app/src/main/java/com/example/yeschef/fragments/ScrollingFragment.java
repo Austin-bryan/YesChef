@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -19,7 +20,7 @@ public class ScrollingFragment extends Fragment {
 
     private GridLayout recipeContainer;
     private SearchView searchView;
-    private Button addRecipeButton;
+    private ImageButton addRecipeButton;
     private int recipeCount = 0; // Start with 0 recipes
 
     @Nullable
