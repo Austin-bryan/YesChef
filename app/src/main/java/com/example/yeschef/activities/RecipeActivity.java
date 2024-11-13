@@ -17,8 +17,6 @@ import com.example.yeschef.fragments.AddFragment;
 import com.example.yeschef.models.Recipe;
 
 public class RecipeActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +29,6 @@ public class RecipeActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
 }
 
 
