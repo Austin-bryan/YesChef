@@ -36,8 +36,7 @@
         android:layout_weight="1"
         android:layout_height="50dp"
         android:background="#fff"
-        android:hint="Grocery Item"
-        android:maxLength="30" />
+        android:hint="Grocery Item"/>
 
     <!-- X Button (for deleting task) -->
     <ImageButton

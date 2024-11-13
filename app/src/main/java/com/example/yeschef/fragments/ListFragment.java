@@ -37,7 +37,7 @@ public class ListFragment extends Fragment {
                 ImageButton deleteTaskButton = newTask.findViewById(R.id.deleteTaskButton);
 
                 // Set the hint for the task input
-                taskInput.setHint("Groceries");
+                taskInput.setHint("New Task");
 
                 // Animation for adding a new task
                 AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
