@@ -101,7 +101,7 @@ public class Recipe {
     public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
     public void setImages(String[] uris) {
         for (int i = 0; i < uris.length; i++) {
-            images[i] = uris[i] != null ? uris[i].toString() : null;
+            images[i] = uris[i] != null ? uris[i] : null;
         }
     }
 

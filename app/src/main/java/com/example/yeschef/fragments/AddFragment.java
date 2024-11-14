@@ -454,6 +454,7 @@ public class AddFragment extends Fragment {
         imageButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             clickedButton = imageButton;
             clickedIndex = index;
             galleryLauncher.launch(intent);
