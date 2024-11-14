@@ -17,6 +17,8 @@ public class Recipe {
     private boolean isGlutenFree = false;
     private List<String> ingredients;
     private List<String> directions;
+    private static int count = 0;
+    private int id = 0;
 
 
     //MealTime enumeration
@@ -52,6 +54,7 @@ public class Recipe {
         this.isSugarFree = isSugarFree;
         this.isGlutenFree = isGlutenFree;
         this.difficultyLevel = difficultyLevel;
+        id = count++;
 
     }
     public Recipe() {
