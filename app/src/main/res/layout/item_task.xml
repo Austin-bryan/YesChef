@@ -1,56 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#00000000"
-    android:paddingHorizontal="16dp"
-    android:id="@+id/item_task"
-    android:paddingVertical="4dp">
+    android:padding="4dp">
 
-    <!-- Left Rectangle -->
+    <!-- White Background Layer -->
     <View
-        android:id="@+id/left_rectangle"
-        android:layout_width="4dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/itemList" />
+        android:background="@android:color/white"/>
 
-    <!-- The circle image button -->
-    <ImageView
-        android:id="@+id/circle_button"
-        android:layout_width="27.5dp"
-        android:layout_height="27.5dp"
-        android:scaleType="fitXY"
-        android:background="#fff"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_circle"
-        android:padding="8dp"
-        android:contentDescription="Button"
-        android:layout_gravity="center_vertical" />
+    <!-- Main Content Layer -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:id="@+id/item_task"
+        android:paddingVertical="4dp"
+        android:background="@android:color/white">
 
-    <!-- Input Text Box -->
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/item_task_input"
-        android:layout_width="400dp"
-        android:layout_weight="1"
-        android:layout_height="50dp"
-        android:background="#fff"
-        android:hint="Grocery Item"
-        android:maxLength="30" />
+        <!-- Left Rectangle -->
+        <View
+            android:id="@+id/left_rectangle"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@color/itemList" />
 
-    <!-- X Button (for deleting task) -->
-    <ImageButton
-        android:id="@+id/checkmarkButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="6.5dp"
-        android:background="@drawable/ic_check_out"/>
+        <!-- Circle ImageView -->
+        <ImageView
+            android:id="@+id/circle_button"
+            android:layout_width="27.5dp"
+            android:layout_height="27.5dp"
+            android:background="@android:color/white"
+            android:src="@drawable/ic_circle"
+            android:contentDescription="Bullet Icon"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY" />
 
-    <ImageButton
-        android:id="@+id/deleteTaskButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="6.5dp"
-        android:background="@drawable/ic_trash_can" />
-</LinearLayout>
+        <!-- Input Text Box -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/item_task_input"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:hint="Grocery Item"/>
+
+        <!-- Checkmark Button -->
+        <ImageButton
+            android:id="@+id/checkmarkButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="6.5dp"
+            android:background="@android:color/white"
+            android:src="@drawable/ic_check_out"
+            android:contentDescription="Checkmark Icon"
+            android:padding="4dp"
+            android:scaleType="fitCenter" />
+
+        <!-- Delete Button -->
+        <ImageButton
+            android:id="@+id/deleteTaskButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="6.5dp"
+            android:background="@android:color/white"
+            android:src="@drawable/ic_trash_can"
+            android:contentDescription="Delete Icon"
+            android:padding="4dp"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+</FrameLayout>

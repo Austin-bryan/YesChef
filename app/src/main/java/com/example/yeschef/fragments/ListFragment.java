@@ -22,7 +22,7 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        Button addTaskButton = view.findViewById(R.id.addTaskButton);
+        ImageButton addTaskButton = view.findViewById(R.id.addTaskButton);
         LinearLayout taskContainer = view.findViewById(R.id.taskContainer);
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +37,7 @@ public class ListFragment extends Fragment {
                 ImageButton deleteTaskButton = newTask.findViewById(R.id.deleteTaskButton);
 
                 // Set the hint for the task input
-                taskInput.setHint("Groceries");
+                taskInput.setHint("New Task");
 
                 // Animation for adding a new task
                 AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);

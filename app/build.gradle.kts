@@ -1,5 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.application) apply true
+
 }
 
 android {
@@ -25,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -32,12 +34,25 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.cardview:cardview:1.0.0") // Latest version for CardView
+        implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
+        implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
+
+
+
+    // Using the libraries from your version catalog
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    // ViewPager2 dependency
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    // Testing libraries
     implementation("androidx.viewpager2:viewpager2:1.0.0") // Add ViewPager2 dependency here
 
     // Add GridLayout dependency
