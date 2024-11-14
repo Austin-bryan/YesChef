@@ -135,8 +135,6 @@ public class AddFragment extends Fragment {
             // Initialize empty lists
             ingredientsList = new ArrayList<>();
             directionsList = new ArrayList<>();
-            addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, null);
-            addNewItem(directionsContainer, "Step(s)", directionsColor, ingredientsContainer, null);
         }
 
         // Set up the meal time spinner
