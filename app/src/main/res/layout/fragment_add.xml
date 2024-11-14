@@ -8,33 +8,74 @@
     tools:context=".fragments.AddFragment"
     tools:ignore="MissingConstraints">
 
-    <!-- Header TextView for "Create a Recipe" -->
-    <TextView
-        android:id="@+id/headerTextView"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create a Recipe"
-        android:textSize="24sp"
-        android:textColor="@android:color/white"
         android:background="#FF69B4"
-        android:gravity="center"
-        android:padding="16dp"
         android:elevation="4dp"
-        android:layout_marginBottom="8dp"
-        tools:ignore="HardcodedText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:padding="6dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <!-- Header TextView for "Create a Recipe" -->
+
+        <!-- Clear Button aligned to the start (left) -->
+        <ImageButton
+            android:id="@+id/clear_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:contentDescription="Clear Recipe"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_delete"
+            android:tint="@android:color/white" />
+
+        <!-- Header Text centered in the layout -->
+        <TextView
+            android:id="@+id/headerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Create a Recipe"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <!-- Save Button aligned to the end (right) -->
+        <ImageButton
+            android:id="@+id/save_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:contentDescription="Save Recipe"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_save_button"
+            android:tint="@android:color/white" />
+
+    </RelativeLayout>
 
     <!-- Scrollable container for inputs -->
     <ScrollView
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:overScrollMode="always"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/headerTextView"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:overScrollMode="always"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,21 +85,21 @@
 
             <!-- Meal Title Input -->
             <include
-                layout="@layout/item_list"
                 android:id="@+id/meal_title"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp"
+                layout="@layout/item_list"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp" />
 
             <!-- Meal Description Input -->
             <include
-                layout="@layout/item_list"
                 android:id="@+id/meal_description"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp"
+                layout="@layout/item_list"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-16dp"
+                android:layout_marginEnd="-16dp" />
 
             <!-- Serving Size Input -->
             <EditText
@@ -90,25 +131,26 @@
                 android:id="@+id/difficulty_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Difficulty Level"
-                android:textSize="18sp"
-                android:textColor="#000000"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:padding="8dp"
+                android:text="Difficulty Level"
+                android:textColor="#000000"
+                android:textSize="18sp"
                 tools:ignore="HardcodedText" />
 
             <Spinner
                 android:id="@+id/difficulty_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/spinner_background"
-                android:padding="12dp"
-                android:textColor="#333333"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"
+                android:layout_height="40dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/flat_spinner_background"
+                android:padding="10dp"
                 android:spinnerMode="dropdown"
-                android:dropDownWidth="match_parent" />
+                android:layout_marginBottom="16dp"
+                android:dropDownWidth="match_parent"
+                android:textColor="#333333"
+                android:textSize="16sp" />
 
             <!-- Options Section -->
             <TextView
@@ -144,7 +186,6 @@
                     tools:ignore="HardcodedText" />
 
 
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/option_sugar_free"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -160,9 +201,9 @@
                 android:id="@+id/image_add_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:alignmentMode="alignMargins"
                 android:columnCount="4"
                 android:padding="16dp"
-                android:alignmentMode="alignMargins"
                 android:useDefaultMargins="true"
                 tools:ignore="GridLayout">
 
@@ -187,9 +228,9 @@
                 android:id="@+id/spinner1"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp"
                 android:layout_marginVertical="5dp"
                 android:background="@drawable/flat_spinner_background"
+                android:padding="10dp"
                 android:prompt="@string/select_mealtime"
                 android:spinnerMode="dropdown" />
 
@@ -202,11 +243,11 @@
                 tools:ignore="ExtraText">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/ingredients_label"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/ingredient"
                     android:layout_marginVertical="5dp"
+                    android:background="@color/ingredient"
                     android:padding="6dp">
 
                     <TextView
@@ -243,8 +284,8 @@
                     android:id="@+id/directions_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/step"
                     android:layout_marginVertical="5dp"
+                    android:background="@color/step"
                     android:padding="6dp">
 
                     <TextView
@@ -268,24 +309,6 @@
                         android:src="@drawable/ic_add" />
                 </RelativeLayout>
             </LinearLayout>
-            <Button
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save Recipe"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:textSize="18sp" />
-            <Button
-                android:id="@+id/clear_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Clear Recipe"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:textSize="18sp" />
-
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

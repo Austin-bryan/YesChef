@@ -1,5 +1,7 @@
 package com.example.yeschef.models;
 
+import android.net.Uri;
+
 import com.google.gson.Gson;
 
 import java.util.LinkedList;
@@ -10,6 +12,7 @@ public class Recipe {
     private int cal;
     //private int rating; 1-10, every even number being a .5 star
     private int protein;
+    private String[] images = new String[4];
     private String servingSize;
     private String description;
     private boolean isVegetarian = false;
@@ -19,7 +22,6 @@ public class Recipe {
     private List<String> directions;
     private static int count = 0;
     private int id = 0;
-
 
     //MealTime enumeration
     public enum MealTime {
@@ -62,12 +64,11 @@ public class Recipe {
         this.servingSize = "";
         this.description = "";
         this.cal = protein = 0;
-        this.ingredients = new LinkedList<String>();  // Initialize as empty list
-        this.directions = new LinkedList<String>();
+        this.ingredients = new LinkedList<>();  // Initialize as empty list
+        this.directions = new LinkedList<>();
         this.mealTime = MealTime.ANYTIME;
         this.difficultyLevel = DifficultyLevel.EASY;
-
-
+        this.images = new String[4];
     }
 
     // Getters
@@ -78,6 +79,13 @@ public class Recipe {
     public String getDescription() { return description; }
     public int getCal() { return cal; }
     public int getProtein() { return protein; }
+    public Uri[] getImages() {
+        Uri[] uris = new Uri[images.length];
+        for (int i = 0; i < images.length; i++) {
+            uris[i] = images[i] != null ? Uri.parse(images[i]) : null;
+        }
+        return uris;
+    }
     public MealTime getMealTime() { return mealTime; }
     public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
 
@@ -94,20 +102,26 @@ public class Recipe {
     public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
     public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
     public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
+    public void setImages(String[] uris) {
+        for (int i = 0; i < uris.length; i++) {
+            images[i] = uris[i] != null ? uris[i].toString() : null;
+        }
+    }
 
    //toString displays the recipe
    @Override
    public String toString() {
-       return "Recipe Title: " + recipeTitle + "\n" +
-               "Description: " + description + "\n" +
-               "Meal Time: " + mealTime + "\n" +
-               "Difficulty Level: " + difficultyLevel + "\n" +
-               "Calories: " + cal + "\n" +
+       return "Recipe Title: " + recipeTitle + '\n' +
+               "Description: " + description + '\n' +
+               "Meal Time: " + mealTime + '\n' +
+               "Difficulty Level: " + difficultyLevel + '\n' +
+               "Calories: " + cal + '\n' +
                "Protein: " + protein + "g\n" +
-               "Vegetarian: " + formatBool(isVegetarian) + "\n" +
-               "Gluten Free: " + formatBool(isGlutenFree) + "\n" +
-               "Sugar Free: " + formatBool(isSugarFree) + "\n" +
-               "Ingredients: \n" + formatIngredients() + "\n" +
+               "Vegetarian: " + formatBool(isVegetarian) + '\n' +
+               "Gluten Free: " + formatBool(isGlutenFree) + '\n' +
+               "Sugar Free: " + formatBool(isSugarFree) + '\n' +
+               "Images: \n" + formatImages() + '\n' +
+               "Ingredients: \n" + formatIngredients() + '\n' +
                "Directions: \n" + formatDirections();
     }
 
@@ -121,11 +135,21 @@ public class Recipe {
         }
         return answer;
     }
+    private String formatImages() {
+        StringBuilder sb = new StringBuilder();
+        for (String uri : images) {
+            if (uri != null) {
+                sb.append("- ").append(uri).append('\n');
+            }
+        }
+        return sb.toString();
+    }
+
     //formatter functions for our lists
     private String formatIngredients() {
         StringBuilder sb = new StringBuilder();
         for (String ingredient : ingredients) {
-            sb.append("- ").append(ingredient).append("\n");
+            sb.append("- ").append(ingredient).append('\n');
         }
         return sb.toString();
     }
@@ -134,7 +158,7 @@ public class Recipe {
         StringBuilder sb = new StringBuilder();
         int stepNumber = 1;
         for (String direction : directions) {
-            sb.append(stepNumber++).append(". ").append(direction).append("\n");
+            sb.append(stepNumber++).append(". ").append(direction).append('\n');
         }
         return sb.toString();
     }
@@ -143,5 +167,4 @@ public class Recipe {
         Gson gson = new Gson();
         return gson.toJson(this); // Converts the Recipe object to JSON string
     }
-
 }
