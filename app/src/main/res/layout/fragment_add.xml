@@ -131,8 +131,8 @@
                 android:id="@+id/difficulty_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="0dp"
                 android:padding="8dp"
                 android:text="Difficulty Level"
                 android:textColor="#000000"
@@ -152,22 +152,33 @@
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/flat_spinner_background"
+                android:padding="10dp"
+                android:prompt="@string/select_mealtime"
+                android:spinnerMode="dropdown" />
+
             <!-- Options Section -->
             <TextView
                 android:id="@+id/options_label"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="0dp"
                 android:padding="8dp"
                 android:text="Dietary Options"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:ignore="HardcodedText" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/dietary_options_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/option_vegetarian"
@@ -185,7 +196,6 @@
                     android:text="Gluten-Free"
                     tools:ignore="HardcodedText" />
 
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/option_sugar_free"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -196,43 +206,15 @@
 
             </com.google.android.material.chip.ChipGroup>
 
-            <!-- Grid Layout for Image Addition -->
-            <GridLayout
-                android:id="@+id/image_add_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alignmentMode="alignMargins"
-                android:columnCount="4"
-                android:padding="16dp"
-                android:useDefaultMargins="true"
-                tools:ignore="GridLayout">
-
-                <include
-                    android:id="@+id/image_add1"
-                    layout="@layout/image_add" />
-
-                <include
-                    android:id="@+id/image_add2"
-                    layout="@layout/image_add" />
-
-                <include
-                    android:id="@+id/image_add3"
-                    layout="@layout/image_add" />
-
-                <include
-                    android:id="@+id/image_add4"
-                    layout="@layout/image_add" />
-            </GridLayout>
-
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginVertical="5dp"
-                android:background="@drawable/flat_spinner_background"
-                android:padding="10dp"
-                android:prompt="@string/select_mealtime"
-                android:spinnerMode="dropdown" />
+            <ImageButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/image_add"
+                android:src="@drawable/ic_add_photo"
+                android:adjustViewBounds="true"
+                android:padding="20dp"
+                android:scaleType="fitCenter"
+                android:background="#eeaa88" />
 
             <!-- Ingredients Section -->
             <LinearLayout

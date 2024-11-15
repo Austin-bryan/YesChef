@@ -18,8 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;  // Add this import statement
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -38,7 +36,6 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AddFragment extends Fragment {
@@ -62,6 +59,7 @@ public class AddFragment extends Fragment {
     private Spinner difficultySpinner;
     private EditText recipeTitleInput;
     private EditText descriptionInput;
+    private ImageButton imageAdder;
     private EditText caloriesInput;
     private EditText proteinInput;
     private String[] images = new String[4];
@@ -86,6 +84,7 @@ public class AddFragment extends Fragment {
         proteinInput = view.findViewById(R.id.protein_input);
         mealTimeSpinner = view.findViewById(R.id.spinner1);
         difficultySpinner = view.findViewById(R.id.difficulty_spinner);
+        imageAdder = view.findViewById(R.id.image_add);
 
         // Initialize containers for dynamic content
         ingredientsContainer = view.findViewById(R.id.ingredients_container);
@@ -110,7 +109,8 @@ public class AddFragment extends Fragment {
         ingredientsLabel.setClickable(false);
         directionsLabel.setClickable(false);
 
-        initializeImageAdders(view);
+        initializeGalleryLauncher(view);
+        initializeImageAdder();
 
         // Initialize lists for ingredients and directions
         if (savedInstanceState != null) {
@@ -426,37 +426,23 @@ public class AddFragment extends Fragment {
         resetFields();
     }
 
-    private void initializeImageAdders(View view) {
+    private void initializeGalleryLauncher(View view) {
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                Uri imageUri = result.getData().getData();
-                if (clickedButton != null) {
-                    clickedButton.clearColorFilter();
-                    clickedButton.setColorFilter(null);
-                    clickedButton.setImageURI(imageUri);
-                    clickedButton.setPadding(0, 0, 0, 0);
+            if (!(result.getResultCode() == RESULT_OK && result.getData() != null))
+                return;
+            Uri imageUri = result.getData().getData();
 
-                    images[clickedIndex] = imageUri.toString();
-                }
-            }
+            imageAdder.clearColorFilter();
+            imageAdder.setColorFilter(null);
+            imageAdder.setImageURI(imageUri);
+            imageAdder.setPadding(0, 0, 0, 0);
         });
-
-        GridLayout gridLayout = view.findViewById(R.id.image_add_grid);  // Make sure to use view.findViewById()
-        int[] imageAddIds = {R.id.image_add1, R.id.image_add2, R.id.image_add3, R.id.image_add4};
-
-        for (int i = 0; i < imageAddIds.length; i++) {
-            RelativeLayout relativeLayout = gridLayout.findViewById(imageAddIds[i]);
-            ImageButton imageAdd = relativeLayout.findViewById(R.id.add_photo);
-            initializeImageAdder(i, imageAdd);
-        }
     }
-    private void initializeImageAdder(int index, ImageButton imageButton) {
-        imageButton.setOnClickListener(v -> {
+    private void initializeImageAdder() {
+        imageAdder.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            clickedButton = imageButton;
-            clickedIndex = index;
             galleryLauncher.launch(intent);
         });
     }
