@@ -421,6 +421,7 @@ public class AddFragment extends Fragment {
         recipe.setGlutenFree(isGlutenFree);
         recipe.setSugarFree(isSugarFree);
         recipe.setImages(images);
+
         // Assign a unique ID to the new recipe
         recipe.setId(maxId + 1);
         // Add recipe to map

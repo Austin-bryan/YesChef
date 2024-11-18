@@ -110,7 +110,7 @@ public class Recipe {
     }
     public void setId(int id) {
         this.id = id;
-        // Ensure the static count keeps up with the highest ID
+        // Ensure the static count keeps up with the highest ID for when app is shut off
         if (id >= count) {
             count = id + 1;
         }
