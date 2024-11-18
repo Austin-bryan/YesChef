@@ -62,7 +62,7 @@ public class AddFragment extends Fragment {
     private ImageButton imageAdder;
     private EditText caloriesInput;
     private EditText proteinInput;
-    private String[] images = new String[4];
+    private String image;
     private Button saveButton;
     private boolean isVegetarian = false;
     private boolean isGlutenFree = false;
@@ -403,7 +403,7 @@ public class AddFragment extends Fragment {
         recipe.setVegetarian(isVegetarian);
         recipe.setGlutenFree(isGlutenFree);
         recipe.setSugarFree(isSugarFree);
-        recipe.setImages(images);
+        recipe.setImage(image);
 
         JsonUtils.writeJsonToFile(requireContext(), recipe,"recipe.json");
         JsonUtils.logJson(recipe);
@@ -436,6 +436,7 @@ public class AddFragment extends Fragment {
             imageAdder.setColorFilter(null);
             imageAdder.setImageURI(imageUri);
             imageAdder.setPadding(0, 0, 0, 0);
+            image = String.valueOf(imageUri);
         });
     }
     private void initializeImageAdder() {

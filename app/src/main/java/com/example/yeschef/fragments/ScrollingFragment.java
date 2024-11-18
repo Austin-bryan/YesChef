@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.SearchView;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
@@ -56,7 +54,8 @@ public class ScrollingFragment extends Fragment {
         recipeTitleTextView.setText(recipe.getTitle());
 
         ImageButton recipeImageButton = recipeItemView.findViewById(R.id.recipe_image);
-        recipeImageButton.setImageURI(recipe.getImages()[0]);
+        Log.e("URI", recipe.getImage().toString());
+        recipeImageButton.setImageURI(recipe.getImage());
 
         // Set the OnClickListener for the recipe item view
         //recipeItemView.setOnClickListener(v -> {

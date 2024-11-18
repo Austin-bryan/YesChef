@@ -1,5 +1,6 @@
 package com.example.yeschef.models;
 
+import android.util.Log;
 import android.net.Uri;
 
 import com.google.gson.Gson;
@@ -12,7 +13,7 @@ public class Recipe {
     private int cal;
     //private int rating; 1-10, every even number being a .5 star
     private int protein;
-    private String[] images = new String[4];
+    private String image;
     private String servingSize;
     private String description;
     private boolean isVegetarian = false;
@@ -65,7 +66,7 @@ public class Recipe {
         this.directions = new LinkedList<>();
         this.mealTime = MealTime.ANYTIME;
         this.difficultyLevel = DifficultyLevel.EASY;
-        this.images = new String[4];
+        this.image = "";
     }
 
     // Getters
@@ -76,13 +77,7 @@ public class Recipe {
     public String getDescription() { return description; }
     public int getCal() { return cal; }
     public int getProtein() { return protein; }
-    public Uri[] getImages() {
-        Uri[] uris = new Uri[images.length];
-        for (int i = 0; i < images.length; i++) {
-            uris[i] = images[i] != null ? Uri.parse(images[i]) : null;
-        }
-        return uris;
-    }
+    public Uri getImage() { return Uri.parse(image); }
     public MealTime getMealTime() { return mealTime; }
     public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
 
@@ -99,9 +94,15 @@ public class Recipe {
     public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
     public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
     public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
-    public void setImages(String[] uris) {
-        for (int i = 0; i < uris.length; i++) {
-            images[i] = uris[i] != null ? uris[i] : null;
+    public void setImage(String uri) {
+        if (uri == null)
+        {
+            Log.e("URI", "NULL");
+        }
+        else {
+
+            Log.e("URI", uri.toString());
+            image = uri;
         }
     }
 
@@ -117,7 +118,7 @@ public class Recipe {
                "Vegetarian: " + formatBool(isVegetarian) + '\n' +
                "Gluten Free: " + formatBool(isGlutenFree) + '\n' +
                "Sugar Free: " + formatBool(isSugarFree) + '\n' +
-               "Images: \n" + formatImages() + '\n' +
+               "Image: \n" + image + '\n' +
                "Ingredients: \n" + formatIngredients() + '\n' +
                "Directions: \n" + formatDirections();
     }
@@ -131,15 +132,6 @@ public class Recipe {
             answer = "no";
         }
         return answer;
-    }
-    private String formatImages() {
-        StringBuilder sb = new StringBuilder();
-        for (String uri : images) {
-            if (uri != null) {
-                sb.append("- ").append(uri).append('\n');
-            }
-        }
-        return sb.toString();
     }
 
     //formatter functions for our lists
