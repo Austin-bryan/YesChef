@@ -35,6 +35,11 @@ import com.example.yeschef.utils.JsonUtils;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -430,20 +435,57 @@ public class AddFragment extends Fragment {
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (!(result.getResultCode() == RESULT_OK && result.getData() != null))
                 return;
+
             Uri imageUri = result.getData().getData();
 
-            imageAdder.clearColorFilter();
-            imageAdder.setColorFilter(null);
-            imageAdder.setImageURI(imageUri);
-            imageAdder.setPadding(0, 0, 0, 0);
-            image = String.valueOf(imageUri);
+            try {
+                // Copy the selected image to app's private storage
+                String copiedImagePath = copyImageToAppStorage(imageUri);
+
+                // Update the ImageView with the copied image
+                imageAdder.clearColorFilter();
+                imageAdder.setColorFilter(null);
+                imageAdder.setImageURI(Uri.parse(copiedImagePath)); // Load from app storage
+                imageAdder.setPadding(0, 0, 0, 0);
+
+                // Save the path for persistent storage
+                image = copiedImagePath;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
+    }
+    private String copyImageToAppStorage(Uri sourceUri) throws IOException {
+        // Get a unique file name
+        String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+
+        // Get the app's private storage directory
+        File storageDir = new File(requireContext().getFilesDir(), "images");
+        if (!storageDir.exists()) {
+            storageDir.mkdirs(); // Create the directory if it doesn't exist
+        }
+
+        // Create the destination file
+        File destFile = new File(storageDir, fileName);
+
+        // Open streams to copy the file
+        try (InputStream inputStream = requireContext().getContentResolver().openInputStream(sourceUri);
+             OutputStream outputStream = new FileOutputStream(destFile)) {
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+        }
+
+        // Return the absolute file path of the copied image
+        return destFile.getAbsolutePath();
     }
     private void initializeImageAdder() {
         imageAdder.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             galleryLauncher.launch(intent);
         });
     }
