@@ -21,6 +21,22 @@
         tools:layout_editor_absoluteY="0dp">
 
         <!-- Header Text centered in the layout -->
+
+        <!-- Clear Button aligned to the start (left) -->
+        <ImageButton
+            android:id="@+id/clear_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:contentDescription="Clear Recipe"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_delete"
+            android:tint="@android:color/white" />
+
         <TextView
             android:id="@+id/headerTextView"
             android:layout_width="wrap_content"
