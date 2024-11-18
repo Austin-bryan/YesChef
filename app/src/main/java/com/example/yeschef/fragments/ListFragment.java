@@ -59,6 +59,18 @@ public class ListFragment extends Fragment {
                     }
                 });
 
+                // Clear all tasks listener
+                ImageButton clearTasksButton = view.findViewById(R.id.clear_button);
+
+                clearTasksButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v){
+                        taskContainer.removeAllViews();
+
+                    }
+
+                });
+
                 // Delete task listener
                 deleteTaskButton.setOnClickListener(new View.OnClickListener() {
                     @Override
