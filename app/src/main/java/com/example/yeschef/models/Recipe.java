@@ -88,6 +88,7 @@ public class Recipe {
     }
     public MealTime getMealTime() { return mealTime; }
     public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
+    public int getId() { return id; }
 
    //Setters
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
@@ -105,6 +106,13 @@ public class Recipe {
     public void setImages(String[] uris) {
         for (int i = 0; i < uris.length; i++) {
             images[i] = uris[i] != null ? uris[i].toString() : null;
+        }
+    }
+    public void setId(int id) {
+        this.id = id;
+        // Ensure the static count keeps up with the highest ID
+        if (id >= count) {
+            count = id + 1;
         }
     }
 

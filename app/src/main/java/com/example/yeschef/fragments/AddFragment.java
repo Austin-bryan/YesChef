@@ -38,8 +38,10 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class AddFragment extends Fragment {
 
@@ -315,6 +317,21 @@ public class AddFragment extends Fragment {
         outState.putStringArrayList(KEY_DIRECTIONS_LIST, new ArrayList<>(directionsList));
     }
     private void onSaveClick() {
+       // Check recipe map storage
+        Map<Integer, Recipe> loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipe.json");
+        if (loadedRecipeMap == null) {
+            loadedRecipeMap = new HashMap<>(); // Initialize if the file is empty or doesn't exist
+            Log.d("Loaded Test", "Recipe map was null; initialized new map.");        }
+
+        // Log the loaded map
+        Log.d("Loaded Test", "Loaded recipe map content before save: " + loadedRecipeMap.toString());
+
+        // Find the highest existing ID
+        int maxId = 0;
+        for (Integer existingId : loadedRecipeMap.keySet()) {
+            maxId = Math.max(maxId, existingId);
+        }
+        Log.d("Loaded Test", "Max ID found: " + maxId);
         // Create a new Recipe object
         Recipe recipe = new Recipe();
 
@@ -404,23 +421,22 @@ public class AddFragment extends Fragment {
         recipe.setGlutenFree(isGlutenFree);
         recipe.setSugarFree(isSugarFree);
         recipe.setImages(images);
-
-        JsonUtils.writeJsonToFile(requireContext(), recipe,"recipe.json");
-        JsonUtils.logJson(recipe);
-
-        // Log the recipe details to test the save functionality
-        Log.e("RecipeTest", recipe.toString());
-
+        // Assign a unique ID to the new recipe
+        recipe.setId(maxId + 1);
+        // Add recipe to map
+        loadedRecipeMap.put(recipe.getId(), recipe);
         // Use the file name recipe.json
         String fileName = "recipe.json";
+        JsonUtils.saveRecipeMapToJson(requireContext(), loadedRecipeMap, "recipe.json");
 
-        // Write the Recipe object to JSON file
-        JsonUtils.writeJsonToFile(requireContext(), recipe, fileName);
 
-        // Read the Recipe object back from the JSON file
-        Recipe restoredRecipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
 
-        Log.e("RestoreTest", restoredRecipe.toString());
+        Log.d("Loaded Test", "Loaded recipe map size: " + loadedRecipeMap.size());
+        for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
+            Log.d("Load Test", "Recipe ID: " + entry.getKey() + ", Title: " + entry.getValue().getTitle());
+        }
+
+
     }
     private void onClearClick() {
         resetFields();

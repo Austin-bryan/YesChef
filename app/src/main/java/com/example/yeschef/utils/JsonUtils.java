@@ -3,9 +3,9 @@ package com.example.yeschef.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.yeschef.fragments.AddFragment;
 import com.example.yeschef.models.Recipe;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,50 +13,42 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JsonUtils {
-    // Convert Recipe object to JSON string
-    public static String convertRecipeToJson(Recipe recipe) {
+
+    public static void saveRecipeMapToJson(Context context, Map<Integer, Recipe> recipeMap, String fileName) {
         Gson gson = new Gson();
-        return gson.toJson(recipe); // Converts the Recipe object to JSON string
-    }
+        try (FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+             OutputStreamWriter osw = new OutputStreamWriter(fos)) {
 
-    // Method to write JSON to a text file
-    public static void writeJsonToFile(Context context, Recipe recipe, String fileName) {
-        String json = convertRecipeToJson(recipe); // Convert Recipe to JSON string
-
-       File file = new File(context.getFilesDir(), fileName); // Create a file in internal storage
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            fos.write(json.getBytes()); // Write JSON string to file
-            fos.flush(); // Ensure all data is written
-            System.out.println("JSON file created: " + file.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle any exceptions
-        }
-    }
-
-    // This allows us to log the json file data in logcat so we don't have to search through the phones files
-    public static void logJson(Recipe recipe) {
-        Gson gson = new Gson();
-        String json = gson.toJson(recipe);
-        Log.e("JsonUtils", "Recipe JSON: " + json); // stored in alphabetical order
-    }
-
-    public static Recipe readJsonFromFile(Context context, String fileName)
-    {
-        Gson gson = new Gson();
-
-        File file = new File(context.getFilesDir(), fileName);
-
-        try (FileInputStream fis = new FileInputStream(file); // reading strings of raw bytes
-             InputStreamReader isr = new InputStreamReader(fis); // reads bytes and decodes them into characters
-             BufferedReader reader = new BufferedReader(isr)) { // reads text from character input stream
-
-            // Parse the JSON content back into a Recipe object
-            return gson.fromJson(reader, Recipe.class);
+            gson.toJson(recipeMap, osw); // Convert the map to JSON and save
+            osw.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            return null; // Return null if there was an error
         }
     }
+
+    public static Map<Integer, Recipe> loadRecipeMapFromJson(Context context, String fileName) {
+        Gson gson = new Gson();
+        Map<Integer, Recipe> recipeMap = new HashMap<>();
+
+        File file = new File(context.getFilesDir(), fileName);
+        if (file.exists()) {
+            try (FileInputStream fis = new FileInputStream(file);
+                 InputStreamReader isr = new InputStreamReader(fis);
+                 BufferedReader reader = new BufferedReader(isr)) {
+
+                Type type = new TypeToken<Map<Integer, Recipe>>() {}.getType();
+                recipeMap = gson.fromJson(reader, type); // Convert JSON to Map
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return recipeMap;
+    }
+
 }
