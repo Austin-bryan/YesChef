@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         }
 
-        transaction.replace(R.id.container, fragment).commit();
+        transaction.replace(R.id.main, fragment).commit();
     }
 
     // Method to animate the BottomNavigationView item with scale effect

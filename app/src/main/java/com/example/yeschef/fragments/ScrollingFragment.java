@@ -9,10 +9,12 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
@@ -54,15 +56,16 @@ public class ScrollingFragment extends Fragment {
         recipeTitleTextView.setText(recipe.getTitle());
 
         ImageButton recipeImageButton = recipeItemView.findViewById(R.id.recipe_image);
-        Log.e("URI", recipe.getImage().toString());
+        Log.d("Test", recipe.getImage().toString());
         recipeImageButton.setImageURI(recipe.getImage());
 
         // Set the OnClickListener for the recipe item view
-        //recipeItemView.setOnClickListener(v -> {
-            //Bundle bundle = new Bundle();
-            //bundle.putString("recipeId", recipe.getId()); // Assuming each Recipe has a unique ID
-            //Navigation.findNavController(v).navigate(R.id.action_scrollingFragment_to_addFragment, bundle);
-        //});
+        recipeImageButton.setOnClickListener(v -> {
+//            Bundle bundle = new Bundle();
+//            bundle.putString("recipeId", recipe.getid()); // Assuming each Recipe has a unique ID
+            Log.d("Test", "swag");
+            Navigation.findNavController(v).navigate(R.id.action_scrollingFragment_to_addFragment);
+        });
 
         // Calculate the row and column for placement
         int columnCount = recipeContainer.getColumnCount();
