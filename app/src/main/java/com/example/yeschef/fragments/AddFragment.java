@@ -318,7 +318,9 @@ public class AddFragment extends Fragment {
     }
     private void onSaveClick() {
        // Check recipe map storage
-        Map<Integer, Recipe> loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipe.json");
+        Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
+        loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipe.json");
+
         if (loadedRecipeMap == null) {
             loadedRecipeMap = new HashMap<>(); // Initialize if the file is empty or doesn't exist
             Log.d("Loaded Test", "Recipe map was null; initialized new map.");        }
