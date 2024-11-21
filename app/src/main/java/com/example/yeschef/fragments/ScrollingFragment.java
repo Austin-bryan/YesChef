@@ -61,10 +61,19 @@ public class ScrollingFragment extends Fragment {
 
         // Set the OnClickListener for the recipe item view
         recipeImageButton.setOnClickListener(v -> {
+            // Create an instance of the RecipeDetailsFragment
+            AddFragment recipeDetailsFragment = new AddFragment();
+
+            // Pass any necessary data to the new fragment using a Bundle
 //            Bundle bundle = new Bundle();
-//            bundle.putString("recipeId", recipe.getid()); // Assuming each Recipe has a unique ID
-            Log.d("Test", "swag");
-            Navigation.findNavController(v).navigate(R.id.action_scrollingFragment_to_addFragment);
+//            bundle.putString("recipeId", recipe.getId()); // Assuming you have a recipe ID
+//            recipeDetailsFragment.setArguments(bundle);
+
+            // Replace the current fragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
+                    .addToBackStack(null) // Add to back stack for "Back" navigation
+                    .commit();
         });
 
         // Calculate the row and column for placement
