@@ -11,6 +11,8 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import com.example.yeschef.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -62,10 +64,18 @@ public class ListFragment extends Fragment {
                 // Clear all tasks listener
                 ImageButton clearTasksButton = view.findViewById(R.id.clear_button);
 
+
                 clearTasksButton.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v){
-                        taskContainer.removeAllViews();
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("Clear Recipe")
+                                .setMessage("Are you sure you want to clear all fields?")
+                                .setPositiveButton("Clear", (dialog, which) -> taskContainer.removeAllViews())
+                                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                                .show();
+
 
                     }
 
