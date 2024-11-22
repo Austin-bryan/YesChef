@@ -65,9 +65,26 @@ public class ScrollingFragment extends Fragment {
             AddFragment recipeDetailsFragment = new AddFragment();
 
             // Pass any necessary data to the new fragment using a Bundle
-//            Bundle bundle = new Bundle();
-//            bundle.putString("recipeId", recipe.getId()); // Assuming you have a recipe ID
-//            recipeDetailsFragment.setArguments(bundle);
+
+            Log.d("Test", recipe.getServingSize());
+            Log.d("Test", String.valueOf(recipe.getCal()));
+
+            Bundle bundle = new Bundle();
+            bundle.putString("recipeTitle", recipe.getTitle());
+            bundle.putString("recipeDescription", recipe.getDescription());
+            bundle.putString("servingSize", recipe.getServingSize());
+            bundle.putInt("calories", recipe.getCal());
+            bundle.putInt("protein", recipe.getProtein());
+            bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
+            bundle.putInt("mealtime", recipe.getMealTime().ordinal());
+
+            bundle.putBoolean("isVegetarian", recipe.getIsVegetarian());
+            bundle.putBoolean("isGlutenFree", recipe.getIsGlutenFree());
+            bundle.putBoolean("isSugarFree", recipe.getIsSugarFree());
+
+            bundle.putString("image", recipe.getImage().toString());
+
+            recipeDetailsFragment.setArguments(bundle);
 
             // Replace the current fragment
             requireActivity().getSupportFragmentManager().beginTransaction()

@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
 import com.example.yeschef.utils.JsonUtils;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -65,8 +66,12 @@ public class AddFragment extends Fragment {
     private EditText recipeTitleInput;
     private EditText descriptionInput;
     private ImageButton imageAdder;
+    private EditText servingSizeInput;
     private EditText caloriesInput;
     private EditText proteinInput;
+    private Chip optionVegetarian;
+    private Chip optionGlutenFree;
+    private Chip optionSugarFree;
     private String image;
     private Button saveButton;
     private boolean isVegetarian = false;
@@ -85,6 +90,7 @@ public class AddFragment extends Fragment {
         View mealDescriptionView = view.findViewById(R.id.meal_description);
         descriptionInput = mealDescriptionView.findViewById(R.id.ingredient_step_input); // Adjust as necessary
 
+        servingSizeInput = view.findViewById(R.id.serving_size_input);
         caloriesInput = view.findViewById(R.id.calories_input);
         proteinInput = view.findViewById(R.id.protein_input);
         mealTimeSpinner = view.findViewById(R.id.spinner1);
@@ -93,7 +99,7 @@ public class AddFragment extends Fragment {
 
         // Initialize containers for dynamic content
         ingredientsContainer = view.findViewById(R.id.ingredients_container);
-        directionsContainer = view.findViewById(R.id.directions_container); // Initialize directionsContainer
+        directionsContainer = view.findViewById(R.id.directions_container);
 
         // Set up labels and their colors
         RelativeLayout ingredientsLabel = view.findViewById(R.id.ingredients_label);
@@ -164,26 +170,13 @@ public class AddFragment extends Fragment {
         addButtonListeners(view, ingredientsContainer, directionsContainer, ingredientsColor, directionsColor);
 
         // Add buttons for dietary options
-        Button vegetarianButton = view.findViewById(R.id.option_vegetarian);
-        Button glutenFreeButton = view.findViewById(R.id.option_gluten_free);
-        Button sugarFreeButton = view.findViewById(R.id.option_sugar_free);
+        optionVegetarian = view.findViewById(R.id.option_vegetarian);
+        optionGlutenFree = view.findViewById(R.id.option_gluten_free);
+        optionSugarFree = view.findViewById(R.id.option_sugar_free);
 
         //Add click listeners
         // Set click listeners to toggle booleans
-        vegetarianButton.setOnClickListener(v -> {
-            isVegetarian = !isVegetarian;
-            vegetarianButton.setSelected(isVegetarian);
-        });
 
-        glutenFreeButton.setOnClickListener(v -> {
-            isGlutenFree = !isGlutenFree;
-            glutenFreeButton.setSelected(isGlutenFree);
-        });
-
-        sugarFreeButton.setOnClickListener(v -> {
-            isSugarFree = !isSugarFree;
-            sugarFreeButton.setSelected(isSugarFree);
-        });
 
         // Add save button click listener
         ImageButton saveButton = view.findViewById(R.id.save_button);
@@ -212,7 +205,51 @@ public class AddFragment extends Fragment {
 
         updateIngredientsAndDirectionsViews();
 
+        Bundle args = getArguments();
+        if (args != null) {
+            String recipeName = args.getString("recipeName");
+            String recipeImageUri = args.getString("recipeImageUri");
+
+            // Populate the UI
+            if (args.containsKey("recipeTitle"))
+                recipeTitleInput.setText(args.getString("recipeTitle"));
+            if (args.containsKey("recipeDescription"))
+                descriptionInput.setText(args.getString("recipeDescription"));
+            if (args.containsKey("servingSize"))
+                servingSizeInput.setText(args.getString("servingSize"));
+            if (args.containsKey("calories"))
+                caloriesInput.setText(String.valueOf(args.getInt("calories")));
+            if (args.containsKey("protein"))
+                proteinInput.setText(String.valueOf(args.getInt("protein")));
+            if (args.containsKey("difficulty"))
+                difficultySpinner.setSelection(args.getInt("difficulty"));
+            if (args.containsKey("mealtime"))
+                mealTimeSpinner.setSelection(args.getInt("mealtime"));
+
+            if (args.containsKey("isVegetarian"))
+                optionVegetarian.setChecked(args.getBoolean("isVegetarian"));
+            if (args.containsKey("isGlutenFree"))
+                optionGlutenFree.setChecked(args.getBoolean("isGlutenFree"));
+            if (args.containsKey("isSugarFree"))
+                optionSugarFree.setChecked(args.getBoolean("isSugarFree"));
+
+            if (args.containsKey("image"))
+                if (!args.getString("image").isEmpty())
+                    SetImage(args.getString("image"));
+
+//            ingredientsContainer
+//            directionsContainer.setText(recipeName);
+
+        }
+
         return view;
+    }
+    private void SetImage(String uri)
+    {
+        imageAdder.clearColorFilter();
+        imageAdder.setColorFilter(null);
+        imageAdder.setImageURI(Uri.parse(uri)); // Load from app storage
+        imageAdder.setPadding(0, 0, 0, 0);
     }
 
     // reset UI method
@@ -326,6 +363,7 @@ public class AddFragment extends Fragment {
         // Retrieve input from UI components
         String title = recipeTitleInput.getText().toString();
         String description = descriptionInput.getText().toString();
+        String servingSize = servingSizeInput.getText().toString();
         String caloriesStr = caloriesInput.getText().toString();
         String proteinStr = proteinInput.getText().toString();
         String mealTimeStr = mealTimeSpinner.getSelectedItem().toString();
@@ -369,6 +407,7 @@ public class AddFragment extends Fragment {
         // Set user input to the Recipe object
         recipe.setTitle(title);
         recipe.setDescription(description);
+        recipe.setServingSize(servingSize);
         recipe.setCal(calories);
         recipe.setProtein(protein);
         recipe.setMealTime(mealTime);
@@ -405,9 +444,9 @@ public class AddFragment extends Fragment {
         recipe.setIngredients(ingredientsList);
         recipe.setDirections(directionsList);
 
-        recipe.setVegetarian(isVegetarian);
-        recipe.setGlutenFree(isGlutenFree);
-        recipe.setSugarFree(isSugarFree);
+        recipe.setVegetarian(optionVegetarian.isChecked());
+        recipe.setGlutenFree(optionGlutenFree.isChecked());
+        recipe.setSugarFree(optionSugarFree.isChecked());
         recipe.setImage(image);
 
         JsonUtils.writeJsonToFile(requireContext(), recipe,"recipe.json");
@@ -443,10 +482,7 @@ public class AddFragment extends Fragment {
                 String copiedImagePath = copyImageToAppStorage(imageUri);
 
                 // Update the ImageView with the copied image
-                imageAdder.clearColorFilter();
-                imageAdder.setColorFilter(null);
-                imageAdder.setImageURI(Uri.parse(copiedImagePath)); // Load from app storage
-                imageAdder.setPadding(0, 0, 0, 0);
+                SetImage(copiedImagePath);
 
                 // Save the path for persistent storage
                 image = copiedImagePath;

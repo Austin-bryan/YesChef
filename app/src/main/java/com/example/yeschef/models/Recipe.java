@@ -77,11 +77,14 @@ public class Recipe {
     public String getDescription() { return description; }
     public int getCal() { return cal; }
     public int getProtein() { return protein; }
+    public boolean getIsVegetarian() { return isVegetarian; }
+    public boolean getIsGlutenFree() { return isGlutenFree; }
+    public boolean getIsSugarFree()  { return isSugarFree; }
     public Uri getImage() { return Uri.parse(image); }
     public MealTime getMealTime() { return mealTime; }
     public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
 
-   //Setters
+    // Setters
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
     public void setIngredients(List<String> ingredients) { this.ingredients = ingredients; }
     public void setDirections(List<String> directions) { this.directions = directions; }
@@ -113,8 +116,9 @@ public class Recipe {
                "Description: " + description + '\n' +
                "Meal Time: " + mealTime + '\n' +
                "Difficulty Level: " + difficultyLevel + '\n' +
+               "Serving Size: " + servingSize + '\n' +
                "Calories: " + cal + '\n' +
-               "Protein: " + protein + "g\n" +
+               "Protein: " + protein + '\n' +
                "Vegetarian: " + formatBool(isVegetarian) + '\n' +
                "Gluten Free: " + formatBool(isGlutenFree) + '\n' +
                "Sugar Free: " + formatBool(isSugarFree) + '\n' +
