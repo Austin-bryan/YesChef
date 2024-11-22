@@ -64,6 +64,11 @@
             android:orientation="vertical"
             android:padding="8dp">
             <!-- Container for dynamically added tasks -->
+
+            <!-- Spacer View -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -49,8 +49,8 @@ public class AddFragment extends Fragment {
     private static final String KEY_INGREDIENTS_LIST = "ingredients_list";
     private static final String KEY_DIRECTIONS_LIST = "directions_list";
 
-    private List<String> ingredientsList;
-    private List<String> directionsList;
+    private ArrayList<String> ingredientsList;
+    private ArrayList<String> directionsList;
 
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ImageButton clickedButton;

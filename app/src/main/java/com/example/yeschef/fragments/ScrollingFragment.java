@@ -84,6 +84,9 @@ public class ScrollingFragment extends Fragment {
 
             bundle.putString("image", recipe.getImage().toString());
 
+            bundle.putStringArrayList("ingredients", recipe.getIngredients());
+            bundle.putStringArrayList("directions", recipe.getDirections());
+
             recipeDetailsFragment.setArguments(bundle);
 
             // Replace the current fragment

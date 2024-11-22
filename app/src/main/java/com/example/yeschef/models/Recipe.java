@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,8 +20,8 @@ public class Recipe {
     private boolean isVegetarian = false;
     private boolean isSugarFree = false;
     private boolean isGlutenFree = false;
-    private List<String> ingredients;
-    private List<String> directions;
+    private ArrayList<String> ingredients;
+    private ArrayList<String> directions;
 
     //MealTime enumeration
     public enum MealTime {
@@ -40,8 +41,8 @@ public class Recipe {
     private MealTime mealTime;
     private DifficultyLevel difficultyLevel;
 
-    public Recipe(String name, List<String> ingredients, String servingSize,
-                  int cal, int protein, String description, List<String> directions,
+    public Recipe(String name, ArrayList<String> ingredients, String servingSize,
+                  int cal, int protein, String description, ArrayList<String> directions,
                   MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree, DifficultyLevel difficultyLevel) {
         this.recipeTitle = name;
         this.ingredients = ingredients;
@@ -62,8 +63,8 @@ public class Recipe {
         this.servingSize = "";
         this.description = "";
         this.cal = protein = 0;
-        this.ingredients = new LinkedList<>();  // Initialize as empty list
-        this.directions = new LinkedList<>();
+        this.ingredients = new ArrayList<>();  // Initialize as empty list
+        this.directions = new ArrayList<>();
         this.mealTime = MealTime.ANYTIME;
         this.difficultyLevel = DifficultyLevel.EASY;
         this.image = "";
@@ -71,8 +72,8 @@ public class Recipe {
 
     // Getters
     public String getTitle() { return recipeTitle; }
-    public List<String> getIngredients() { return ingredients; }
-    public List<String> getDirections() { return directions; }
+    public ArrayList<String> getIngredients() { return ingredients; }
+    public ArrayList<String> getDirections() { return directions; }
     public String getServingSize() { return servingSize; }
     public String getDescription() { return description; }
     public int getCal() { return cal; }
@@ -86,8 +87,8 @@ public class Recipe {
 
     // Setters
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
-    public void setIngredients(List<String> ingredients) { this.ingredients = ingredients; }
-    public void setDirections(List<String> directions) { this.directions = directions; }
+    public void setIngredients(ArrayList<String> ingredients) { this.ingredients = ingredients; }
+    public void setDirections(ArrayList<String> directions) { this.directions = directions; }
     public void setServingSize(String servingSize) { this.servingSize = servingSize; }
     public void setDescription(String description) { this.description = description; }
     public void setCal(int cal) { this.cal = cal; }

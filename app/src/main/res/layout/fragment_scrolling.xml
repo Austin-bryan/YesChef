@@ -70,16 +70,27 @@
         app:layout_constraintBottom_toTopOf="@id/addRecipeButton"
         app:layout_constraintTop_toBottomOf="@id/searchView">
 
-        <GridLayout
-            android:id="@+id/recipe_container"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
-            <!-- Recipe items will be added here dynamically -->
-        </GridLayout>
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <GridLayout
+                android:id="@+id/recipe_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+                <!-- Recipe items will be added here dynamically -->
+            </GridLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
