@@ -132,14 +132,14 @@ public class AddFragment extends Fragment {
             // Populate ingredients
             if (ingredientsList != null) {
                 for (String ingredient : ingredientsList) {
-                    addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, ingredient);
+                    addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, ingredient, true);
                 }
             }
 
             // Populate directions
             if (directionsList != null) {
                 for (String direction : directionsList) {
-                    addNewItem(directionsContainer, "Step(s)", directionsColor, ingredientsContainer, direction);
+                    addNewItem(directionsContainer, "Step(s)", directionsColor, ingredientsContainer, direction, true);
                 }
             }
         } else {
@@ -237,6 +237,23 @@ public class AddFragment extends Fragment {
                 if (!args.getString("image").isEmpty())
                     SetImage(args.getString("image"));
 
+            if (args.containsKey("ingredients"))
+                for (String ingredient : args.getStringArrayList("ingredients"))
+                {
+                    addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, ingredient, false);
+//                    View newItem = addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, false);
+//                    TextInputEditText input = newItem.findViewById(R.id.ingredient_step_input);
+//                    input.setText(ingredient);
+                }
+            if (args.containsKey("directions"))
+                for (String direction : args.getStringArrayList("directions"))
+                {
+                    addNewItem(directionsContainer, "Step(s)", directionsColor, null, direction, false);
+//                    View newItem = addNewItem(directionsContainer, "Step(s)", directionsColor, null, false);
+//                    TextInputEditText input = newItem.findViewById(R.id.ingredient_step_input);
+//                    input.setText(direction);
+                }
+
 //            ingredientsContainer
 //            directionsContainer.setText(recipeName);
 
@@ -301,8 +318,8 @@ public class AddFragment extends Fragment {
         ImageButton addIngredientButton = view.findViewById(R.id.add_ingredient_button);
         ImageButton addDirectionButton = view.findViewById(R.id.add_direction_button);
 
-        addIngredientButton.setOnClickListener(v -> addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer));
-        addDirectionButton.setOnClickListener(v -> addNewItem(directionsContainer, "Step(s)", directionsColor, null));
+        addIngredientButton.setOnClickListener(v -> addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, true));
+        addDirectionButton.setOnClickListener(v -> addNewItem(directionsContainer, "Step(s)", directionsColor, null, true));
     }
 
     private void toggleCategoryButtons() {
@@ -543,26 +560,34 @@ public class AddFragment extends Fragment {
             }
         }
     }
-    private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer) {
-        addNewItem(itemListContainer, hintText, labelColor, otherContainer, null);
+    private View addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer, boolean animate) {
+        return addNewItem(itemListContainer, hintText, labelColor, otherContainer, null, animate);
     }
-    private void addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer, String existingText) {
-        if (isAnimating) return;
-        isAnimating = true;
+    private View addNewItem(LinearLayout itemListContainer, String hintText, int labelColor, LinearLayout otherContainer, String existingText, boolean animate) {
+        if (animate) {
+            if (isAnimating)
+                return null;
+            isAnimating = true;
+        }
 
         // Inflate the item_list layout
         View newItem = getLayoutInflater().inflate(R.layout.item_list, itemListContainer, false);
-        newItem.setAlpha(0f);
-        newItem.setTranslationY(-30);
 
-        // Animate the appearance of the new item
-        newItem.animate()
-                .alpha(1f)
-                .translationY(0)
-                .setDuration(300)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
-                .withEndAction(() -> { isAnimating = false; })
-                .start();
+        if (animate) {
+            newItem.setAlpha(0f);
+            newItem.setTranslationY(-30);
+
+            // Animate the appearance of the new item
+            newItem.animate()
+                    .alpha(1f)
+                    .translationY(0)
+                    .setDuration(300)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .withEndAction(() -> {
+                        isAnimating = false;
+                    })
+                    .start();
+        }
 
         // Set up the input field and hint
         TextInputEditText inputField = newItem.findViewById(R.id.ingredient_step_input);
@@ -593,7 +618,7 @@ public class AddFragment extends Fragment {
                 playSlideContainerAnimation(directionsContainer, newItem, -1);
             }
             if (otherContainer != null && itemListContainer.getChildCount() == 0) {
-                addNewItem(itemListContainer, hintText, labelColor, otherContainer);
+                addNewItem(itemListContainer, hintText, labelColor, otherContainer, true);
             }
 
             itemListContainer.removeView(newItem); // Remove the item from the container
@@ -606,6 +631,8 @@ public class AddFragment extends Fragment {
 
         // Add the new item to the container
         itemListContainer.addView(newItem);
+
+        return newItem;
     }
 
     private void playDeleteAnimation(View itemView, LinearLayout itemListContainer) {
