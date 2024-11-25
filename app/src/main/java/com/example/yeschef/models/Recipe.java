@@ -22,6 +22,8 @@ public class Recipe {
     private boolean isGlutenFree = false;
     private ArrayList<String> ingredients;
     private ArrayList<String> directions;
+    private static int count = 0;
+    private int id = 0;
 
     //MealTime enumeration
     public enum MealTime {
@@ -56,7 +58,7 @@ public class Recipe {
         this.isSugarFree = isSugarFree;
         this.isGlutenFree = isGlutenFree;
         this.difficultyLevel = difficultyLevel;
-
+        id = count++;
     }
     public Recipe() {
         this.recipeTitle = "";
@@ -84,6 +86,7 @@ public class Recipe {
     public Uri getImage() { return Uri.parse(image); }
     public MealTime getMealTime() { return mealTime; }
     public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
+    public int getId() { return id; }
 
     // Setters
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
@@ -107,6 +110,13 @@ public class Recipe {
 
             Log.e("URI", uri.toString());
             image = uri;
+        }
+    }
+    public void setId(int id) {
+        this.id = id;
+        // Ensure the static count keeps up with the highest ID for when app is shut off
+        if (id >= count) {
+            count = id + 1;
         }
     }
 

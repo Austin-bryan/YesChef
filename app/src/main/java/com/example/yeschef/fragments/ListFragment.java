@@ -11,6 +11,8 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import com.example.yeschef.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -37,7 +39,7 @@ public class ListFragment extends Fragment {
                 ImageButton deleteTaskButton = newTask.findViewById(R.id.deleteTaskButton);
 
                 // Set the hint for the task input
-                taskInput.setHint("New Task");
+                taskInput.setHint("New Item");
 
                 // Animation for adding a new task
                 AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
@@ -57,6 +59,26 @@ public class ListFragment extends Fragment {
                             taskContainer.addView(newTask);
                         }
                     }
+                });
+
+                // Clear all tasks listener
+                ImageButton clearTasksButton = view.findViewById(R.id.clear_button);
+
+
+                clearTasksButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v){
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("Clear Recipe")
+                                .setMessage("Are you sure you want to clear all fields?")
+                                .setPositiveButton("Clear", (dialog, which) -> taskContainer.removeAllViews())
+                                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                                .show();
+
+
+                    }
+
                 });
 
                 // Delete task listener

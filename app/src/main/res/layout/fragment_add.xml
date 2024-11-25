@@ -102,14 +102,30 @@
                 android:layout_marginEnd="-16dp" />
 
             <!-- Serving Size Input -->
+            <TextView
+                android:id="@+id/label_serving_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serving Size"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp" />
             <EditText
                 android:id="@+id/serving_size_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Serving Size"
+                android:hint="Serving Size:"
                 android:inputType="text"
                 tools:ignore="Autofill" />
 
+            <TextView
+                android:id="@+id/label_calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calories:"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp" />
             <EditText
                 android:id="@+id/calories_input"
                 android:layout_width="match_parent"
@@ -118,6 +134,14 @@
                 android:inputType="numberDecimal"
                 tools:ignore="Autofill" />
 
+            <TextView
+                android:id="@+id/label_protein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Protein:"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp" />
             <EditText
                 android:id="@+id/protein_input"
                 android:layout_width="match_parent"

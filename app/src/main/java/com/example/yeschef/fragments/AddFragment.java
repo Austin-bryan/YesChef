@@ -42,7 +42,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class AddFragment extends Fragment {
 
@@ -174,10 +177,6 @@ public class AddFragment extends Fragment {
         optionGlutenFree = view.findViewById(R.id.option_gluten_free);
         optionSugarFree = view.findViewById(R.id.option_sugar_free);
 
-        //Add click listeners
-        // Set click listeners to toggle booleans
-
-
         // Add save button click listener
         ImageButton saveButton = view.findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> {
@@ -236,27 +235,12 @@ public class AddFragment extends Fragment {
             if (args.containsKey("image"))
                 if (!args.getString("image").isEmpty())
                     SetImage(args.getString("image"));
-
             if (args.containsKey("ingredients"))
                 for (String ingredient : args.getStringArrayList("ingredients"))
-                {
                     addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, ingredient, false);
-//                    View newItem = addNewItem(ingredientsContainer, "Ingredient(s)", ingredientsColor, directionsContainer, false);
-//                    TextInputEditText input = newItem.findViewById(R.id.ingredient_step_input);
-//                    input.setText(ingredient);
-                }
             if (args.containsKey("directions"))
                 for (String direction : args.getStringArrayList("directions"))
-                {
                     addNewItem(directionsContainer, "Step(s)", directionsColor, null, direction, false);
-//                    View newItem = addNewItem(directionsContainer, "Step(s)", directionsColor, null, false);
-//                    TextInputEditText input = newItem.findViewById(R.id.ingredient_step_input);
-//                    input.setText(direction);
-                }
-
-//            ingredientsContainer
-//            directionsContainer.setText(recipeName);
-
         }
 
         return view;
@@ -374,6 +358,23 @@ public class AddFragment extends Fragment {
         outState.putStringArrayList(KEY_DIRECTIONS_LIST, new ArrayList<>(directionsList));
     }
     private void onSaveClick() {
+       // Check recipe map storage
+        Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
+        loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
+
+        if (loadedRecipeMap == null) {
+            loadedRecipeMap = new HashMap<>(); // Initialize if the file is empty or doesn't exist
+            Log.d("Loaded Test", "Recipe map was null; initialized new map.");        }
+
+        // Log the loaded map
+        Log.d("Loaded Test", "Loaded recipe map content before save: " + loadedRecipeMap.toString());
+
+        // Find the highest existing ID
+        int maxId = 0;
+        for (Integer existingId : loadedRecipeMap.keySet()) {
+            maxId = Math.max(maxId, existingId);
+        }
+        Log.d("Loaded Test", "Max ID found: " + maxId);
         // Create a new Recipe object
         Recipe recipe = new Recipe();
 
@@ -466,22 +467,20 @@ public class AddFragment extends Fragment {
         recipe.setSugarFree(optionSugarFree.isChecked());
         recipe.setImage(image);
 
-        JsonUtils.writeJsonToFile(requireContext(), recipe,"recipe.json");
-        JsonUtils.logJson(recipe);
+        // Assign a unique ID to the new recipe
+        recipe.setId(maxId + 1);
 
-        // Log the recipe details to test the save functionality
-        Log.e("RecipeTest", recipe.toString());
+        // Add recipe to map
+        loadedRecipeMap.put(recipe.getId(), recipe);
 
-        // Use the file name recipe.json
-        String fileName = "recipe.json";
+        // Use the file name recipes.json
+        String fileName = "recipes.json";
+        JsonUtils.saveRecipeMapToJson(requireContext(), loadedRecipeMap, "recipes.json");
 
-        // Write the Recipe object to JSON file
-        JsonUtils.writeJsonToFile(requireContext(), recipe, fileName);
-
-        // Read the Recipe object back from the JSON file
-        Recipe restoredRecipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
-
-        Log.e("RestoreTest", restoredRecipe.toString());
+        Log.d("Loaded Test", "Loaded recipe map size: " + loadedRecipeMap.size());
+        for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
+            Log.d("Load Test", "Recipe ID: " + entry.getKey() + ", Title: " + entry.getValue().getTitle());
+        }
     }
     private void onClearClick() {
         resetFields();

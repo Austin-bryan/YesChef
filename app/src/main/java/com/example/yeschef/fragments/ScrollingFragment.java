@@ -20,6 +20,9 @@ import com.example.yeschef.R;
 import com.example.yeschef.models.Recipe;
 import com.example.yeschef.utils.JsonUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScrollingFragment extends Fragment {
 
     private GridLayout recipeContainer;
@@ -39,18 +42,25 @@ public class ScrollingFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         addRecipeButton = view.findViewById(R.id.addRecipeButton);
 
-        // Set the button click listener
-        addRecipeButton.setOnClickListener(v -> addRecipeItem());
+        Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
+        loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
+
+        for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
+            Integer recipeId = entry.getKey();
+            Recipe recipe = entry.getValue();
+
+            addRecipeItem(recipeId, recipe);
+        }
 
         return view;
     }
 
-    private void addRecipeItem() {
+    private void addRecipeItem(int recipeId, Recipe recipe) {
         // Inflate the recipe item layout
         View recipeItemView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_item, recipeContainer, false);
 
-        String fileName = "recipe.json";
-        Recipe recipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
+//        String fileName = "recipes.json";
+//        Recipe recipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
 
         TextView recipeTitleTextView = recipeItemView.findViewById(R.id.recipe_name);
         recipeTitleTextView.setText(recipe.getTitle());
