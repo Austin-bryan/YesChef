@@ -37,7 +37,6 @@ public class ScrollingFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scrolling, container, false);
 
-        Log.d("Test", "\n");
         recipeCount = 0;
 
         // Initialize the GridLayout, SearchView, and Button
@@ -70,8 +69,6 @@ public class ScrollingFragment extends Fragment {
 
         // Calculate row and column
         int columnCount = recipeContainer.getColumnCount();
-
-        Log.d("Test", "recipeCount: " + String.valueOf(recipeCount));
         int row = recipeCount / columnCount;
         int col = recipeCount % columnCount;
 
