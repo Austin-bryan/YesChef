@@ -37,9 +37,12 @@ public class ScrollingFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scrolling, container, false);
 
+        Log.d("Test", "\n");
+        recipeCount = 0;
+
         // Initialize the GridLayout, SearchView, and Button
         recipeContainer = view.findViewById(R.id.recipe_container);
-        searchView = view.findViewById(R.id.searchView);
+        searchView      = view.findViewById(R.id.searchView);
         addRecipeButton = view.findViewById(R.id.addRecipeButton);
 
         Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
@@ -56,69 +59,34 @@ public class ScrollingFragment extends Fragment {
     }
 
     private void addRecipeItem(int recipeId, Recipe recipe) {
-        // Inflate the recipe item layout
         View recipeItemView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_item, recipeContainer, false);
 
-//        String fileName = "recipes.json";
-//        Recipe recipe = JsonUtils.readJsonFromFile(requireContext(), fileName);
-
+        // Set text and image
         TextView recipeTitleTextView = recipeItemView.findViewById(R.id.recipe_name);
         recipeTitleTextView.setText(recipe.getTitle());
 
         ImageButton recipeImageButton = recipeItemView.findViewById(R.id.recipe_image);
-        Log.d("Test", recipe.getImage().toString());
         recipeImageButton.setImageURI(recipe.getImage());
 
-        // Set the OnClickListener for the recipe item view
-        recipeImageButton.setOnClickListener(v -> {
-            // Create an instance of the RecipeDetailsFragment
-            AddFragment recipeDetailsFragment = new AddFragment();
-
-            // Pass any necessary data to the new fragment using a Bundle
-
-            Log.d("Test", recipe.getServingSize());
-            Log.d("Test", String.valueOf(recipe.getCal()));
-
-            Bundle bundle = new Bundle();
-            bundle.putString("recipeTitle", recipe.getTitle());
-            bundle.putString("recipeDescription", recipe.getDescription());
-            bundle.putString("servingSize", recipe.getServingSize());
-            bundle.putInt("calories", recipe.getCal());
-            bundle.putInt("protein", recipe.getProtein());
-            bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
-            bundle.putInt("mealtime", recipe.getMealTime().ordinal());
-
-            bundle.putBoolean("isVegetarian", recipe.getIsVegetarian());
-            bundle.putBoolean("isGlutenFree", recipe.getIsGlutenFree());
-            bundle.putBoolean("isSugarFree", recipe.getIsSugarFree());
-
-            bundle.putString("image", recipe.getImage().toString());
-
-            bundle.putStringArrayList("ingredients", recipe.getIngredients());
-            bundle.putStringArrayList("directions", recipe.getDirections());
-
-            recipeDetailsFragment.setArguments(bundle);
-
-            // Replace the current fragment
-            requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
-                    .addToBackStack(null) // Add to back stack for "Back" navigation
-                    .commit();
-        });
-
-        // Calculate the row and column for placement
+        // Calculate row and column
         int columnCount = recipeContainer.getColumnCount();
+
+        Log.d("Test", "recipeCount: " + String.valueOf(recipeCount));
         int row = recipeCount / columnCount;
         int col = recipeCount % columnCount;
 
-        // Set the GridLayout.LayoutParams for the new item
+        // Set GridLayout.LayoutParams
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-        params.rowSpec = GridLayout.spec(row);
-        params.columnSpec = GridLayout.spec(col);
-        params.setMargins(10, 10, 10, 10); // Add margins
+        params.rowSpec = GridLayout.spec(row, 1); // Row span of 1
+        params.columnSpec = GridLayout.spec(col, 1); // Column span of 1
+        params.setMargins(10, 10, 10, 10); // Margins
 
         recipeItemView.setLayoutParams(params);
         recipeContainer.addView(recipeItemView);
+
+        // Force layout recalculation
+        recipeContainer.invalidate();
+        recipeContainer.requestLayout();
 
         // Increment recipe count
         recipeCount++;
