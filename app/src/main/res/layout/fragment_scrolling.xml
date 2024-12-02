@@ -33,7 +33,7 @@
 
         <!-- Save Button aligned to the end (right) -->
         <ImageButton
-            android:id="@+id/addRecipeButton"
+            android:id="@+id/delRecipeButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
@@ -41,10 +41,10 @@
             android:layout_marginEnd="8dp"
             android:adjustViewBounds="true"
             android:background="@null"
-            android:contentDescription="Add Grocery item"
+            android:contentDescription="Delete Grocery item"
             android:padding="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_add_recipe"
+            android:src="@drawable/ic_delete"
             android:tint="@android:color/white" />
     </RelativeLayout>
 
@@ -67,7 +67,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:contentDescription="Scroll through the recipe items"
-        app:layout_constraintBottom_toTopOf="@id/addRecipeButton"
+        app:layout_constraintBottom_toTopOf="@id/delRecipeButton"
         app:layout_constraintTop_toBottomOf="@id/searchView">
 
         <LinearLayout
