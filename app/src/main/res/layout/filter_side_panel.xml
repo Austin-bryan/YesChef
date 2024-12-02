@@ -1,0 +1,73 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Row for Calories filter -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Label for Calories -->
+        <TextView
+            android:id="@+id/calorie_filter_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Spinner for selecting < or > -->
+        <Spinner
+            android:id="@+id/calorie_filter_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:entries="@array/filter_inequalities"
+            android:background="@drawable/spinner_background" />
+
+        <!-- TextField for entering calorie amount -->
+        <EditText
+            android:id="@+id/calorie_filter_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Enter calories"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <!-- Row for Cancel and Apply buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+        <!-- Cancel Button -->
+        <Button
+            android:id="@+id/cancel_filter_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Cancel"
+            android:backgroundTint="#FF0000"
+            android:textColor="#FFFFFF" />
+
+        <!-- Apply Button -->
+        <Button
+            android:id="@+id/apply_filter_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Apply"
+            android:backgroundTint="#00aa00"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</LinearLayout>

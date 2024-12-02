@@ -16,6 +16,11 @@
         <item>Dinner</item>
     </string-array>
 
+    <string-array name="filter_inequalities">
+        <item>&lt;</item>
+        <item>&gt;</item>
+    </string-array>
+
     <string name="select_mealtime">Select a Mealtime</string>
 
     <!-- App name string -->

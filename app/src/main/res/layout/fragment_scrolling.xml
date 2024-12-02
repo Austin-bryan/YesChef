@@ -72,7 +72,7 @@
 
         <!-- Inline Add Recipe Button -->
         <ImageButton
-            android:id="@+id/inlineAddRecipeButton"
+            android:id="@+id/filter_button"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginStart="8dp"

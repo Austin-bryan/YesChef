@@ -44,7 +44,6 @@ public class ScrollingFragment extends Fragment {
         recipeContainer = view.findViewById(R.id.recipe_container);
         searchView      = view.findViewById(R.id.searchView);
         addRecipeButton = view.findViewById(R.id.addRecipeButton);
-
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
 
         // Initially display all recipes
@@ -66,12 +65,18 @@ public class ScrollingFragment extends Fragment {
             }
         });
 
-//        for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
-//            Integer recipeId = entry.getKey();
-//            Recipe recipe = entry.getValue();
-//
-//            addRecipeItem(recipeId, recipe);
-//        }
+        ImageButton filterButton = view.findViewById(R.id.filter_button);
+
+        // Set an OnClickListener to open the filter panel
+        filterButton.setOnClickListener(v -> {
+            // Open the filter panel
+            FilterBottomSheet filterBottomSheet = new FilterBottomSheet();
+            filterBottomSheet.setFilterCallback((filterOption, calorieAmount) -> {
+                // Apply the filter when the user clicks "Apply" in the panel
+//                applyCalorieFilter(filterOption, calorieAmount);
+            });
+            filterBottomSheet.show(getParentFragmentManager(), "FilterBottomSheet");
+        });
 
         return view;
     }
