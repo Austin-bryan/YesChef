@@ -1,9 +1,11 @@
 package com.example.yeschef.models;
 
+import android.util.Log;
 import android.net.Uri;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,14 +14,14 @@ public class Recipe {
     private int cal;
     //private int rating; 1-10, every even number being a .5 star
     private int protein;
-    private String[] images = new String[4];
+    private String image;
     private String servingSize;
     private String description;
     private boolean isVegetarian = false;
     private boolean isSugarFree = false;
     private boolean isGlutenFree = false;
-    private List<String> ingredients;
-    private List<String> directions;
+    private ArrayList<String> ingredients;
+    private ArrayList<String> directions;
     private static int count = 0;
     private int id = 0;
 
@@ -41,8 +43,8 @@ public class Recipe {
     private MealTime mealTime;
     private DifficultyLevel difficultyLevel;
 
-    public Recipe(String name, List<String> ingredients, String servingSize,
-                  int cal, int protein, String description, List<String> directions,
+    public Recipe(String name, ArrayList<String> ingredients, String servingSize,
+                  int cal, int protein, String description, ArrayList<String> directions,
                   MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree, DifficultyLevel difficultyLevel) {
         this.recipeTitle = name;
         this.ingredients = ingredients;
@@ -57,43 +59,39 @@ public class Recipe {
         this.isGlutenFree = isGlutenFree;
         this.difficultyLevel = difficultyLevel;
         id = count++;
-
     }
     public Recipe() {
         this.recipeTitle = "";
         this.servingSize = "";
         this.description = "";
         this.cal = protein = 0;
-        this.ingredients = new LinkedList<>();  // Initialize as empty list
-        this.directions = new LinkedList<>();
+        this.ingredients = new ArrayList<>();  // Initialize as empty list
+        this.directions = new ArrayList<>();
         this.mealTime = MealTime.ANYTIME;
         this.difficultyLevel = DifficultyLevel.EASY;
-        this.images = new String[4];
+        this.image = "";
     }
 
     // Getters
     public String getTitle() { return recipeTitle; }
-    public List<String> getIngredients() { return ingredients; }
-    public List<String> getDirections() { return directions; }
+    public ArrayList<String> getIngredients() { return ingredients; }
+    public ArrayList<String> getDirections() { return directions; }
     public String getServingSize() { return servingSize; }
     public String getDescription() { return description; }
     public int getCal() { return cal; }
     public int getProtein() { return protein; }
-    public Uri[] getImages() {
-        Uri[] uris = new Uri[images.length];
-        for (int i = 0; i < images.length; i++) {
-            uris[i] = images[i] != null ? Uri.parse(images[i]) : null;
-        }
-        return uris;
-    }
+    public boolean getIsVegetarian() { return isVegetarian; }
+    public boolean getIsGlutenFree() { return isGlutenFree; }
+    public boolean getIsSugarFree()  { return isSugarFree; }
+    public Uri getImage() { return Uri.parse(image); }
     public MealTime getMealTime() { return mealTime; }
     public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
     public int getId() { return id; }
 
-   //Setters
+    // Setters
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
-    public void setIngredients(List<String> ingredients) { this.ingredients = ingredients; }
-    public void setDirections(List<String> directions) { this.directions = directions; }
+    public void setIngredients(ArrayList<String> ingredients) { this.ingredients = ingredients; }
+    public void setDirections(ArrayList<String> directions) { this.directions = directions; }
     public void setServingSize(String servingSize) { this.servingSize = servingSize; }
     public void setDescription(String description) { this.description = description; }
     public void setCal(int cal) { this.cal = cal; }
@@ -103,9 +101,15 @@ public class Recipe {
     public void setVegetarian(boolean isVegetarian) { this.isVegetarian = isVegetarian; }
     public void setGlutenFree(boolean isGlutenFree) { this.isGlutenFree = isGlutenFree; }
     public void setSugarFree(boolean isSugarFree) { this.isSugarFree = isSugarFree; }
-    public void setImages(String[] uris) {
-        for (int i = 0; i < uris.length; i++) {
-            images[i] = uris[i] != null ? uris[i].toString() : null;
+    public void setImage(String uri) {
+        if (uri == null)
+        {
+            Log.e("URI", "NULL");
+        }
+        else {
+
+            Log.e("URI", uri.toString());
+            image = uri;
         }
     }
     public void setId(int id) {
@@ -123,12 +127,13 @@ public class Recipe {
                "Description: " + description + '\n' +
                "Meal Time: " + mealTime + '\n' +
                "Difficulty Level: " + difficultyLevel + '\n' +
+               "Serving Size: " + servingSize + '\n' +
                "Calories: " + cal + '\n' +
-               "Protein: " + protein + "g\n" +
+               "Protein: " + protein + '\n' +
                "Vegetarian: " + formatBool(isVegetarian) + '\n' +
                "Gluten Free: " + formatBool(isGlutenFree) + '\n' +
                "Sugar Free: " + formatBool(isSugarFree) + '\n' +
-               "Images: \n" + formatImages() + '\n' +
+               "Image: \n" + image + '\n' +
                "Ingredients: \n" + formatIngredients() + '\n' +
                "Directions: \n" + formatDirections();
     }
@@ -142,15 +147,6 @@ public class Recipe {
             answer = "no";
         }
         return answer;
-    }
-    private String formatImages() {
-        StringBuilder sb = new StringBuilder();
-        for (String uri : images) {
-            if (uri != null) {
-                sb.append("- ").append(uri).append('\n');
-            }
-        }
-        return sb.toString();
     }
 
     //formatter functions for our lists
