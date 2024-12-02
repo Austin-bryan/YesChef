@@ -29,6 +29,7 @@ public class ScrollingFragment extends Fragment {
     private SearchView searchView;
     private ImageButton addRecipeButton;
     private int recipeCount = 0; // Start with 0 recipes
+    private Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
 
     @Nullable
     @Override
@@ -44,49 +45,72 @@ public class ScrollingFragment extends Fragment {
         searchView      = view.findViewById(R.id.searchView);
         addRecipeButton = view.findViewById(R.id.addRecipeButton);
 
-        Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
 
-        for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
-            Integer recipeId = entry.getKey();
-            Recipe recipe = entry.getValue();
+        // Initially display all recipes
+        populateRecipes("");
 
-            addRecipeItem(recipeId, recipe);
-        }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Trigger filtering when the user submits the query
+                populateRecipes(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Trigger filtering as the user types
+                populateRecipes(newText);
+                return true;
+            }
+        });
+
+//        for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
+//            Integer recipeId = entry.getKey();
+//            Recipe recipe = entry.getValue();
+//
+//            addRecipeItem(recipeId, recipe);
+//        }
 
         return view;
     }
 
-    private void addRecipeItem(int recipeId, Recipe recipe) {
-        View recipeItemView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_item, recipeContainer, false);
+    private void populateRecipes(String filter) {
+        // Clear the existing GridLayout
+        recipeContainer.removeAllViews();
 
-        // Set text and image
+        // Filter and add recipes that match the filter
+        for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
+            Recipe recipe = entry.getValue();
+
+            // Check if the recipe title contains the filter (case insensitive)
+            if (recipe.getTitle().toLowerCase().contains(filter.toLowerCase())) {
+                addRecipeItem(entry.getKey(), recipe);
+            }
+        }
+    }
+
+    private void addRecipeItem(int recipeId, Recipe recipe) {
+        View recipeItemView = LayoutInflater.from(getContext())
+                .inflate(R.layout.recipe_item, recipeContainer, false);
+
         TextView recipeTitleTextView = recipeItemView.findViewById(R.id.recipe_name);
         recipeTitleTextView.setText(recipe.getTitle());
 
         ImageButton recipeImageButton = recipeItemView.findViewById(R.id.recipe_image);
         recipeImageButton.setImageURI(recipe.getImage());
 
-        // Calculate row and column
-        int columnCount = recipeContainer.getColumnCount();
-        int row = recipeCount / columnCount;
-        int col = recipeCount % columnCount;
+        // Set OnClickListener for each recipe item
+        recipeImageButton.setOnClickListener(v -> {
+            // Navigate to recipe details fragment
+            Bundle bundle = new Bundle();
+            bundle.putString("recipeTitle", recipe.getTitle());
+            // Pass other necessary details to the bundle here...
+            Navigation.findNavController(v).navigate(R.id.action_scrollingFragment_to_addFragment, bundle);
+        });
 
-        // Set GridLayout.LayoutParams
-        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-        params.rowSpec = GridLayout.spec(row, 1); // Row span of 1
-        params.columnSpec = GridLayout.spec(col, 1); // Column span of 1
-        params.setMargins(10, 10, 10, 10); // Margins
-
-        recipeItemView.setLayoutParams(params);
+        // Add the item to the GridLayout
         recipeContainer.addView(recipeItemView);
-
-        // Force layout recalculation
-        recipeContainer.invalidate();
-        recipeContainer.requestLayout();
-
-        // Increment recipe count
-        recipeCount++;
     }
-
 }
