@@ -13,6 +13,40 @@
         android:background="@color/background"
         android:padding="16dp">
 
+        <!-- Row for Cancel and Apply buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <!-- Cancel Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_filter_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Cancel"
+                android:backgroundTint="#FF0000"
+                app:cornerRadius="16dp"
+                tools:ignore="HardCodedText"
+                android:textColor="#FFFFFF" />
+
+            <!-- Apply Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/apply_filter_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Apply"
+                android:textColor="#FFFFFF"
+                tools:ignore="HardCodedText"
+                app:cornerRadius="16dp"
+                app:backgroundTint="#00aa00" />
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,7 +81,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="2dp">
 
             <!-- Label for Calories -->
             <TextView
@@ -86,7 +120,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="2dp">
 
             <!-- Label for Calories -->
             <TextView
@@ -125,7 +159,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="8dp">
 
             <!-- Label for Calories -->
             <TextView
@@ -366,7 +400,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Ingredient Tags"
-            android:paddingTop="8dp"
             tools:ignore="HardCodedText"
             app:boxStrokeColor="#6200EE"
             app:boxStrokeWidthFocused="2dp"
@@ -408,40 +441,6 @@
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Row for Cancel and Apply buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="16dp">
-
-            <!-- Cancel Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancel_filter_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:text="Cancel"
-                android:backgroundTint="#FF0000"
-                app:cornerRadius="16dp"
-                tools:ignore="HardCodedText"
-                android:textColor="#FFFFFF" />
-
-            <!-- Apply Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/apply_filter_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Apply"
-                android:textColor="#FFFFFF"
-                tools:ignore="HardCodedText"
-                app:cornerRadius="16dp"
-                app:backgroundTint="#00aa00" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 
