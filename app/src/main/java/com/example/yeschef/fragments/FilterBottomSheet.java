@@ -32,8 +32,8 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_side_panel, container, false);
 
-        Spinner calorieFilterSpinner = view.findViewById(R.id.calorie_filter_spinner);
-        EditText calorieFilterInput = view.findViewById(R.id.calorie_filter_input);
+        Spinner calorieFilterSpinner = view.findViewById(R.id.filter_calorie_inequality_spinner);
+        EditText calorieFilterInput = view.findViewById(R.id.filter_calorie_input);
         Button applyFilterButton = view.findViewById(R.id.apply_filter_button);
         Button cancelFilterButton = view.findViewById(R.id.cancel_filter_button);
 
