@@ -50,7 +50,8 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
 
         // Handle "Apply" button click
         applyFilterButton.setOnClickListener(v -> {
-            String description = ((TextInputEditText) view.findViewById(R.id.filter_description_input)).getText().toString();
+            String descriptionStr = ((TextInputEditText) view.findViewById(R.id.filter_description_input)).getText().toString();
+            List<String> descriptionTags = convertCommaSeparatedToList(descriptionStr);
 
             String servingSizeInequality = ((Spinner) view.findViewById(R.id.filter_serving_size_inequality_spinner)).getSelectedItem().toString();
             int servingSize = parseInteger(((EditText) view.findViewById(R.id.filter_serving_size_input)).getText().toString());
@@ -75,7 +76,7 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
             List<String> directions = convertCommaSeparatedToList(directionsStr);
 
             // Bundle the filter parameters
-            FilterParams filterParams = new FilterParams(description, servingSizeParam, calorieParam,
+            FilterParams filterParams = new FilterParams(descriptionTags, servingSizeParam, calorieParam,
                     proteinParam, difficulty, mealtime, dietaryOptions, ingredients, directions);
 
             // Pass the filters back to the ScrollingFragment

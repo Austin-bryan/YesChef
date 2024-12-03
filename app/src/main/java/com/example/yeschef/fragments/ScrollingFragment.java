@@ -1,7 +1,6 @@
 package com.example.yeschef.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,10 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
 
 import com.example.yeschef.R;
 import com.example.yeschef.models.FilterParams;
@@ -92,7 +89,7 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
             // Apply filtering logic
             if (!recipe.getTitle().toLowerCase().contains(filter.toLowerCase())) continue;
             if (filterParams != null) {
-                if (!filterParams.description.isEmpty() && !recipe.getDescription().toLowerCase().contains(filterParams.description.toLowerCase())) continue;
+                if (!filterParams.descriptionTags.isEmpty() && !containsAllTags(filterParams.descriptionTags, recipe.getDescription())) continue;
                 if (!filterParams.servingSizeParam.IsValid(recipe.getServingSize())) continue;
                 if (!filterParams.calorieParam.IsValid(recipe.getCal())) continue;
                 if (!filterParams.proteinParam.IsValid(recipe.getProtein())) continue;
@@ -105,6 +102,19 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 
             addRecipeItem(entry.getKey(), recipe);
         }
+    }
+
+    private boolean containsAllTags(List<String> filter, String description) {
+        if (filter == null || description == null)
+            return false;
+
+        String lowerDescription = description.toLowerCase();
+
+        for (String tag : filter)
+            if (!lowerDescription.contains(tag.toLowerCase()))
+                return false; // If this, then there was a tag missing
+
+        return true; // Returning here means all tags were found
     }
 
     private boolean containsAllFilteredStrings(List<String> filter, List<String> recipe) {

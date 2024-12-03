@@ -3,7 +3,7 @@ package com.example.yeschef.models;
 import java.util.List;
 
 public class FilterParams {
-    public String description;
+    public List<String> descriptionTags;
 
     public NumericalParam servingSizeParam;
     public NumericalParam calorieParam;
@@ -17,11 +17,12 @@ public class FilterParams {
 
     // Constructor
     public FilterParams(
-            String description,
+            List<String> descriptionTags,
             NumericalParam servingSizeParam, NumericalParam calorieParam, NumericalParam proteinParam,
             List<String> difficulty, List<String> mealtime, List<String> dietaryOptions,
             List<String> ingredients, List<String> directions) {
-        this.description = description;
+
+        this.descriptionTags = descriptionTags;
 
         this.servingSizeParam = servingSizeParam;
         this.calorieParam = calorieParam;
