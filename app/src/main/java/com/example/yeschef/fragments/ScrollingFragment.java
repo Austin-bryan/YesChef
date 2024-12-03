@@ -132,8 +132,7 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 
         return true; // Return true if all filter ingredients are found
     }
-
-
+    
     private boolean matchesDietaryOptions(Recipe recipe, List<String> options) {
         if (options.contains("vegetarian") && !recipe.getIsVegetarian())
             return false;
@@ -142,13 +141,6 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
         if (options.contains("sugar-free") && !recipe.getIsSugarFree())
             return false;
         return true;
-    }
-    private boolean matchInequality(String inequality, int recipeValue, int filterValue) {
-        switch (inequality) {
-            case "<": return recipeValue < filterValue;
-            case ">": return recipeValue > filterValue;
-            default: return recipeValue == filterValue;
-        }
     }
 
     private void addRecipeItem(int recipeId, Recipe recipe) {
@@ -163,33 +155,37 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 
         // Set OnClickListener for each recipe item
         recipeImageButton.setOnClickListener(v -> {
-            AddFragment recipeDetailsFragment = new AddFragment();
 
-            Bundle bundle = new Bundle();
-            bundle.putString("recipeTitle", recipe.getTitle());
-            bundle.putString("recipeDescription", recipe.getDescription());
-            bundle.putInt("servingSize", recipe.getServingSize());
-            bundle.putInt("calories", recipe.getCal());
-            bundle.putInt("protein", recipe.getProtein());
-            bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
-            bundle.putInt("mealtime", recipe.getMealTime().ordinal());
+            RecipeDetailsBottomSheet bottomSheet = new RecipeDetailsBottomSheet();
+            bottomSheet.show(getParentFragmentManager(), "RecipeDetailsBottomSheet");
 
-            bundle.putBoolean("isVegetarian", recipe.getIsVegetarian());
-            bundle.putBoolean("isGlutenFree", recipe.getIsGlutenFree());
-            bundle.putBoolean("isSugarFree", recipe.getIsSugarFree());
-
-            bundle.putString("image", recipe.getImage().toString());
-
-            bundle.putStringArrayList("ingredients", recipe.getIngredients());
-            bundle.putStringArrayList("directions", recipe.getDirections());
-
-            recipeDetailsFragment.setArguments(bundle);
-
-            // Replace the current fragment
-            requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
-                    .addToBackStack(null) // Add to back stack for "Back" navigation
-                    .commit();
+//            AddFragment recipeDetailsFragment = new AddFragment();
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putString("recipeTitle", recipe.getTitle());
+//            bundle.putString("recipeDescription", recipe.getDescription());
+//            bundle.putInt("servingSize", recipe.getServingSize());
+//            bundle.putInt("calories", recipe.getCal());
+//            bundle.putInt("protein", recipe.getProtein());
+//            bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
+//            bundle.putInt("mealtime", recipe.getMealTime().ordinal());
+//
+//            bundle.putBoolean("isVegetarian", recipe.getIsVegetarian());
+//            bundle.putBoolean("isGlutenFree", recipe.getIsGlutenFree());
+//            bundle.putBoolean("isSugarFree", recipe.getIsSugarFree());
+//
+//            bundle.putString("image", recipe.getImage().toString());
+//
+//            bundle.putStringArrayList("ingredients", recipe.getIngredients());
+//            bundle.putStringArrayList("directions", recipe.getDirections());
+//
+//            recipeDetailsFragment.setArguments(bundle);
+//
+//            // Replace the current fragment
+//            requireActivity().getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
+//                    .addToBackStack(null) // Add to back stack for "Back" navigation
+//                    .commit();
         });
 
         // Add the item to the GridLayout
