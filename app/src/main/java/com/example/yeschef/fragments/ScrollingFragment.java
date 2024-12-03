@@ -108,11 +108,36 @@ public class ScrollingFragment extends Fragment {
 
         // Set OnClickListener for each recipe item
         recipeImageButton.setOnClickListener(v -> {
-            // Navigate to recipe details fragment
+            AddFragment recipeDetailsFragment = new AddFragment();
+
+            Log.d("Test", recipe.getServingSize());
+            Log.d("Test", String.valueOf(recipe.getCal()));
+
             Bundle bundle = new Bundle();
             bundle.putString("recipeTitle", recipe.getTitle());
-            // Pass other necessary details to the bundle here...
-            Navigation.findNavController(v).navigate(R.id.action_scrollingFragment_to_addFragment, bundle);
+            bundle.putString("recipeDescription", recipe.getDescription());
+            bundle.putString("servingSize", recipe.getServingSize());
+            bundle.putInt("calories", recipe.getCal());
+            bundle.putInt("protein", recipe.getProtein());
+            bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
+            bundle.putInt("mealtime", recipe.getMealTime().ordinal());
+
+            bundle.putBoolean("isVegetarian", recipe.getIsVegetarian());
+            bundle.putBoolean("isGlutenFree", recipe.getIsGlutenFree());
+            bundle.putBoolean("isSugarFree", recipe.getIsSugarFree());
+
+            bundle.putString("image", recipe.getImage().toString());
+
+            bundle.putStringArrayList("ingredients", recipe.getIngredients());
+            bundle.putStringArrayList("directions", recipe.getDirections());
+
+            recipeDetailsFragment.setArguments(bundle);
+
+            // Replace the current fragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
+                    .addToBackStack(null) // Add to back stack for "Back" navigation
+                    .commit();
         });
 
         // Add the item to the GridLayout
