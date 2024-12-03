@@ -7,6 +7,7 @@
     <color name="step">#00AC79</color>
     <color name="itemList">#0079AC</color>
     <color name="pink">#FF69B4</color>
+    <color name="background">#d2d2d2</color>
 
     <!-- colors.xml -->
     <color name="bottom_nav_icon_color">#FF000000</color> <!-- Black icons -->
@@ -16,5 +17,7 @@
     <!-- New primary color for use in your layout -->
     <color name="primaryColor">#FF9800</color> <!-- Use any color you like -->
 
-
+    <color name="chip_selected_color">#000</color>
+    <color name="chip_pressed_color">#000</color>
+    <color name="chip_unselected_color">#000</color>
 </resources>

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <!-- Background color for unselected, selected, and pressed states -->
+        <item name="chipBackgroundColor">@drawable/chip_background</item>
 
+        <!-- Ripple effect when the chip is pressed -->
+        <item name="chipRippleColor">@color/chip_pressed_color</item>
+
+        <!-- Optional: Remove chip stroke or customize it -->
+        <item name="chipStrokeColor">@android:color/transparent</item>
+        <item name="chipStrokeWidth">0dp</item>
+
+    </style>
 </resources>
