@@ -5,6 +5,42 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Row for Serving Size filter -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Label for Calories -->
+        <TextView
+            android:id="@+id/serving_size_filter_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Serving Size"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Spinner for selecting < or > -->
+        <Spinner
+            android:id="@+id/serving_size_filter_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:entries="@array/filter_inequalities"
+            android:background="@drawable/spinner_background" />
+
+        <!-- TextField for entering calorie amount -->
+        <EditText
+            android:id="@+id/serving_size_filter_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Enter serving size"
+            android:inputType="number" />
+    </LinearLayout>
+
     <!-- Row for Calories filter -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,6 +74,42 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Enter calories"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <!-- Row for Protein filter -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Label for Calories -->
+        <TextView
+            android:id="@+id/protein_filter_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Protein"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Spinner for selecting < or > -->
+        <Spinner
+            android:id="@+id/protein_filter_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:entries="@array/filter_inequalities"
+            android:background="@drawable/spinner_background" />
+
+        <!-- TextField for entering calorie amount -->
+        <EditText
+            android:id="@+id/protein_filter_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Enter protein (g)"
             android:inputType="number" />
     </LinearLayout>
 

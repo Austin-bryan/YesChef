@@ -18,6 +18,9 @@
 
     <string-array name="filter_inequalities">
         <item>&lt;</item>
+        <item>&lt;=</item>
+        <item>==</item>
+        <item>&gt;=</item>
         <item>&gt;</item>
     </string-array>
 
