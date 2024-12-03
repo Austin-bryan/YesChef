@@ -12,13 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.yeschef.R;
+import com.example.yeschef.models.Compare;
+import com.example.yeschef.models.Comparisons;
+import com.example.yeschef.models.FilterParams;
+import com.example.yeschef.models.NumericalParam;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FilterBottomSheet extends BottomSheetDialogFragment {
 
     // Callback interface to send data back to the fragment
     public interface FilterCallback {
-        void onFilterApplied(String filterOption, int calorieAmount);
+        void onFilterApplied(FilterParams filterParams);
     }
 
     private FilterCallback filterCallback;
@@ -32,22 +42,39 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_side_panel, container, false);
 
-        Spinner calorieFilterSpinner = view.findViewById(R.id.filter_calorie_inequality_spinner);
-        EditText calorieFilterInput = view.findViewById(R.id.filter_calorie_input);
         Button applyFilterButton = view.findViewById(R.id.apply_filter_button);
         Button cancelFilterButton = view.findViewById(R.id.cancel_filter_button);
 
         // Handle "Apply" button click
         applyFilterButton.setOnClickListener(v -> {
-            if (filterCallback != null) {
-                String filterOption = calorieFilterSpinner.getSelectedItem().toString();
-                String calorieInput = calorieFilterInput.getText().toString();
-                if (!calorieInput.isEmpty()) {
-                    int calorieAmount = Integer.parseInt(calorieInput);
-                    filterCallback.onFilterApplied(filterOption, calorieAmount);
-                }
-            }
-            dismiss(); // Close the bottom sheet
+            String description = ((TextInputEditText) view.findViewById(R.id.filter_description_input)).getText().toString();
+
+            String servingSizeInequality = ((Spinner) view.findViewById(R.id.filter_serving_size_inequality_spinner)).getSelectedItem().toString();
+            int servingSize = parseInteger(((EditText) view.findViewById(R.id.filter_serving_size_input)).getText().toString());
+            NumericalParam servingSizeParam = MakeNumericalParam(servingSize, servingSizeInequality);
+
+            String calorieInequality = ((Spinner) view.findViewById(R.id.filter_calorie_inequality_spinner)).getSelectedItem().toString();
+            int calories = parseInteger(((EditText) view.findViewById(R.id.filter_calorie_input)).getText().toString());
+            NumericalParam calorieParam = MakeNumericalParam(calories, calorieInequality);
+
+            String proteinInequality = ((Spinner) view.findViewById(R.id.filter_protein_inequality_spinner)).getSelectedItem().toString();
+            int protein = parseInteger(((EditText) view.findViewById(R.id.fitler_protien_input)).getText().toString());
+            NumericalParam proteinParam = MakeNumericalParam(protein, proteinInequality);
+
+            List<String> difficulty = getSelectedChips(view.findViewById(R.id.filter_difficulty_chip_group));
+            List<String> mealtime = getSelectedChips(view.findViewById(R.id.filter_mealtime_chip_group));
+            List<String> dietaryOptions = getSelectedChips(view.findViewById(R.id.chip_group));
+
+            String ingredients = ((TextInputEditText) view.findViewById(R.id.filter_ingredients_input)).getText().toString();
+            String directions = ((TextInputEditText) view.findViewById(R.id.filter_directions_input)).getText().toString();
+
+            // Bundle the filter parameters
+            FilterParams filterParams = new FilterParams(description, servingSizeParam, calorieParam,
+                    proteinParam, difficulty, mealtime, dietaryOptions, ingredients, directions);
+
+            // Pass the filters back to the ScrollingFragment
+            dismiss();
+            filterCallback.onFilterApplied(filterParams);
         });
 
         // Handle "Cancel" button click
@@ -55,4 +82,38 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
 
         return view;
     }
+
+    private NumericalParam MakeNumericalParam(int filterValue, String inequalityStr) {
+       return new NumericalParam(GetCompare(inequalityStr), filterValue);
+    }
+
+    private Compare GetCompare(String inequalityStr) {
+        switch (inequalityStr) {
+            case "<":  return Comparisons.LESS_THAN;
+            case "<=": return Comparisons.LESS_THAN_EQUALS;
+            case "==": return Comparisons.EQUALS;
+            case ">=": return Comparisons.GREATER_THAN_EQUALS;
+            case ">":  return Comparisons.GREATER_THAN;
+            default: return Comparisons.EQUALS;
+        }
+    }
+
+    private int parseInteger(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return 0; // Default value for invalid input
+        }
+    }
+    private List<String> getSelectedChips(ChipGroup chipGroup) {
+        List<String> selectedChips = new ArrayList<>();
+        for (int i = 0; i < chipGroup.getChildCount(); i++) {
+            Chip chip = (Chip) chipGroup.getChildAt(i);
+            if (chip.isChecked()) {
+                selectedChips.add(chip.getText().toString());
+            }
+        }
+        return selectedChips;
+    }
+
 }

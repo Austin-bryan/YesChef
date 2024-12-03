@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Serving Size:"
-                android:inputType="text"
+                android:inputType="number"
                 tools:ignore="Autofill" />
 
             <TextView
@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Calories"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 tools:ignore="Autofill" />
 
             <TextView
@@ -206,6 +206,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/option_vegetarian"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vegetarian"

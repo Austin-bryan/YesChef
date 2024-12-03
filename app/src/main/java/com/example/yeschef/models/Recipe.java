@@ -6,16 +6,13 @@ import android.net.Uri;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Recipe {
     private String recipeTitle;
     private int cal;
-    //private int rating; 1-10, every even number being a .5 star
     private int protein;
     private String image;
-    private String servingSize;
+    private int servingSize;
     private String description;
     private boolean isVegetarian = false;
     private boolean isSugarFree = false;
@@ -43,7 +40,7 @@ public class Recipe {
     private MealTime mealTime;
     private DifficultyLevel difficultyLevel;
 
-    public Recipe(String name, ArrayList<String> ingredients, String servingSize,
+    public Recipe(String name, ArrayList<String> ingredients, int servingSize,
                   int cal, int protein, String description, ArrayList<String> directions,
                   MealTime mealTime, boolean isVegetarian, boolean isSugarFree, boolean isGlutenFree, DifficultyLevel difficultyLevel) {
         this.recipeTitle = name;
@@ -62,7 +59,7 @@ public class Recipe {
     }
     public Recipe() {
         this.recipeTitle = "";
-        this.servingSize = "";
+        this.servingSize = 0;
         this.description = "";
         this.cal = protein = 0;
         this.ingredients = new ArrayList<>();  // Initialize as empty list
@@ -74,10 +71,10 @@ public class Recipe {
 
     // Getters
     public String getTitle() { return recipeTitle; }
+    public String getDescription() { return description; }
     public ArrayList<String> getIngredients() { return ingredients; }
     public ArrayList<String> getDirections() { return directions; }
-    public String getServingSize() { return servingSize; }
-    public String getDescription() { return description; }
+    public int getServingSize() { return servingSize; }
     public int getCal() { return cal; }
     public int getProtein() { return protein; }
     public boolean getIsVegetarian() { return isVegetarian; }
@@ -92,7 +89,7 @@ public class Recipe {
     public void setTitle(String recipeTitle) { this.recipeTitle = recipeTitle; }
     public void setIngredients(ArrayList<String> ingredients) { this.ingredients = ingredients; }
     public void setDirections(ArrayList<String> directions) { this.directions = directions; }
-    public void setServingSize(String servingSize) { this.servingSize = servingSize; }
+    public void setServingSize(int servingSize) { this.servingSize = servingSize; }
     public void setDescription(String description) { this.description = description; }
     public void setCal(int cal) { this.cal = cal; }
     public void setProtein(int protein) { this.protein = protein; }
@@ -108,7 +105,7 @@ public class Recipe {
         }
         else {
 
-            Log.e("URI", uri.toString());
+            Log.e("URI", uri);
             image = uri;
         }
     }

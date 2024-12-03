@@ -381,7 +381,7 @@ public class AddFragment extends Fragment {
         // Retrieve input from UI components
         String title = recipeTitleInput.getText().toString();
         String description = descriptionInput.getText().toString();
-        String servingSize = servingSizeInput.getText().toString();
+        String servingSizeStr = servingSizeInput.getText().toString();
         String caloriesStr = caloriesInput.getText().toString();
         String proteinStr = proteinInput.getText().toString();
         String mealTimeStr = mealTimeSpinner.getSelectedItem().toString();
@@ -419,6 +419,7 @@ public class AddFragment extends Fragment {
         }
 
         // Parse numeric inputs (with default values if empty)
+        int servingSize = servingSizeStr.isEmpty() ? 1 : Integer.parseInt(servingSizeStr);
         int calories = caloriesStr.isEmpty() ? 0 : Integer.parseInt(caloriesStr);
         int protein = proteinStr.isEmpty() ? 0 : Integer.parseInt(proteinStr);
 

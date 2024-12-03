@@ -17,13 +17,15 @@ import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
 import com.example.yeschef.R;
+import com.example.yeschef.models.FilterParams;
 import com.example.yeschef.models.Recipe;
 import com.example.yeschef.utils.JsonUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ScrollingFragment extends Fragment {
+public class ScrollingFragment extends Fragment implements FilterBottomSheet.FilterCallback {
 
     private GridLayout recipeContainer;
     private SearchView searchView;
@@ -47,20 +49,20 @@ public class ScrollingFragment extends Fragment {
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
 
         // Initially display all recipes
-        populateRecipes("");
+        populateRecipes("", null);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Trigger filtering when the user submits the query
-                populateRecipes(query);
+                populateRecipes(query, null);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 // Trigger filtering as the user types
-                populateRecipes(newText);
+                populateRecipes(newText, null);
                 return true;
             }
         });
@@ -71,17 +73,14 @@ public class ScrollingFragment extends Fragment {
         filterButton.setOnClickListener(v -> {
             // Open the filter panel
             FilterBottomSheet filterBottomSheet = new FilterBottomSheet();
-            filterBottomSheet.setFilterCallback((filterOption, calorieAmount) -> {
-                // Apply the filter when the user clicks "Apply" in the panel
-//                applyCalorieFilter(filterOption, calorieAmount);
-            });
+            filterBottomSheet.setFilterCallback(this);
             filterBottomSheet.show(getParentFragmentManager(), "FilterBottomSheet");
         });
 
         return view;
     }
 
-    private void populateRecipes(String filter) {
+    private void populateRecipes(String filter, FilterParams filterParams) {
         // Clear the existing GridLayout
         recipeContainer.removeAllViews();
 
@@ -89,10 +88,36 @@ public class ScrollingFragment extends Fragment {
         for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
             Recipe recipe = entry.getValue();
 
-            // Check if the recipe title contains the filter (case insensitive)
-            if (recipe.getTitle().toLowerCase().contains(filter.toLowerCase())) {
-                addRecipeItem(entry.getKey(), recipe);
+            // Apply filtering logic
+            if (!recipe.getTitle().toLowerCase().contains(filter.toLowerCase())) continue;
+            if (filterParams != null) {
+                if (!filterParams.servingSizeParam.IsValid(recipe.getServingSize())) continue;
+                if (!filterParams.calorieParam.IsValid(recipe.getCal())) continue;
+                if (!filterParams.proteinParam.IsValid(recipe.getProtein())) continue;
+                if (!filterParams.difficulty.isEmpty() && !filterParams.difficulty.contains(recipe.getDifficultyLevel().toString())) continue;
+                if (!filterParams.mealtime.isEmpty() && !filterParams.mealtime.contains(recipe.getMealTime().toString())) continue;
+                if (!filterParams.dietaryOptions.isEmpty() && !matchesDietaryOptions(recipe, filterParams.dietaryOptions)) continue;
+                //if (!recipe.getIngredients().toLowerCase().contains(filterParams.ingredients.toLowerCase())) continue;
+                //if (!recipe.getDirections().toLowerCase().contains(filterParams.directions.toLowerCase())) continue;
             }
+
+            addRecipeItem(entry.getKey(), recipe);
+        }
+    }
+    private boolean matchesDietaryOptions(Recipe recipe, List<String> options) {
+        if (options.contains("Vegetarian") && !recipe.getIsVegetarian())
+            return false;
+        if (options.contains("Gluten-Free") && !recipe.getIsGlutenFree())
+            return false;
+        if (options.contains("Sugar-Free") && !recipe.getIsSugarFree())
+            return false;
+        return true;
+    }
+    private boolean matchInequality(String inequality, int recipeValue, int filterValue) {
+        switch (inequality) {
+            case "<": return recipeValue < filterValue;
+            case ">": return recipeValue > filterValue;
+            default: return recipeValue == filterValue;
         }
     }
 
@@ -110,13 +135,10 @@ public class ScrollingFragment extends Fragment {
         recipeImageButton.setOnClickListener(v -> {
             AddFragment recipeDetailsFragment = new AddFragment();
 
-            Log.d("Test", recipe.getServingSize());
-            Log.d("Test", String.valueOf(recipe.getCal()));
-
             Bundle bundle = new Bundle();
             bundle.putString("recipeTitle", recipe.getTitle());
             bundle.putString("recipeDescription", recipe.getDescription());
-            bundle.putString("servingSize", recipe.getServingSize());
+            bundle.putInt("servingSize", recipe.getServingSize());
             bundle.putInt("calories", recipe.getCal());
             bundle.putInt("protein", recipe.getProtein());
             bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
@@ -142,5 +164,10 @@ public class ScrollingFragment extends Fragment {
 
         // Add the item to the GridLayout
         recipeContainer.addView(recipeItemView);
+    }
+
+    @Override
+    public void onFilterApplied(FilterParams filterParams) {
+        populateRecipes(searchView.getQuery().toString(), filterParams);
     }
 }
