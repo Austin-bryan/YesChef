@@ -12,15 +12,15 @@ public class FilterParams {
     public List<String> difficulty;
     public List<String> mealtime;
     public List<String> dietaryOptions;
-    public String ingredients;
-    public String directions;
+    public List<String> ingredients;
+    public List<String> directions;
 
     // Constructor
     public FilterParams(
             String description,
             NumericalParam servingSizeParam, NumericalParam calorieParam, NumericalParam proteinParam,
             List<String> difficulty, List<String> mealtime, List<String> dietaryOptions,
-            String ingredients, String directions) {
+            List<String> ingredients, List<String> directions) {
         this.description = description;
 
         this.servingSizeParam = servingSizeParam;

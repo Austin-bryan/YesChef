@@ -24,6 +24,7 @@ import com.example.yeschef.utils.JsonUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ScrollingFragment extends Fragment implements FilterBottomSheet.FilterCallback {
 
@@ -98,17 +99,32 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
                 if (!filterParams.difficulty.isEmpty() && !filterParams.difficulty.contains(recipe.getDifficultyLevel().toString().toLowerCase())) continue;
                 if (!filterParams.mealtime.isEmpty() && !filterParams.mealtime.contains(recipe.getMealTime().toString().toLowerCase())) continue;
                 if (!filterParams.dietaryOptions.isEmpty() && !matchesDietaryOptions(recipe, filterParams.dietaryOptions)) continue;
-                //if (!recipe.getIngredients().toLowerCase().contains(filterParams.ingredients.toLowerCase())) continue;
-                //if (!recipe.getDirections().toLowerCase().contains(filterParams.directions.toLowerCase())) continue;
+                if (!filterParams.ingredients.isEmpty() && !containsAllFilteredStrings(filterParams.ingredients, recipe.getIngredients())) continue;
+                if (!filterParams.directions.isEmpty() && !containsAllFilteredStrings(filterParams.directions, recipe.getDirections())) continue;
             }
 
             addRecipeItem(entry.getKey(), recipe);
         }
     }
+
+    private boolean containsAllFilteredStrings(List<String> filter, List<String> recipe) {
+        // Convert the recipe list to lowercase for case-insensitive comparison
+        List<String> recipeLower = recipe.stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
+
+        // Check if all items in the filter are present in the recipe
+        for (String ingredient : filter) {
+            if (!recipeLower.contains(ingredient.toLowerCase())) {
+                return false; // Return false if any ingredient is missing
+            }
+        }
+
+        return true; // Return true if all filter ingredients are found
+    }
+
+
     private boolean matchesDietaryOptions(Recipe recipe, List<String> options) {
-        options.forEach(x -> Log.d("Test", x));
-        Log.d("Test", String.valueOf(options.contains("Vegetarian")) + ", " +
-                String.valueOf(recipe.getIsVegetarian()));
         if (options.contains("vegetarian") && !recipe.getIsVegetarian())
             return false;
         if (options.contains("gluten-free") && !recipe.getIsGlutenFree())

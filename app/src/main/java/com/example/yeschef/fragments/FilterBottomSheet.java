@@ -23,6 +23,8 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class FilterBottomSheet extends BottomSheetDialogFragment {
@@ -66,8 +68,11 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
             List<String> mealtime = getSelectedChips(view.findViewById(R.id.filter_mealtime_chip_group));
             List<String> dietaryOptions = getSelectedChips(view.findViewById(R.id.chip_group));
 
-            String ingredients = ((TextInputEditText) view.findViewById(R.id.filter_ingredients_input)).getText().toString();
-            String directions = ((TextInputEditText) view.findViewById(R.id.filter_directions_input)).getText().toString();
+            String ingredientsStr = ((TextInputEditText) view.findViewById(R.id.filter_ingredients_input)).getText().toString().toLowerCase();
+            String directionsStr = ((TextInputEditText) view.findViewById(R.id.filter_directions_input)).getText().toString().toLowerCase();
+
+            List<String> ingredients = convertCommaSeparatedToList(ingredientsStr);
+            List<String> directions = convertCommaSeparatedToList(directionsStr);
 
             // Bundle the filter parameters
             FilterParams filterParams = new FilterParams(description, servingSizeParam, calorieParam,
@@ -82,6 +87,12 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
         cancelFilterButton.setOnClickListener(v -> dismiss());
 
         return view;
+    }
+
+    private List<String> convertCommaSeparatedToList(String input) {
+        if (input == null || input.trim().isEmpty())
+            return Collections.emptyList();
+        return Arrays.asList(input.split("\\s*,\\s*"));
     }
 
     private NumericalParam MakeNumericalParam(int filterValue, String inequalityStr) {
