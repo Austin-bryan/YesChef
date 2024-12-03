@@ -1,6 +1,7 @@
 package com.example.yeschef.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,9 +111,10 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
         for (int i = 0; i < chipGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipGroup.getChildAt(i);
             if (chip.isChecked()) {
-                selectedChips.add(chip.getText().toString());
+                selectedChips.add(chip.getText().toString().toLowerCase());
             }
         }
+
         return selectedChips;
     }
 

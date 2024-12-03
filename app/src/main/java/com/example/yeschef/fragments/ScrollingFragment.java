@@ -91,11 +91,12 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
             // Apply filtering logic
             if (!recipe.getTitle().toLowerCase().contains(filter.toLowerCase())) continue;
             if (filterParams != null) {
+                if (!filterParams.description.isEmpty() && !recipe.getDescription().toLowerCase().contains(filterParams.description.toLowerCase())) continue;
                 if (!filterParams.servingSizeParam.IsValid(recipe.getServingSize())) continue;
                 if (!filterParams.calorieParam.IsValid(recipe.getCal())) continue;
                 if (!filterParams.proteinParam.IsValid(recipe.getProtein())) continue;
-                if (!filterParams.difficulty.isEmpty() && !filterParams.difficulty.contains(recipe.getDifficultyLevel().toString())) continue;
-                if (!filterParams.mealtime.isEmpty() && !filterParams.mealtime.contains(recipe.getMealTime().toString())) continue;
+                if (!filterParams.difficulty.isEmpty() && !filterParams.difficulty.contains(recipe.getDifficultyLevel().toString().toLowerCase())) continue;
+                if (!filterParams.mealtime.isEmpty() && !filterParams.mealtime.contains(recipe.getMealTime().toString().toLowerCase())) continue;
                 if (!filterParams.dietaryOptions.isEmpty() && !matchesDietaryOptions(recipe, filterParams.dietaryOptions)) continue;
                 //if (!recipe.getIngredients().toLowerCase().contains(filterParams.ingredients.toLowerCase())) continue;
                 //if (!recipe.getDirections().toLowerCase().contains(filterParams.directions.toLowerCase())) continue;
@@ -105,11 +106,14 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
         }
     }
     private boolean matchesDietaryOptions(Recipe recipe, List<String> options) {
-        if (options.contains("Vegetarian") && !recipe.getIsVegetarian())
+        options.forEach(x -> Log.d("Test", x));
+        Log.d("Test", String.valueOf(options.contains("Vegetarian")) + ", " +
+                String.valueOf(recipe.getIsVegetarian()));
+        if (options.contains("vegetarian") && !recipe.getIsVegetarian())
             return false;
-        if (options.contains("Gluten-Free") && !recipe.getIsGlutenFree())
+        if (options.contains("gluten-free") && !recipe.getIsGlutenFree())
             return false;
-        if (options.contains("Sugar-Free") && !recipe.getIsSugarFree())
+        if (options.contains("sugar-free") && !recipe.getIsSugarFree())
             return false;
         return true;
     }
