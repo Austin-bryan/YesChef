@@ -11,7 +11,7 @@
         android:background="@color/background">
 
         <TextView
-            android:id="@+id/caps_bold_large_text"
+            android:id="@+id/recipe_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Recipe Title"
@@ -24,6 +24,7 @@
             android:textColor="@color/white" />
 
         <ImageView
+            android:id="@+id/recipe_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:src="@drawable/ic_add_photo"
@@ -67,6 +68,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/details_servings_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2"
@@ -97,6 +99,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/details_calories_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="520"
@@ -127,6 +130,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/details_protein_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15 g"
@@ -143,7 +147,7 @@
             android:background="#aaa" />
 
         <TextView
-            android:id="@+id/read_only_description"
+            android:id="@+id/details_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor malesuada ipsum, sed iaculis enim ultrices id. Maecenas non nisl quis dolor."
@@ -185,7 +189,7 @@
 
                 <!-- Mealtime Value -->
                 <TextView
-                    android:id="@+id/mealtime_value"
+                    android:id="@+id/details_mealtime_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -215,7 +219,7 @@
 
                 <!-- Difficulty Value -->
                 <TextView
-                    android:id="@+id/difficulty_value"
+                    android:id="@+id/details_difficulty_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -226,6 +230,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/dietary_border"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginVertical="16dp"
@@ -233,6 +238,7 @@
             android:background="#aaa" />
 
         <LinearLayout
+            android:id="@+id/dietary_options_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -321,7 +327,7 @@
                     android:layout_marginBottom="8dp" />
 
                 <TextView
-                    android:id="@+id/ingredients_list"
+                    android:id="@+id/details_ingredients_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="• 1 cup flour\n• 2 eggs\n• 1/2 cup sugar\n• 1 tsp vanilla"
@@ -358,7 +364,7 @@
                     android:textColor="@color/pink" />
 
                 <TextView
-                    android:id="@+id/directions_list"
+                    android:id="@+id/details_directions_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1. Pour salt\n2. Stir salt\n3. Drink Salt\n4. Eat salt"

@@ -132,7 +132,7 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 
         return true; // Return true if all filter ingredients are found
     }
-    
+
     private boolean matchesDietaryOptions(Recipe recipe, List<String> options) {
         if (options.contains("vegetarian") && !recipe.getIsVegetarian())
             return false;
@@ -157,6 +157,7 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
         recipeImageButton.setOnClickListener(v -> {
 
             RecipeDetailsBottomSheet bottomSheet = new RecipeDetailsBottomSheet();
+            bottomSheet.setRecipe(recipe);
             bottomSheet.show(getParentFragmentManager(), "RecipeDetailsBottomSheet");
 
 //            AddFragment recipeDetailsFragment = new AddFragment();
