@@ -159,6 +159,8 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
             RecipeDetailsBottomSheet bottomSheet = new RecipeDetailsBottomSheet();
             bottomSheet.setRecipe(recipe);
             bottomSheet.show(getParentFragmentManager(), "RecipeDetailsBottomSheet");
+        });
+
 
 //            AddFragment recipeDetailsFragment = new AddFragment();
 //
@@ -187,7 +189,6 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 //                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
 //                    .addToBackStack(null) // Add to back stack for "Back" navigation
 //                    .commit();
-        });
 
         // Add the item to the GridLayout
         recipeContainer.addView(recipeItemView);
