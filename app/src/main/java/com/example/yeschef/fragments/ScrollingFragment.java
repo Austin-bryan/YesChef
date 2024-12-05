@@ -35,6 +35,8 @@ public class ScrollingFragment extends Fragment {
     // For deletion of recipes
     private boolean isDeleteMode = false;
     private final Map<View, Integer> selectedRecipes = new HashMap<>();
+    private Map<Integer, Recipe> recipeMap = new HashMap<>();
+
 
     @Nullable
     @Override
@@ -51,6 +53,7 @@ public class ScrollingFragment extends Fragment {
         Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
 
+        recipeMap.putAll(loadedRecipeMap); // Populate recipeMap with the loaded data
         for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
             Integer recipeId = entry.getKey();
             Recipe recipe = entry.getValue();
@@ -107,6 +110,7 @@ public class ScrollingFragment extends Fragment {
                 Log.d("Test", String.valueOf(recipe.getCal()));
 
                 Bundle bundle = new Bundle();
+                bundle.putInt("recipeId", recipeId);
                 bundle.putString("recipeTitle", recipe.getTitle());
                 bundle.putString("recipeDescription", recipe.getDescription());
                 bundle.putString("servingSize", recipe.getServingSize());
@@ -158,7 +162,10 @@ public class ScrollingFragment extends Fragment {
             return; // If no recipes are selected, do nothing
         }
 
-        // Iterate through the selected recipes and remove them
+        // Get the current recipe map from JSON
+        Map<Integer, Recipe> loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
+
+        // Remove the selected recipes from the map and the UI
         for (Map.Entry<View, Integer> entry : selectedRecipes.entrySet()) {
             View recipeItemView = entry.getKey(); // View representing the recipe item
             Integer recipeId = entry.getValue(); // The ID of the recipe to be deleted
@@ -166,20 +173,21 @@ public class ScrollingFragment extends Fragment {
             // Remove the recipe from the UI
             recipeContainer.removeView(recipeItemView); // This will remove the view from the container
 
-            // Optionally, you can also remove the recipe from the data source (e.g., map or JSON file)
-            Map<Integer, Recipe> loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
-
-            // Remove the recipe from the map using the recipe ID
+            // Remove the recipe from the map
             loadedRecipeMap.remove(recipeId);
-
-            // Save the updated map back to the JSON file
-            JsonUtils.saveRecipeMapToJson(requireContext(), loadedRecipeMap, "recipes.json");
         }
+
+        // Rebuild the recipe map with new IDs
+        rebuildRecipeMap(loadedRecipeMap);
+
+        // Save the updated map back to the JSON file
+        JsonUtils.saveRecipeMapToJson(requireContext(), recipeMap, "recipes.json");
 
         // After deletion, exit delete mode and reset the icon
         isDeleteMode = false;
         delRecipeButton.setImageResource(R.drawable.ic_delete); // Reset the delete button icon
     }
+    
 
     private void toggleDeleteMode() {
         if (isDeleteMode) {
@@ -225,7 +233,7 @@ public class ScrollingFragment extends Fragment {
         selectedRecipes.clear(); // Clear the selected recipes map
     }
 
-    /*private void rebuildRecipeMap(Map<Integer, Recipe> oldMap) {
+    private void rebuildRecipeMap(Map<Integer, Recipe> oldMap) {
         Map<Integer, Recipe> newMap = new HashMap<>();
         int newId = 1; // Starting ID value
 
@@ -236,8 +244,9 @@ public class ScrollingFragment extends Fragment {
         }
 
         // Update your recipeMap with the re-indexed map
-        //recipeMap = newMap;
-    }*/
+        recipeMap.clear();
+        recipeMap.putAll(newMap);
+    }
 
 }
 
