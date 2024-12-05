@@ -3,7 +3,8 @@ package com.example.yeschef.fragments;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import androidx.core.content.ContextCompat;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,8 +44,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class AddFragment extends Fragment {
@@ -66,7 +65,7 @@ public class AddFragment extends Fragment {
     private boolean isAnimating = false;
     private Spinner mealTimeSpinner;
     private Spinner difficultySpinner;
-    private EditText recipeTitleInput;
+    private EditText titleInput;
     private EditText descriptionInput;
     private ImageButton imageAdder;
     private EditText servingSizeInput;
@@ -87,38 +86,27 @@ public class AddFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
         // Initialize input fields
-        View mealTitleView = view.findViewById(R.id.meal_title);
-        recipeTitleInput = mealTitleView.findViewById(R.id.ingredient_step_input); // Adjust as necessary
-
-        View mealDescriptionView = view.findViewById(R.id.meal_description);
-        descriptionInput = mealDescriptionView.findViewById(R.id.ingredient_step_input); // Adjust as necessary
-
-        servingSizeInput = view.findViewById(R.id.serving_size_input);
-        caloriesInput = view.findViewById(R.id.calories_input);
-        proteinInput = view.findViewById(R.id.protein_input);
-        mealTimeSpinner = view.findViewById(R.id.spinner1);
-        difficultySpinner = view.findViewById(R.id.difficulty_spinner);
-        imageAdder = view.findViewById(R.id.image_add);
-
-        // Initialize containers for dynamic content
+        titleInput           = view.findViewById(R.id.meal_title);
+        descriptionInput     = view.findViewById(R.id.meal_description);
+        servingSizeInput     = view.findViewById(R.id.serving_size_input);
+        caloriesInput        = view.findViewById(R.id.calories_input);
+        proteinInput         = view.findViewById(R.id.protein_input);
+        mealTimeSpinner      = view.findViewById(R.id.spinner1);
+        difficultySpinner    = view.findViewById(R.id.difficulty_spinner);
+        imageAdder           = view.findViewById(R.id.image_add);
         ingredientsContainer = view.findViewById(R.id.ingredients_container);
-        directionsContainer = view.findViewById(R.id.directions_container);
+        directionsContainer  = view.findViewById(R.id.directions_container);
 
         // Set up labels and their colors
         RelativeLayout ingredientsLabel = view.findViewById(R.id.ingredients_label);
         RelativeLayout directionsLabel = view.findViewById(R.id.directions_label);
-        int ingredientsColor = ((ColorDrawable) ingredientsLabel.getBackground()).getColor();
-        int directionsColor = ((ColorDrawable) directionsLabel.getBackground()).getColor();
+
+        int ingredientsColor = ContextCompat.getColor(view.getContext(), R.color.ingredient);
+        int directionsColor = ContextCompat.getColor(view.getContext(), R.color.step);
 
         // Setup basic text fields
         setHintText(view, R.id.meal_title, "Meal Title");
         setHintText(view, R.id.meal_description, "Description");
-
-        // Set visibility for remove buttons
-        ImageButton removeButton1 = mealTitleView.findViewById(R.id.remove_button);
-        removeButton1.setVisibility(View.GONE);
-        ImageButton removeButton2 = mealDescriptionView.findViewById(R.id.remove_button);
-        removeButton2.setVisibility(View.GONE);
 
         ingredientsLabel.setClickable(false);
         directionsLabel.setClickable(false);
@@ -183,8 +171,8 @@ public class AddFragment extends Fragment {
             onSaveClick();
             new AlertDialog.Builder(getContext())
                     .setTitle("Recipe Saved")
-                    .setMessage("The " + (recipeTitleInput.getText().toString().isEmpty() ?
-                            "untitled" : recipeTitleInput.getText().toString()) + " recipe has been saved." +
+                    .setMessage("The " + (titleInput.getText().toString().isEmpty() ?
+                            "untitled" : titleInput.getText().toString()) + " recipe has been saved." +
                             "\nIt is safe to clear this page.")
                     .setPositiveButton("Okay", (dialog, which) -> dialog.dismiss())
                     .show();
@@ -211,7 +199,7 @@ public class AddFragment extends Fragment {
 
             // Populate the UI
             if (args.containsKey("recipeTitle"))
-                recipeTitleInput.setText(args.getString("recipeTitle"));
+                titleInput.setText(args.getString("recipeTitle"));
             if (args.containsKey("recipeDescription"))
                 descriptionInput.setText(args.getString("recipeDescription"));
             if (args.containsKey("servingSize"))
@@ -264,7 +252,7 @@ public class AddFragment extends Fragment {
         ChipGroup dietaryOptionsGroup = requireView().findViewById(R.id.dietary_options_group);
         dietaryOptionsGroup.clearCheck();
 
-        recipeTitleInput.setText("");     // Clear the meal title
+        titleInput.setText("");     // Clear the meal title
         descriptionInput.setText("");     // Clear the meal description
 
         // Clear serving size
@@ -379,7 +367,7 @@ public class AddFragment extends Fragment {
         Recipe recipe = new Recipe();
 
         // Retrieve input from UI components
-        String title = recipeTitleInput.getText().toString();
+        String title = titleInput.getText().toString();
         String description = descriptionInput.getText().toString();
         String servingSizeStr = servingSizeInput.getText().toString();
         String caloriesStr = caloriesInput.getText().toString();
@@ -546,7 +534,7 @@ public class AddFragment extends Fragment {
     private void setHintText(View view, int id, String text) {
         View titleItem = view.findViewById(id);
         TextInputEditText editText = titleItem.findViewById(R.id.ingredient_step_input);
-        editText.setHint(text);
+        //editText.setHint(text);
     }
     private void updateStepNumbers(LinearLayout itemListContainer) {
         for (int i = 0; i < itemListContainer.getChildCount(); i++) {

@@ -279,7 +279,7 @@
                 android:layout_marginBottom="0dp">
 
                 <TextView
-                    android:id="@+id/difficulty_label"
+                    android:id="@+id/mealtime_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -436,111 +436,6 @@
                         android:src="@drawable/ic_add" />
                 </RelativeLayout>
             </LinearLayout>
-
-            <!-- Meal Title Input -->
-            <include
-                android:id="@+id/meal_title"
-                layout="@layout/item_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp" />
-
-            <!-- Meal Description Input -->
-            <include
-                android:id="@+id/meal_description"
-                layout="@layout/item_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
-                android:layout_marginEnd="-16dp" />
-
-            <!-- Serving Size Input -->
-            <TextView
-                android:id="@+id/label_serving_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Serving Size"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="4dp" />
-            <EditText
-                android:id="@+id/serving_size_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Serving Size:"
-                android:inputType="number"
-                tools:ignore="Autofill" />
-
-            <TextView
-                android:id="@+id/label_calories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calories:"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="4dp" />
-            <EditText
-                android:id="@+id/calories_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Calories"
-                android:inputType="number"
-                tools:ignore="Autofill" />
-
-            <TextView
-                android:id="@+id/label_protein"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Protein:"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="4dp" />
-            <EditText
-                android:id="@+id/protein_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Protein (g)"
-                android:inputType="numberDecimal"
-                tools:ignore="Autofill" />
-
-            <!-- Difficulty Level Section -->
-            <TextView
-                android:id="@+id/difficulty_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="0dp"
-                android:padding="8dp"
-                android:text="Difficulty Level"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                tools:ignore="HardcodedText" />
-
-            <Spinner
-                android:id="@+id/difficulty_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginVertical="5dp"
-                android:background="@drawable/flat_spinner_background"
-                android:padding="10dp"
-                android:spinnerMode="dropdown"
-                android:layout_marginBottom="16dp"
-                android:dropDownWidth="match_parent"
-                android:textColor="#333333"
-                android:textSize="16sp" />
-
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginVertical="5dp"
-                android:background="@drawable/flat_spinner_background"
-                android:padding="10dp"
-                android:prompt="@string/select_mealtime"
-                android:spinnerMode="dropdown" />
-
-            <!-- Options Section -->
 
             <!-- Spacer View -->
             <View
