@@ -5,10 +5,11 @@
     <item>
         <shape android:shape="rectangle">
             <solid android:color="#F5F5F5"/> <!-- Light gray background -->
-            <corners android:radius="0dp"/>
+            <corners android:radius="16dp"/>
         </shape>
     </item>
 
     <!-- Drop-down arrow -->
-    <item android:drawable="@drawable/ic_arrow_down" android:gravity="right|center_vertical"/>
+    <item android:drawable="@drawable/ic_arrow_down"
+        android:gravity="right|center_vertical"/>
 </layer-list>
