@@ -11,7 +11,7 @@
         android:background="@color/background">
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FF69B4"
@@ -20,7 +20,7 @@
 
             <!-- Header Text centered in the layout -->
             <TextView
-                android:id="@+id/headerTextView"
+                android:id="@+id/recipe_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -33,7 +33,7 @@
 
             <!-- Save Button aligned to the end (right) -->
             <ImageButton
-                android:id="@+id/save_button"
+                android:id="@+id/edit_button"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
@@ -43,7 +43,7 @@
                 android:background="@null"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_edit"/>.
+                android:src="@drawable/ic_edit"/>
 
         </RelativeLayout>
 

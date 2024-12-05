@@ -161,35 +161,6 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
             bottomSheet.show(getParentFragmentManager(), "RecipeDetailsBottomSheet");
         });
 
-
-//            AddFragment recipeDetailsFragment = new AddFragment();
-//
-//            Bundle bundle = new Bundle();
-//            bundle.putString("recipeTitle", recipe.getTitle());
-//            bundle.putString("recipeDescription", recipe.getDescription());
-//            bundle.putInt("servingSize", recipe.getServingSize());
-//            bundle.putInt("calories", recipe.getCal());
-//            bundle.putInt("protein", recipe.getProtein());
-//            bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
-//            bundle.putInt("mealtime", recipe.getMealTime().ordinal());
-//
-//            bundle.putBoolean("isVegetarian", recipe.getIsVegetarian());
-//            bundle.putBoolean("isGlutenFree", recipe.getIsGlutenFree());
-//            bundle.putBoolean("isSugarFree", recipe.getIsSugarFree());
-//
-//            bundle.putString("image", recipe.getImage().toString());
-//
-//            bundle.putStringArrayList("ingredients", recipe.getIngredients());
-//            bundle.putStringArrayList("directions", recipe.getDirections());
-//
-//            recipeDetailsFragment.setArguments(bundle);
-//
-//            // Replace the current fragment
-//            requireActivity().getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
-//                    .addToBackStack(null) // Add to back stack for "Back" navigation
-//                    .commit();
-
         // Add the item to the GridLayout
         recipeContainer.addView(recipeItemView);
     }

@@ -18,8 +18,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <!-- Header TextView for "Create a Recipe" -->
-
         <!-- Clear Button aligned to the start (left) -->
         <ImageButton
             android:id="@+id/clear_button"
@@ -29,11 +27,9 @@
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:background="@null"
-            android:contentDescription="Clear Recipe"
             android:padding="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_delete"
-            android:tint="@android:color/white" />
+            android:src="@drawable/ic_delete"/>
 
         <!-- Header Text centered in the layout -->
         <TextView

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
     private TextView ingredientsList;
     private TextView directionsList;
     private Recipe recipe;
+    private ImageButton editButton;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -66,6 +68,7 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
         sugarFreeContainer = view.findViewById(R.id.sugar_free_container);
         ingredientsList = view.findViewById(R.id.details_ingredients_list);
         directionsList = view.findViewById(R.id.details_directions_list);
+        editButton = view.findViewById(R.id.edit_button);
 
         recipeTitle.setText(recipe.getTitle());
         recipeImage.setImageURI(recipe.getImage()); // Assuming the image is a URI
@@ -84,6 +87,39 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
         // Set the ingredients and directions
         ingredientsList.setText(String.join("\n• ", recipe.getIngredients()));
         directionsList.setText(formatDirections(recipe.getDirections()));
+
+        editButton.setOnClickListener((v) -> {
+            AddFragment recipeDetailsFragment = new AddFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("recipeTitle", recipe.getTitle());
+            bundle.putString("recipeDescription", recipe.getDescription());
+            bundle.putInt("servingSize", recipe.getServingSize());
+            bundle.putInt("calories", recipe.getCal());
+            bundle.putInt("protein", recipe.getProtein());
+            bundle.putInt("difficulty", recipe.getDifficultyLevel().ordinal());
+            bundle.putInt("mealtime", recipe.getMealTime().ordinal());
+
+            bundle.putBoolean("isVegetarian", recipe.getIsVegetarian());
+            bundle.putBoolean("isGlutenFree", recipe.getIsGlutenFree());
+            bundle.putBoolean("isSugarFree", recipe.getIsSugarFree());
+
+            bundle.putString("image", recipe.getImage().toString());
+
+            bundle.putStringArrayList("ingredients", recipe.getIngredients());
+            bundle.putStringArrayList("directions", recipe.getDirections());
+
+            recipeDetailsFragment.setArguments(bundle);
+
+            // Replace the current fragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main, recipeDetailsFragment) // Replace with the ID of your container
+                    .addToBackStack(null) // Add to back stack for "Back" navigation
+                    .commit();
+
+            dismiss();
+
+        });
 
         return view;
     }
