@@ -36,6 +36,7 @@ import com.example.yeschef.utils.JsonUtils;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -168,6 +169,10 @@ public class AddFragment extends Fragment {
         // Add save button click listener
         ImageButton saveButton = view.findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> {
+            if (!validateInput(view)) {
+                return;
+            }
+
             onSaveClick();
             new AlertDialog.Builder(getContext())
                     .setTitle("Recipe Saved")
@@ -232,6 +237,22 @@ public class AddFragment extends Fragment {
         }
 
         return view;
+    }
+    private boolean validateInput(View view) {
+        TextInputLayout mealTitleLayout = view.findViewById(R.id.meal_title_layout);
+        TextInputEditText mealTitleEditText = view.findViewById(R.id.meal_title);
+
+        // Get the text from the EditText
+        String mealTitle = mealTitleEditText.getText().toString().trim();
+
+        // Check if the field is empty
+        if (mealTitle.isEmpty()) {
+            mealTitleLayout.setError("This field is required");
+            return false;
+        } else {
+            mealTitleLayout.setError(null); // Clear the error
+            return true;
+        }
     }
     private void SetImage(String uri)
     {

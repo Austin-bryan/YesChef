@@ -104,6 +104,7 @@
                         android:layout_marginBottom="8dp" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/meal_title_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Title"
