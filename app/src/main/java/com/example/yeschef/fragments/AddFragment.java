@@ -377,14 +377,12 @@ public class AddFragment extends Fragment {
 
         // Log the loaded map
         Log.d("Loaded Test", "Loaded recipe map content before save: " + loadedRecipeMap.toString());
-
-
+        
         // Check if we're editing an existing recipe
         int recipeId = -1; // Default ID indicating new recipe
         if (getArguments() != null && getArguments().containsKey("recipeId")) {
             recipeId = getArguments().getInt("recipeId"); // Retrieve the recipeId from arguments
         }
-
 
         // Create a new Recipe object
         Recipe recipe = new Recipe();

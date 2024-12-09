@@ -107,7 +107,7 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
             case "==": return Comparisons.EQUALS;
             case ">=": return Comparisons.GREATER_THAN_EQUALS;
             case ">":  return Comparisons.GREATER_THAN;
-            default: return Comparisons.EQUALS;
+            default:   return Comparisons.EQUALS;
         }
     }
 

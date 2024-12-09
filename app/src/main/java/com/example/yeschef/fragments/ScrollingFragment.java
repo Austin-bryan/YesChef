@@ -52,11 +52,13 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 
         // Initialize the GridLayout, SearchView, and Button
         recipeContainer = view.findViewById(R.id.recipe_container);
-        searchView = view.findViewById(R.id.searchView);
+        searchView      = view.findViewById(R.id.searchView);
         delRecipeButton = view.findViewById(R.id.delRecipeButton);
 
-        Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
+
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
+
+        Log.d("MyTest", String.valueOf(loadedRecipeMap.size()));
 
         recipeMap.putAll(loadedRecipeMap); // Populate recipeMap with the loaded data
         // Initially display all recipes
@@ -94,13 +96,13 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
     private void populateRecipes(String filter, FilterParams filterParams) {
         // Clear the existing GridLayout
         recipeContainer.removeAllViews();
+        Log.d("MyTest", "A: " + String.valueOf(loadedRecipeMap.size()));
 
         // Filter and add recipes that match the filter
+
         for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
             Integer recipeId = entry.getKey();
             Recipe recipe = entry.getValue();
-
-            addRecipeItem(recipeId, recipe);
 
             // For deletion
             delRecipeButton.setOnClickListener(v -> {
