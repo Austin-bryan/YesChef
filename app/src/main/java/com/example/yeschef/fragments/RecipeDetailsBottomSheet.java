@@ -92,6 +92,7 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
             AddFragment recipeDetailsFragment = new AddFragment();
 
             Bundle bundle = new Bundle();
+            bundle.putInt("recipeId", recipe.getId());
             bundle.putString("recipeTitle", recipe.getTitle());
             bundle.putString("recipeDescription", recipe.getDescription());
             bundle.putInt("servingSize", recipe.getServingSize());

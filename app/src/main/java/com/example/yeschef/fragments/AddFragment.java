@@ -368,7 +368,7 @@ public class AddFragment extends Fragment {
     }
     private void onSaveClick() {
        // Check recipe map storage
-        Map<Integer, Recipe> loadedRecipeMap = new HashMap<>();
+        Map<Integer, Recipe> loadedRecipeMap;
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
 
         if (loadedRecipeMap == null) {
@@ -377,23 +377,30 @@ public class AddFragment extends Fragment {
 
         // Log the loaded map
         Log.d("Loaded Test", "Loaded recipe map content before save: " + loadedRecipeMap.toString());
-        
+
         // Check if we're editing an existing recipe
         int recipeId = -1; // Default ID indicating new recipe
+        Log.d("MyTest", "Is Null: " + getArguments());
+        if (getArguments() != null)
+            Log.d("MyTest", "Contains Key: " + getArguments().containsKey("recipeId"));
         if (getArguments() != null && getArguments().containsKey("recipeId")) {
             recipeId = getArguments().getInt("recipeId"); // Retrieve the recipeId from arguments
         }
 
         // Create a new Recipe object
-        Recipe recipe = new Recipe();
+        Recipe recipe;
+
+        Log.d("MyTest", "ID: " + recipeId + ", " + loadedRecipeMap.containsKey(recipeId));
         if (recipeId != -1 && loadedRecipeMap.containsKey(recipeId)) {
             // If the recipeId exists, fetch the existing recipe for update
             recipe = loadedRecipeMap.get(recipeId);
+            Log.d("MyTest", "Found");
         } else {
             // Create a new Recipe object if not editing
             recipe = new Recipe();
             recipeId = loadedRecipeMap.size() + 1; // Assign a new ID
             recipe.setId(recipeId);
+            Log.d("MyTest", "Not Found");
         }
 
         // Retrieve input from UI components
@@ -480,12 +487,10 @@ public class AddFragment extends Fragment {
 
         recipe.setIngredients(ingredientsList);
         recipe.setDirections(directionsList);
-
         recipe.setVegetarian(optionVegetarian.isChecked());
         recipe.setGlutenFree(optionGlutenFree.isChecked());
         recipe.setSugarFree(optionSugarFree.isChecked());
         recipe.setImage(image);
-
 
         // Add recipe to map
         loadedRecipeMap.put(recipe.getId(), recipe);
