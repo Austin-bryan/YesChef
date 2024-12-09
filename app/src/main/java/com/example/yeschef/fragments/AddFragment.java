@@ -378,14 +378,25 @@ public class AddFragment extends Fragment {
         // Log the loaded map
         Log.d("Loaded Test", "Loaded recipe map content before save: " + loadedRecipeMap.toString());
 
-        // Find the highest existing ID
-        int maxId = 0;
-        for (Integer existingId : loadedRecipeMap.keySet()) {
-            maxId = Math.max(maxId, existingId);
+
+        // Check if we're editing an existing recipe
+        int recipeId = -1; // Default ID indicating new recipe
+        if (getArguments() != null && getArguments().containsKey("recipeId")) {
+            recipeId = getArguments().getInt("recipeId"); // Retrieve the recipeId from arguments
         }
-        Log.d("Loaded Test", "Max ID found: " + maxId);
+
+
         // Create a new Recipe object
         Recipe recipe = new Recipe();
+        if (recipeId != -1 && loadedRecipeMap.containsKey(recipeId)) {
+            // If the recipeId exists, fetch the existing recipe for update
+            recipe = loadedRecipeMap.get(recipeId);
+        } else {
+            // Create a new Recipe object if not editing
+            recipe = new Recipe();
+            recipeId = loadedRecipeMap.size() + 1; // Assign a new ID
+            recipe.setId(recipeId);
+        }
 
         // Retrieve input from UI components
         String title = titleInput.getText().toString();
@@ -477,8 +488,6 @@ public class AddFragment extends Fragment {
         recipe.setSugarFree(optionSugarFree.isChecked());
         recipe.setImage(image);
 
-        // Assign a unique ID to the new recipe
-        recipe.setId(maxId + 1);
 
         // Add recipe to map
         loadedRecipeMap.put(recipe.getId(), recipe);

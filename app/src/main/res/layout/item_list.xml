@@ -52,7 +52,7 @@
     <!-- Input Text Box (ingredients) -->
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/ingredient_step_input"
-        android:layout_width="321dp"
+        android:layout_width="400dp"
         android:layout_height="50dp"
         android:layout_weight="1"
         android:background="#fff"
@@ -64,11 +64,11 @@
         android:id="@+id/remove_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="#fff"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:padding="8dp"
         android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:background="#fff"
         android:contentDescription="Add item"
+        android:padding="8dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_remove_outline" />
 </LinearLayout>
