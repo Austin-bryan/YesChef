@@ -18,6 +18,8 @@ import com.example.yeschef.models.Recipe;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.example.yeschef.R;
 
+import java.util.Objects;
+
 public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
 
     // Class variables for all UI elements with IDs
@@ -75,7 +77,8 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
         servingsValue.setText(formatNumber(recipe.getServingSize()));
         caloriesValue.setText(formatNumber(recipe.getCal()));
         proteinValue.setText(recipe.getProtein() > 0 ? String.format("%d g", recipe.getProtein()) : "N/A");
-        description.setText(recipe.getDescription());
+
+        description.setText(Objects.equals(recipe.getDescription(), "") ? "Add your own description to make this recipe yours!" : recipe.getDescription());
         mealtimeValue.setText(recipe.getMealTime().toString());
         difficultyValue.setText(recipe.getDifficultyLevel().toString());
 
@@ -85,7 +88,7 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
         sugarFreeContainer.setVisibility(recipe.getIsSugarFree() ? View.VISIBLE : View.GONE);
 
         // Set the ingredients and directions
-        ingredientsList.setText(String.join("\n• ", recipe.getIngredients()));
+        ingredientsList.setText(String.format("• %s", String.join("\n• ", recipe.getIngredients())));
         directionsList.setText(formatDirections(recipe.getDirections()));
 
         editButton.setOnClickListener((v) -> {

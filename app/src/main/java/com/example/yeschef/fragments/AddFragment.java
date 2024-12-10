@@ -207,8 +207,9 @@ public class AddFragment extends Fragment {
                 titleInput.setText(args.getString("recipeTitle"));
             if (args.containsKey("recipeDescription"))
                 descriptionInput.setText(args.getString("recipeDescription"));
+
             if (args.containsKey("servingSize"))
-                servingSizeInput.setText(args.getString("servingSize"));
+                servingSizeInput.setText(String.valueOf(args.getInt("servingSize")));
             if (args.containsKey("calories"))
                 caloriesInput.setText(String.valueOf(args.getInt("calories")));
             if (args.containsKey("protein"))
@@ -390,7 +391,6 @@ public class AddFragment extends Fragment {
         // Create a new Recipe object
         Recipe recipe;
 
-        Log.d("MyTest", "ID: " + recipeId + ", " + loadedRecipeMap.containsKey(recipeId));
         if (recipeId != -1 && loadedRecipeMap.containsKey(recipeId)) {
             // If the recipeId exists, fetch the existing recipe for update
             recipe = loadedRecipeMap.get(recipeId);
