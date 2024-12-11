@@ -45,6 +45,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:visibility="gone">
+
             <!-- Border drawable for highlight -->
             <View
                 android:layout_width="match_parent"

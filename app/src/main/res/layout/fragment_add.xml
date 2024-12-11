@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <!-- Clear Button aligned to the start (left) -->
+        <!-- Clear Button aligned to the left -->
         <ImageButton
             android:id="@+id/clear_button"
             android:layout_width="60dp"
@@ -45,7 +45,7 @@
             android:textSize="24sp"
             tools:ignore="HardcodedText" />
 
-        <!-- Save Button aligned to the end (right) -->
+        <!-- Save Button aligned to the right -->
         <ImageButton
             android:id="@+id/save_button"
             android:layout_width="60dp"

@@ -107,6 +107,7 @@
                 android:paddingEnd="16dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp">
+
                 <!-- Recipe items will be added here dynamically -->
             </GridLayout>
 

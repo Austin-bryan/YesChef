@@ -20,9 +20,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <!-- Header Text centered in the layout -->
-
-        <!-- Clear Button aligned to the start (left) -->
+        <!-- Clear Button aligned to the left -->
         <ImageButton
             android:id="@+id/clear_button"
             android:layout_width="60dp"
@@ -50,7 +48,7 @@
             android:textSize="24sp"
             tools:ignore="HardcodedText" />
 
-        <!-- Save Button aligned to the end (right) -->
+        <!-- Save Button aligned to the right -->
         <ImageButton
             android:id="@+id/addTaskButton"
             android:layout_width="60dp"
@@ -79,7 +77,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
-            <!-- Container for dynamically added tasks -->
 
             <!-- Spacer View -->
             <View

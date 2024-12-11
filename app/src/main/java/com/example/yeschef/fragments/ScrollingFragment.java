@@ -58,8 +58,6 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
 
-        Log.d("MyTest", String.valueOf(loadedRecipeMap.size()));
-
         recipeMap.putAll(loadedRecipeMap); // Populate recipeMap with the loaded data
         // Initially display all recipes
         populateRecipes("", null);
@@ -96,17 +94,15 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
     private void populateRecipes(String filter, FilterParams filterParams) {
         // Clear the existing GridLayout
         recipeContainer.removeAllViews();
-        Log.d("MyTest", "A: " + String.valueOf(loadedRecipeMap.size()));
 
         // Filter and add recipes that match the filter
-
         for (Map.Entry<Integer, Recipe> entry : loadedRecipeMap.entrySet()) {
             Integer recipeId = entry.getKey();
             Recipe recipe = entry.getValue();
 
             // For deletion
             delRecipeButton.setOnClickListener(v -> {
-                    toggleDeleteMode();
+                toggleDeleteMode();
             });
             // Apply filtering logic
             if (!recipe.getTitle().toLowerCase().contains(filter.toLowerCase())) continue;
@@ -177,12 +173,9 @@ public class ScrollingFragment extends Fragment implements FilterBottomSheet.Fil
 
         // Set OnClickListener for each recipe item
         recipeImageButton.setOnClickListener(v -> {
-            // Set the OnClickListener for the recipe item view
             if (isDeleteMode) {
-                // Get reference to the CardView (the parent of the recipe item)
                 CardView recipeCardView = recipeItemView.findViewById(R.id.recipe_card_view);
 
-                // Check if the recipe item is already selected
                 boolean isSelected = selectedRecipes.containsKey(recipeItemView);
 
                 if (isSelected) {

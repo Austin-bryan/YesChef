@@ -190,6 +190,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="vertical">
 
             <!-- Row for Mealtime -->
@@ -257,7 +258,8 @@
             android:id="@+id/dietary_border"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginVertical="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginHorizontal="16dp"
             android:background="#aaa" />
 
@@ -266,6 +268,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center">
 
             <LinearLayout
@@ -329,7 +333,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             app:cardBackgroundColor="@android:color/white">

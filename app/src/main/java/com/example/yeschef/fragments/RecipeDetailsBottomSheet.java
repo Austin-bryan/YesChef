@@ -38,17 +38,16 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
     private TextView directionsList;
     private Recipe recipe;
     private ImageButton editButton;
+    private View dietaryBorder;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        Log.d("MyTest", "Fragment attached");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MyTest", "Fragment created");
     }
 
     @Override
@@ -71,9 +70,10 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
         ingredientsList = view.findViewById(R.id.details_ingredients_list);
         directionsList = view.findViewById(R.id.details_directions_list);
         editButton = view.findViewById(R.id.edit_button);
+        dietaryBorder = view.findViewById(R.id.dietary_border);
 
         recipeTitle.setText(recipe.getTitle());
-        recipeImage.setImageURI(recipe.getImage()); // Assuming the image is a URI
+        recipeImage.setImageURI(recipe.getImage());
         servingsValue.setText(formatNumber(recipe.getServingSize()));
         caloriesValue.setText(formatNumber(recipe.getCal()));
         proteinValue.setText(recipe.getProtein() > 0 ? String.format("%d g", recipe.getProtein()) : "N/A");
@@ -83,9 +83,12 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
         difficultyValue.setText(recipe.getDifficultyLevel().toString());
 
         // Show/hide dietary options based on recipe data
+        final int visibilty = recipe.getIsVegetarian() ? View.VISIBLE : View.GONE;
         vegetarianContainer.setVisibility(recipe.getIsVegetarian() ? View.VISIBLE : View.GONE);
         glutenFreeContainer.setVisibility(recipe.getIsGlutenFree() ? View.VISIBLE : View.GONE);
         sugarFreeContainer.setVisibility(recipe.getIsSugarFree() ? View.VISIBLE : View.GONE);
+        dietaryBorder.setVisibility((recipe.getIsGlutenFree() || recipe.getIsSugarFree() || recipe.getIsVegetarian())
+                ? View.VISIBLE : View.GONE);
 
         // Set the ingredients and directions
         ingredientsList.setText(String.format("• %s", String.join("\n• ", recipe.getIngredients())));
@@ -133,10 +136,6 @@ public class RecipeDetailsBottomSheet extends BottomSheetDialogFragment {
     public void setRecipe(Recipe recipe) {
         if (recipe == null)
             return;
-
-        // Set text and values for all UI elements
-        Log.d("MyTest", String.valueOf(recipeTitle == null));
-
         this.recipe = recipe;
     }
 

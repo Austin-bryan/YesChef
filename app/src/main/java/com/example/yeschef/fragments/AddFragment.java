@@ -76,15 +76,12 @@ public class AddFragment extends Fragment {
     private Chip optionSugarFree;
     private String image;
     private Button saveButton;
-    private boolean isVegetarian = false;
-    private boolean isGlutenFree = false;
-    private boolean isSugarFree = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
-        // Initialize input fields
+        // Cache views
         titleInput           = view.findViewById(R.id.meal_title);
         descriptionInput     = view.findViewById(R.id.meal_description);
         servingSizeInput     = view.findViewById(R.id.serving_size_input);
@@ -100,6 +97,7 @@ public class AddFragment extends Fragment {
         RelativeLayout ingredientsLabel = view.findViewById(R.id.ingredients_label);
         RelativeLayout directionsLabel = view.findViewById(R.id.directions_label);
 
+        // Get header colors
         int ingredientsColor = ContextCompat.getColor(view.getContext(), R.color.ingredient);
         int directionsColor = ContextCompat.getColor(view.getContext(), R.color.step);
 
@@ -107,6 +105,7 @@ public class AddFragment extends Fragment {
         setHintText(view, R.id.meal_title, "Meal Title");
         setHintText(view, R.id.meal_description, "Description");
 
+        // Disable click status for labels
         ingredientsLabel.setClickable(false);
         directionsLabel.setClickable(false);
 
@@ -139,16 +138,18 @@ public class AddFragment extends Fragment {
         }
 
         // Set up the meal time spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(),
                 R.array.mealtime_options, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mealTimeSpinner.setAdapter(adapter);
 
-        // Spinner for difficulty level
+        // Set up the difficulty spinner
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(
-                getContext(), R.array.difficulty_levels, android.R.layout.simple_spinner_item);
+                view.getContext(), R.array.difficulty_levels, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
         difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficultySpinner.setAdapter(difficultyAdapter);
 
@@ -172,7 +173,8 @@ public class AddFragment extends Fragment {
             }
 
             onSaveClick();
-            new AlertDialog.Builder(getContext())
+            // Show alert for save confirmation
+            new AlertDialog.Builder(view.getContext())
                     .setTitle("Recipe Saved")
                     .setMessage("The " + (titleInput.getText().toString().isEmpty() ?
                             "untitled" : titleInput.getText().toString()) + " recipe has been saved." +
@@ -185,7 +187,7 @@ public class AddFragment extends Fragment {
         ImageButton clearButton = view.findViewById(R.id.clear_button);
         clearButton.setOnClickListener(v -> {
             // Create an AlertDialog builder
-            new AlertDialog.Builder(getContext())
+            new AlertDialog.Builder(view.getContext())
                     .setTitle("Clear Recipe")
                     .setMessage("Are you sure you want to clear all fields?")
                     .setPositiveButton("Clear", (dialog, which) -> onClearClick())
@@ -196,6 +198,9 @@ public class AddFragment extends Fragment {
         updateIngredientsAndDirectionsViews();
 
         Bundle args = getArguments();
+
+        // When loading from recipe browse, populate the edit page with the fields from the recipe
+        // that is being loaded
         if (args != null) {
             String recipeName = args.getString("recipeName");
             String recipeImageUri = args.getString("recipeImageUri");
@@ -253,6 +258,7 @@ public class AddFragment extends Fragment {
             return true;
         }
     }
+    // Sets the image to the specified URI
     private void SetImage(String uri)
     {
         imageAdder.clearColorFilter();
@@ -287,23 +293,19 @@ public class AddFragment extends Fragment {
 
         Spinner mealTimeSpinner = getView().findViewById(R.id.spinner1);
         mealTimeSpinner.setSelection(0);
+
         Spinner difficultySpinner = getView().findViewById(R.id.difficulty_spinner);
         difficultySpinner.setSelection(0);
-
-        Button vegetarianButton = getView().findViewById(R.id.option_vegetarian);
-        Button glutenFreeButton = getView().findViewById(R.id.option_gluten_free);
-        Button sugarFreeButton = getView().findViewById(R.id.option_sugar_free);
 
         updateIngredientsAndDirectionsViews();
     }
     private void updateIngredientsAndDirectionsViews() {
         while (ingredientsContainer.getChildCount() > 1) { // Keep the header (assume header is the first child)
-            ingredientsContainer.removeViewAt(1); // Remove all but the header
+            ingredientsContainer.removeViewAt(1);    // Remove all but the header
         }
 
-        // Clear existing input views in directions container
         while (directionsContainer.getChildCount() > 1) { // Keep the header (assume header is the first child)
-            directionsContainer.removeViewAt(1); // Remove all but the header
+            directionsContainer.removeViewAt(1);    // Remove all but the header
         }
     }
     private void addButtonListeners(View view, LinearLayout ingredientsContainer, LinearLayout directionsContainer, int ingredientsColor, int directionsColor) {
@@ -314,47 +316,6 @@ public class AddFragment extends Fragment {
         addDirectionButton.setOnClickListener(v -> addNewItem(directionsContainer, "Step(s)", directionsColor, null, true));
     }
 
-    private void toggleCategoryButtons() {
-        if (categoryButtonsContainer.getVisibility() == View.GONE) {
-            categoryButtonsContainer.setVisibility(View.VISIBLE);
-            slideDown(categoryButtonsContainer);
-        } else {
-            slideUp(categoryButtonsContainer, () -> categoryButtonsContainer.setVisibility(View.GONE));
-        }
-    }
-
-    private void slideDown(View view) {
-        TranslateAnimation animation = new TranslateAnimation(0, 0, -view.getHeight(), 0);
-        animation.setDuration(300);
-        animation.setInterpolator(new AccelerateDecelerateInterpolator());
-        view.startAnimation(animation);
-        view.setTranslationY(0);
-    }
-    private void slideUp(View view, Runnable endAction) {
-        TranslateAnimation animation = new TranslateAnimation(0, 0, 0, -view.getHeight());
-        animation.setDuration(300);
-        animation.setInterpolator(new AccelerateDecelerateInterpolator());
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                view.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                endAction.run();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {}
-        });
-        view.startAnimation(animation);
-    }
-
-    private void selectCategory(String category, Button pickCategoryButton) {
-        pickCategoryButton.setText(category);
-        categoryButtonsContainer.setVisibility(View.GONE);
-    }
     private void toggleContainerVisibility(final LinearLayout container) {
         // Logic for toggling visibility
     }
@@ -366,7 +327,7 @@ public class AddFragment extends Fragment {
         outState.putStringArrayList(KEY_DIRECTIONS_LIST, new ArrayList<>(directionsList));
     }
     private void onSaveClick() {
-       // Check recipe map storage
+        // Check recipe map storage
         Map<Integer, Recipe> loadedRecipeMap;
         loadedRecipeMap = JsonUtils.loadRecipeMapFromJson(requireContext(), "recipes.json");
 
@@ -402,12 +363,12 @@ public class AddFragment extends Fragment {
         }
 
         // Retrieve input from UI components
-        String title = titleInput.getText().toString();
-        String description = descriptionInput.getText().toString();
-        String servingSizeStr = servingSizeInput.getText().toString();
-        String caloriesStr = caloriesInput.getText().toString();
-        String proteinStr = proteinInput.getText().toString();
-        String mealTimeStr = mealTimeSpinner.getSelectedItem().toString();
+        String title              = titleInput.getText().toString();
+        String description        = descriptionInput.getText().toString();
+        String servingSizeStr     = servingSizeInput.getText().toString();
+        String caloriesStr        = caloriesInput.getText().toString();
+        String proteinStr         = proteinInput.getText().toString();
+        String mealTimeStr        = mealTimeSpinner.getSelectedItem().toString();
         String difficultyLevelStr = difficultySpinner.getSelectedItem().toString();
 
         // Convert mealTimeStr to MealTime enum

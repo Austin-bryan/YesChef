@@ -86,16 +86,12 @@
                     // Skip if the item is checked-off or empty
                     if (!text.isEmpty() && (input.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == 0) {
                         shoppingItems.add(new ShoppingItem(text));
-                        Log.d("MyTest", "Saving item: " + text);
-                    } else if ((input.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != 0) {
-                        Log.d("MyTest", "Skipping checked-off item: " + text);
                     }
                 }
             }
 
             ShoppingListStorage storage = new ShoppingListStorage(requireContext());
             storage.saveShoppingList(shoppingItems);
-            Log.d("MyTest", "Updated storage with " + shoppingItems.size() + " items.");
         }
 
 
@@ -171,6 +167,6 @@
                 newTask.startAnimation(scaleDown);
             });
 
-            taskContainer.addView(newTask, 0); // Adding at position 0 makes it the first one
+            taskContainer.addView(newTask, 0);
         }
     }
