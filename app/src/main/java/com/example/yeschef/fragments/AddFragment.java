@@ -647,8 +647,8 @@ public class AddFragment extends Fragment {
         });
 
         // Set the background color of the rectangle
-        View leftRectangle = newItem.findViewById(R.id.left_rectangle);
-        leftRectangle.setBackgroundColor(labelColor);
+        //View leftRectangle = newItem.findViewById(R.id.left_rectangle);
+        //leftRectangle.setBackgroundColor(labelColor);
 
         // Add the new item to the container
         itemListContainer.addView(newItem);
