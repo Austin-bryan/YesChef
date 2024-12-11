@@ -50,7 +50,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Description"
+            android:hint="Description Tags"
             tools:ignore="HardCodedText"
             app:boxStrokeColor="#6200EE"
             app:boxStrokeWidthFocused="2dp"
@@ -72,7 +72,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginVertical="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:background="#aaa" />
 
         <!-- Row for Serving Size filter -->
@@ -88,7 +89,7 @@
                 android:id="@+id/serving_size_filter_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Serving Size"
+                android:text="Servings"
                 tools:ignore="HardCodedText"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -109,7 +110,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter serving size"
+                android:hint="Enter servings count"
                 tools:ignore="HardCodedText"
                 android:inputType="number" />
         </LinearLayout>

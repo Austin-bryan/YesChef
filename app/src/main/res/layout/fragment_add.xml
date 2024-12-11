@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <!-- Clear Button aligned to the left -->
+        <!-- Clear Button aligned to the start -->
         <ImageButton
             android:id="@+id/clear_button"
             android:layout_width="60dp"
@@ -357,6 +357,8 @@
                     android:src="@drawable/ic_add_photo"
                     android:adjustViewBounds="true"
                     android:padding="20dp"
+                    android:elevation="6dp"
+                    android:layout_margin="12dp"
                     android:scaleType="fitCenter"
                     android:background="@drawable/rounded_button"
                     android:layout_gravity="center" />
@@ -406,6 +408,7 @@
                 android:id="@+id/directions_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
