@@ -15,6 +15,7 @@
     import android.widget.LinearLayout;
 
     import androidx.annotation.Nullable;
+    import androidx.appcompat.app.AlertDialog;
     import androidx.fragment.app.Fragment;
     import com.example.yeschef.R;
     import com.example.yeschef.models.ShoppingItem;
@@ -30,10 +31,22 @@
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-            ImageButton addTaskButton = view.findViewById(R.id.addTaskButton);
+            ImageButton addTaskButton  = view.findViewById(R.id.addTaskButton);
+            ImageButton clearButton    = view.findViewById(R.id.clear_button);
             LinearLayout taskContainer = view.findViewById(R.id.taskContainer);
 
             addTaskButton.setOnClickListener(v -> addTaskView(LayoutInflater.from(getContext()), taskContainer, true, null));
+            clearButton.setOnClickListener(v -> {
+                new AlertDialog.Builder(view.getContext())
+                    .setTitle("Clear Shopping List")
+                    .setMessage("Are you sure you want to clear the entire shopping list?")
+                    .setPositiveButton("Clear", (dialog, which) -> {
+                        taskContainer.removeAllViews();
+                        updateStorage();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                    .show();
+            });
 
             ShoppingListStorage storage = new ShoppingListStorage(requireContext());
             List<ShoppingItem> savedItems = storage.loadShoppingList();

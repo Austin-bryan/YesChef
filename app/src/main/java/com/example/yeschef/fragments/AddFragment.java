@@ -60,7 +60,6 @@ public class AddFragment extends Fragment {
     private int clickedIndex;
     private LinearLayout categoryButtonsContainer;
 
-    private int stepCounter = 1; // Counter for steps
     private LinearLayout directionsContainer;
     private LinearLayout ingredientsContainer;
     private boolean isAnimating = false;
@@ -80,7 +79,6 @@ public class AddFragment extends Fragment {
     private boolean isVegetarian = false;
     private boolean isGlutenFree = false;
     private boolean isSugarFree = false;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
